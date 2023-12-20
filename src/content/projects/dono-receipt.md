@@ -1,7 +1,7 @@
 ---
-title: DonationReceipt.Online,
+title: Donation Receipt Online
 description: A site I created myself using astro,
-mainImage: { url: "image.src", alt: Main image of portfolio site }
+mainImage: { url: "dono-main.webp", alt: Main image of portfolio site }
 mainVideo: { url: "video.src", alt: Main video of portfolio site }
 otherImages:
   [

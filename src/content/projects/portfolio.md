@@ -1,7 +1,7 @@
 ---
-title: Portfolio Website,
+title: Portfolio Website
 description: A site I created myself using astro,
-mainImage: { url: "image.src", alt: Main image of portfolio site }
+mainImage: { url: "", alt: Main image of portfolio site }
 mainVideo: { url: "video.src", alt: Main video of portfolio site }
 otherImages:
   [
