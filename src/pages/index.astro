@@ -1,0 +1,20 @@
+---
+import { getCollection } from 'astro:content';
+
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+
+const projects = await getCollection("projects");
+---
+
+<Layout title="Gus Ryan - Full Stack Web Developer">
+	<main>
+		<ul role="list" class="">
+      {
+        projects.map((project) => (
+          <li class=""><ProjectCard {...project.data} /></li>
+        ))
+      }
+		</ul>
+	</main>
+</Layout>
