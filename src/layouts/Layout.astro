@@ -1,46 +1,201 @@
 ---
-import { ViewTransitions } from "astro:transitions";
+import { ViewTransitions } from "astro:transitions"
 
 interface Props {
-	title: string;
+  title: string
 }
 
-const { title } = Astro.props;
+const { title } = Astro.props
 ---
 
 <!doctype html>
-<html class="dark:bg-gray-900" lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-    <ViewTransitions /> 
-	</head>
-	<body>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/about">About</a>
-      <a href="/blog">Blog</a>
-    </nav>
-		<slot />
-	</body>
+<html
+  class="dark:bg-gray-900 dark:text-gray-50 md:flex md:flex-row w-full justify-center"
+  lang="en"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <ViewTransitions />
+  </head>
+  <body class="md:flex md:flex-row max-w-6xl">
+    <header class="md:min-w-80 md:mt-20 relative p-8 h-[80vh]">
+      <div class="top-0 left-0 h-20 w-20 border-t border-l absolute"></div>
+      <div class="bottom-0 right-0 h-20 w-20 border-b border-r absolute"></div>
+      <div class="relative mt-10 font-light text-5xl">
+        <div
+          class="opacity-0 dark:text-purple-400 absolute top-0 px-2 dark:bg-gray-900 h-[60%] overflow-hidden glitch-animation"
+        >
+          Gus Ryan
+        </div>
+        <div
+          class="opacity-0 dark:text-red-400 absolute glitch-animation-2 top-[-0.05em] -z-10 rotate-3"
+        >
+          Gus Ryan
+        </div>
+        <div class="opacity-0 dark:text-white absolute glitch-animation-3 top-[0.15em] -z-10">
+          Gus Ryan
+        </div>
+        <h1 class='dark:text-white"'>Gus Ryan</h1>
+      </div>
+      <h2 class="font-light text-2xl mt-4 dark:text-gray-100">Web Developer</h2>
+      <nav class="ml-4 dark:text-gray-300">
+        <ul class="mt-16 space-y-8 text-lg">
+          <li>
+            <a class="relative p-2 group" href="/#about">
+              <!-- <div
+                class="opacity-0 group-hover:line-through dark:text-purple-400 absolute top-0 left-[0.1em] px-2 pt-1 dark:bg-gray-900 h-[60%] overflow-hidden group-hover:opacity-100 transition"
+              >
+                About
+              </div> -->
+              <div
+                class="top-0 right-0 h-2 w-2 border-t border-r absolute opacity-0 group-hover:opacity-100 transition"
+              >
+              </div>
+              <div
+                class="bottom-0 left-0 h-2 w-2 border-b border-l absolute opacity-0 group-hover:opacity-100 transition"
+              >
+              </div>
+               About
+            </a>
+          </li>
+          <li>
+            <a class="relative p-2 group" href="/#projects">
+              <div
+                class="top-0 right-0 h-2 w-2 border-t border-r absolute opacity-0 group-hover:opacity-100 transition"
+              >
+              </div>
+              <div
+                class="bottom-0 left-0 h-2 w-2 border-b border-l absolute opacity-0 group-hover:opacity-100 transition"
+              >
+              </div>Projects</a
+            >
+          </li>
+          <li>
+            <a class="relative p-2 group" href="/blog">
+              <div
+                class="top-0 right-0 h-2 w-2 border-t border-r absolute opacity-0 group-hover:opacity-100 transition"
+              >
+              </div>
+              <div
+                class="bottom-0 left-0 h-2 w-2 border-b border-l absolute opacity-0 group-hover:opacity-100 transition"
+              >
+              </div>Blog</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <div class="p-8 md:pt-16 md:min-w-[600px]">
+      <slot />
+    </div>
+    <style is:global>
+      html {
+        font-family: nimbus-sans, "helvetica neue", system-ui, sans-serif;
+      }
+      code {
+        font-family:
+          Menlo,
+          Monaco,
+          Lucida Console,
+          Liberation Mono,
+          DejaVu Sans Mono,
+          Bitstream Vera Sans Mono,
+          Courier New,
+          monospace;
+      }
+    </style>
+
+    <style>
+      .glitch-animation {
+        animation: inNOut 2s linear 0s 2 normal none;
+      }
+      @keyframes inNOut {
+        0% {
+          opacity: 0%;
+          left: -0.35rem;
+        }
+        45% {
+          opacity: 0%;
+        }
+        46% {
+          opacity: 50%;
+        }
+        49% {
+          opacity: 50%;
+        }
+        50% {
+          opacity: 0%;
+          left: -0.35rem;
+        }
+        91% {
+          opacity: 0%;
+          left: -0.75rem;
+        }
+        92% {
+          opacity: 50%;
+          left: -0.75rem;
+        }
+        95% {
+          left: -0.35rem;
+        }
+        100% {
+          opacity: 50%;
+          left: -0.35rem;
+        }
+      }
+
+      .glitch-animation-2 {
+        animation: glitch2 2s linear 1s 1 normal none;
+      }
+      @keyframes glitch2 {
+        0% {
+          opacity: 0;
+        }
+        43% {
+          opacity: 0;
+        }
+        44% {
+          opacity: 1;
+        }
+        49% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+        91% {
+          opacity: 0;
+        }
+        92% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      .glitch-animation-3 {
+        animation: glitch3 2s linear 1s 1 normal none;
+      }
+      @keyframes glitch3 {
+        0% {
+          opacity: 0;
+        }
+        93% {
+          opacity: 0;
+        }
+        94% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+    </style>
+  </body>
 </html>
-<style is:global>
-	html {
-		font-family: "helvetica neue", system-ui, sans-serif;
-	}
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
-	}
-</style>

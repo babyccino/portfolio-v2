@@ -1,20 +1,85 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection } from "astro:content"
 
-import Layout from '../layouts/Layout.astro';
-import ProjectCard from '../components/ProjectCard.astro';
+import Layout from "../layouts/Layout.astro"
+import ProjectCard from "../components/ProjectCard.astro"
 
-const projects = await getCollection("projects");
+const projects = await getCollection("projects")
+
+const a = 1
 ---
 
 <Layout title="Gus Ryan - Full Stack Web Developer">
-	<main>
-		<ul role="list" class="">
-      {
-        projects.map((project) => (
-          <li class=""><ProjectCard {...project.data} /></li>
-        ))
-      }
-		</ul>
-	</main>
+  <main>
+    <section id="about" class="md:pl-8 text-gray-400 md:max-w-xl">
+      <p>
+        Hi! My name is Gus and I&apos;m an aspiring software developer. I&apos;m originally from
+        Perth, Western Australia but currently based in Canada. With a background in Maths and
+        Physics, I&apos;m fascinated by the intricacies of how things work and enjoy using logic to
+        solve problems
+      </p>
+      <br />
+      <p>
+        I became interested in software development a few years ago after discovering a passion for
+        building useful applications from scratch. I&apos;m now looking to apply my skills in
+        creating tools to help users be more efficient
+      </p>
+      <br />
+      <div>
+        Besides coding at my desk, I can be found
+        <div class="inline-block group relative">
+          <div
+            class="top-0 -right-1 h-2 w-2 border-t border-r absolute opacity-0 group-hover:opacity-100 transition"
+          >
+          </div>
+          <div
+            class="bottom-0 -left-1 h-2 w-2 border-b border-l absolute opacity-0 group-hover:opacity-100 transition"
+          >
+          </div>
+          <a
+            class="relative inline-block text-white"
+            href="https://www.youtube.com/channel/UCtWqQrnozUZXpxnjhVgUTUw"
+          >
+            climbing rocks
+          </a>
+        </div>
+         and
+        <div class="inline-block group relative">
+          <div
+            class="top-0 -right-1 h-2 w-2 border-t border-r absolute opacity-0 group-hover:opacity-100 transition"
+          >
+          </div>
+          <div
+            class="bottom-0 -left-1 h-2 w-2 border-b border-l absolute opacity-0 group-hover:opacity-100 transition"
+          >
+          </div>
+          <a class="relative inline-block text-white" href="https://www.instagram.com/babyccino1">
+            photographing natural landscapes
+          </a>
+        </div>
+        <br />
+      </div>
+      <br />
+      <p class="mt-2">Languages/technologies I've used:</p>
+      <ul class="mt-2 flex flex-row gap-4 font-mono text-gray-100">
+        <li>typescript</li>
+        <li>javascript</li>
+        <li>react</li>
+        <li>html</li>
+        <li>css</li>
+        <li>sqlite</li>
+      </ul>
+    </section>
+    <section id="projects">
+      <ul class="">
+        {
+          projects.map(project => (
+            <li class="">
+              <ProjectCard {...project.data} />
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </main>
 </Layout>
