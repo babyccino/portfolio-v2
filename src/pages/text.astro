@@ -1,0 +1,261 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro"
+---
+
+<BaseLayout title="intro">
+  <div
+    id="terminal-container"
+    class="font-mono h-screen w-screen flex justify-center items-center relative overflow-hidden"
+  >
+    <div id="terminal" class="bg-gray-800 rounded-xl max-w-3xl w-full min-h-96 flex flex-col">
+      <div
+        class="relative rounded-xl rounded-b-none border border-gray-500 border-b-gray-950 bg-gray-700 text-center py-1 font-semibold text-gray-300 font-sans text-sm"
+      >
+        <img src="/mac-folder.png" height="10" class="h-5 inline-block -mt-1 mr-1" />gusryan - zsh -
+        180x47
+        <div class="absolute left-2 top-0 flex flex-row h-full items-center gap-2">
+          <div class="rounded-full bg-red-500 h-[13px] w-[13px]"></div>
+          <div class="rounded-full bg-yellow-500 h-[13px] w-[13px]"></div>
+          <div class="rounded-full bg-green-500 h-[13px] w-[13px]"></div>
+        </div>
+      </div>
+      <div
+        class="pl-1 pt-1 border border-gray-600 border-t-0 rounded-xl rounded-t-none flex-1 text-sm"
+      >
+        <p class="generate-glitch">
+          Last login: {new Date(Date.now() - 1000 * 60 * 60 * 24).toDateString()} on ttys004
+        </p>
+        <div class="generate-glitch">
+          <span> gusryan@Guss-MacBook-Air ~ %</span>
+          <span id="curl"></span><span id="caret" class="text-gray-400 bg-gray-400">O</span>
+        </div>
+        <div class="flex flex-row justify-between">
+          <pre class="generate-glitch" id="progress"></pre>
+          <p id="percent"></p>
+        </div>
+        <pre id="error"></pre>
+      </div>
+    </div>
+    <a id="portfolio-link" class="hidden" href="/" data-astro-prefetch>go to home</a>
+  </div>
+</BaseLayout>
+
+<script>
+  import { prefetch } from "astro:prefetch"
+  const floor = Math.floor.bind(Math)
+
+  // get random int between min and max
+  function getRandomInt(min: number, max: number) {
+    return floor(Math.random() * (max - min + 1)) + min
+  }
+
+  function generateGlitchText(text: string, glitchChance = 0.5, glitchAmount = 10) {
+    let glitchText = ""
+    for (let i = 0; i < text.length; ++i) {
+      glitchText += text.at(i)
+      if (Math.random() < glitchChance) {
+        for (let j = 0; j < glitchAmount; ++j) {
+          glitchText += `&#${getRandomInt(768, 879)};`
+        }
+      }
+    }
+
+    return glitchText
+  }
+
+  // const wait2 = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+  const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+  // const wait = (ms: number) => Promise.resolve()
+  const progressElement = document.getElementById("progress") as HTMLPreElement
+  const caretElement = document.getElementById("caret") as HTMLSpanElement
+  const percentElement = document.getElementById("percent") as HTMLSpanElement
+  const errorElement = document.getElementById("error") as HTMLPreElement
+  async function animate() {
+    await wait(6000)
+    caretElement.classList.add("hidden")
+    await wait(500)
+
+    const weirdText = "#      #      #        #       #"
+    const weirdText2 = "-=0=-"
+
+    function combine(text: string) {
+      let result = ""
+      for (let i = 0; i < Math.max(text.length, weirdText2.length); ++i) {
+        const char1 = text.at(i)
+        const char2 = weirdText2.at(i)
+        if (char1 === "#") result += char1
+        else if (char2) result += char2
+        else result += char1
+      }
+      return result
+    }
+
+    for (let i = 0; i < weirdText.length; ++i) {
+      progressElement.innerText = combine(weirdText.slice(weirdText.length - i - 1))
+      await wait(100)
+    }
+
+    await wait(200)
+
+    prefetch("/")
+
+    const hashes = "###########################################################"
+    percentElement.innerText = `0%`
+
+    for (let i = 0; i <= 99; ++i) {
+      await wait(40)
+      if (Math.random() > 0.8) {
+        progressElement.innerText = hashes.slice(0, floor((i * hashes.length) / 100))
+        percentElement.innerText = `${i}%`
+      }
+    }
+
+    progressElement.innerText = hashes
+    percentElement.innerText = `99%`
+
+    await wait(500)
+
+    document.getElementById("terminal")?.classList.add("wait")
+
+    errorElement.innerHTML = "curl: (7) lost connection to gusryan.me: Data received is corrupted"
+
+    await wait(1000)
+
+    errorElement.innerHTML += "\ncorrupted"
+
+    await wait(1000)
+
+    errorElement.innerHTML += "\n" + generateGlitchText("corrupted")
+
+    await wait(1000)
+
+    errorElement.innerHTML += "\n" + generateGlitchText("corrupted", 0.6, 5)
+
+    await wait(200)
+    errorElement.innerHTML += "\n" + generateGlitchText("corrupted", 0.6, 5)
+
+    const terminal = document.getElementById("terminal") as HTMLDivElement
+    const terminalContainer = document.getElementById("terminal-container") as HTMLDivElement
+    terminalContainer.classList.add("glitch")
+
+    terminal.before(terminal.cloneNode(true))
+    const terminalClone = terminal.previousSibling as HTMLDivElement
+    terminalClone.classList.add("absolute", "opacity-50", "hue-rotate-90", "-z-10")
+    terminalClone.id = "terminal-clone-1"
+
+    terminal.before(terminal.cloneNode(true))
+    const terminalClone2 = terminal.previousSibling as HTMLDivElement
+    terminalClone2.classList.add("absolute", "opacity-50", "-hue-rotate-90", "-z-10")
+    terminalClone2.id = "terminal-clone-2"
+    terminal.classList.add("paths")
+
+    await wait(200)
+    errorElement.innerHTML += "\n" + generateGlitchText("corrupted", 0.6, 5)
+    await wait(200)
+    errorElement.innerHTML += "\n" + generateGlitchText("corrupted", 0.6, 5)
+
+    await wait(1000)
+
+    const glitchify = document.getElementsByClassName("generate-glitch")
+    for (let i = 0; i < glitchify.length; ++i) {
+      const item = glitchify.item(i)
+      if (!item) continue
+      item.innerHTML = generateGlitchText(item.innerHTML, 0.2, 4)
+    }
+
+    await wait(1000)
+
+    terminalContainer.classList.remove("glitch")
+    terminalContainer.classList.add("glitch-disappear")
+
+    await wait(2000)
+    document.getElementById("portfolio-link")?.click()
+  }
+  animate()
+</script>
+
+<style lang="scss">
+  @import "src/typed";
+
+  .wait {
+    cursor: wait;
+  }
+
+  #curl {
+    @include typed(
+      "crul -# -O ht",
+      (
+        type: 0.05,
+        pause-typed: 0.4,
+        delete: 0.04,
+        pause-deleted: 0,
+      ),
+      (
+        caret: false,
+        iterations: 1,
+        delay: 1,
+        end-on: "curl -# -O site.html https://gusryan.me/portfolio.html",
+      )
+    );
+  }
+
+  $animationTime: 1s;
+  .glitch #terminal {
+    animation: paths $animationTime * 3 step-end infinite normal backwards;
+  }
+
+  .glitch #terminal-clone-1 {
+    animation:
+      paths $animationTime * 3 step-end infinite normal backwards,
+      opacity $animationTime * 3 step-end infinite normal backwards,
+      movementTranslate 6 * $animationTime step-end infinite normal backwards;
+  }
+
+  .glitch #terminal-clone-2 {
+    animation:
+      paths 2 * $animationTime step-end infinite normal backwards,
+      opacity 2 * $animationTime step-end infinite normal backwards,
+      movementTranslate 5s step-end infinite normal backwards;
+  }
+
+  $glitch-disappear-time: 150ms;
+  .glitch-disappear #terminal {
+    animation:
+      paths $glitch-disappear-time * 3 step-end infinite normal backwards,
+      scale 6 * $glitch-disappear-time step-end 1 normal forwards;
+  }
+
+  .glitch-disappear #terminal-clone-1 {
+    animation:
+      paths $glitch-disappear-time * 3 step-end infinite normal backwards,
+      opacity $glitch-disappear-time * 3 step-end infinite normal backwards,
+      movementTranslate 6 * $glitch-disappear-time step-end infinite normal backwards,
+      scale 6 * $glitch-disappear-time step-end 1 normal forwards;
+  }
+
+  .glitch-disappear #terminal-clone-2 {
+    animation:
+      paths 2 * $glitch-disappear-time step-end infinite normal backwards,
+      opacity 2 * $glitch-disappear-time step-end infinite normal backwards,
+      movementTranslate 5s step-end infinite normal backwards,
+      scale 6 * $glitch-disappear-time step-end 1 normal forwards;
+  }
+
+  @keyframes scale {
+    0% {
+      scale: 1 1;
+    }
+    5% {
+      scale: 0.8 1.2;
+    }
+    30% {
+      scale: 1.3 0.4;
+    }
+    66% {
+      scale: 0.7 0.3;
+    }
+    100% {
+      scale: 0 0;
+    }
+  }
+</style>
