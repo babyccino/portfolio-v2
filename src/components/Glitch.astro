@@ -1,0 +1,170 @@
+---
+interface Props {
+  text: string
+  delay?: number
+  class?: string
+}
+
+const { text, delay } = Astro.props
+// const text = "ASTRO"
+---
+
+<div class="hero-container">
+  <span style={`animation-delay: ${delay}ms;`} class="layer1">{text}</span>
+  <span style={`animation-delay: ${delay}ms;`} class="layer2">{text}</span>
+  <h2 class="hero glitch layers" data-text={text}>
+    <span style={`animation-delay: ${delay}ms;`}>{text}</span>
+  </h2>
+</div>
+
+<style lang="scss">
+  .hero {
+    margin: 0;
+    line-height: 1;
+    display: inline-block;
+    color: #fff;
+    z-index: 2;
+    position: relative;
+  }
+
+  .demo {
+    height: 100px;
+    background: #fff;
+  }
+
+  .layers {
+    position: relative;
+  }
+
+  .layer1,
+  .layer2 {
+    position: absolute;
+    width: 110%;
+    z-index: -1;
+  }
+
+  .layer1 {
+    top: 10px;
+    left: 15px;
+    color: #e0287d;
+    opacity: 0;
+  }
+
+  .layer2 {
+    top: 5px;
+    left: -10px;
+    color: #1bc7fb;
+    opacity: 0;
+  }
+
+  .single-path {
+    clip-path: polygon(
+      0% 12%,
+      53% 12%,
+      53% 26%,
+      25% 26%,
+      25% 86%,
+      31% 86%,
+      31% 0%,
+      53% 0%,
+      53% 84%,
+      92% 84%,
+      92% 82%,
+      70% 82%,
+      70% 29%,
+      78% 29%,
+      78% 65%,
+      69% 65%,
+      69% 66%,
+      77% 66%,
+      77% 45%,
+      85% 45%,
+      85% 26%,
+      97% 26%,
+      97% 28%,
+      84% 28%,
+      84% 34%,
+      54% 34%,
+      54% 89%,
+      30% 89%,
+      30% 58%,
+      83% 58%,
+      83% 5%,
+      68% 5%,
+      68% 36%,
+      62% 36%,
+      62% 1%,
+      12% 1%,
+      12% 34%,
+      60% 34%,
+      60% 57%,
+      98% 57%,
+      98% 83%,
+      1% 83%,
+      1% 53%,
+      91% 53%,
+      91% 84%,
+      8% 84%,
+      8% 83%,
+      4% 83%
+    );
+  }
+
+  @keyframes font {
+    0% {
+      font-weight: 100;
+      color: #e0287d;
+      filter: blur(3px);
+    }
+
+    20% {
+      font-weight: 500;
+      color: #fff;
+      filter: blur(0);
+    }
+
+    50% {
+      font-weight: 300;
+      color: #1bc7fb;
+      filter: blur(2px);
+    }
+
+    60% {
+      font-weight: 700;
+      color: #fff;
+      filter: blur(0);
+    }
+
+    90% {
+      font-weight: 500;
+      color: #e0287d;
+      filter: blur(6px);
+    }
+  }
+
+  $baseAnimationLength: 6s;
+  $iterationCount: 0.6;
+  .glitch span {
+    animation: paths ((1/2) * $baseAnimationLength) step-end (2 * $iterationCount) normal backwards;
+  }
+
+  .layer1 {
+    animation:
+      paths ((1/2) * $baseAnimationLength) step-end (2 * $iterationCount) normal backwards,
+      opacity ((1/2) * $baseAnimationLength) step-end (2 * $iterationCount) normal backwards,
+      font ((4/5) * $baseAnimationLength) step-end ((5/4) * $iterationCount) normal backwards,
+      movement $baseAnimationLength step-end $iterationCount normal backwards;
+  }
+
+  .layer2 {
+    animation:
+      paths ((1/2) * $baseAnimationLength) step-end (2 * $iterationCount) normal backwards,
+      opacity ((1/2) * $baseAnimationLength) step-end (2 * $iterationCount) normal backwards,
+      font ((7/10) * $baseAnimationLength) step-end ((10/7) * $iterationCount) normal backwards,
+      movement ((4/5) * $baseAnimationLength) step-end ((5/4) * $iterationCount) normal backwards;
+  }
+
+  .hero-container {
+    position: relative;
+  }
+</style>

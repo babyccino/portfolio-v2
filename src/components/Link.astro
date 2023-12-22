@@ -1,0 +1,43 @@
+---
+interface Props {
+  content: string
+  href: string
+}
+
+const { content, href } = Astro.props
+---
+
+<a class="relative p-2 link" href={href}>
+  <div
+    class="opacity-0 dark:text-purple-400 absolute align-bottom top-0 left-[0.2em] px-2 pt-1 dark:bg-gray-900 h-[60%] overflow-hidden group-hover:opacity-100 glitch rotate-6"
+  >
+    {content}
+  </div>
+  {content}
+</a>
+
+<style>
+  .link:hover .glitch {
+    animation: glitch 2s infinite;
+    opacity: 1;
+  }
+
+  @keyframes glitch {
+    0%,
+    100% {
+      opacity: 0;
+    }
+    45% {
+      opacity: 0;
+    }
+    46% {
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    51% {
+      opacity: 0;
+    }
+  }
+</style>

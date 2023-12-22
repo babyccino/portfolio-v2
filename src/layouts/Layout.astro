@@ -1,5 +1,8 @@
 ---
-import { ViewTransitions } from "astro:transitions"
+import Link from "../components/Link.astro"
+
+import BaseLayout from "./BaseLayout.astro"
+import Glitch from "../components/Glitch.astro"
 
 interface Props {
   title: string
@@ -8,26 +11,15 @@ interface Props {
 const { title } = Astro.props
 ---
 
-<!doctype html>
-<html
-  class="dark:bg-gray-900 dark:text-gray-50 md:flex md:flex-row w-full justify-center"
-  lang="en"
->
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="description" content="Astro description" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
-    <ViewTransitions />
-  </head>
-  <body class="md:flex md:flex-row max-w-6xl">
-    <header class="md:min-w-80 md:mt-20 relative p-8 h-[80vh]">
-      <div class="top-0 left-0 h-20 w-20 border-t border-l absolute"></div>
-      <div class="bottom-0 right-0 h-20 w-20 border-b border-r absolute"></div>
+<BaseLayout title={title}>
+  <div class="sm:flex flex-row max-w-6xl w-full">
+    <div id="top"></div>
+    <header transition:name="nav" class="sm:w-80 relative p-8 sm:h-[80vh] sm:fixed sm:top-20">
+      <div class="top-0 left-0 h-14 w-14 border-t border-l absolute"></div>
+      <div class="bottom-0 right-0 h-14 w-14 border-b border-r absolute"></div>
       <div class="relative mt-10 font-light text-5xl">
-        <div
+        <Glitch text="Gus Ryan" delay={1500} />
+        <!-- <div
           class="opacity-0 dark:text-purple-400 absolute top-0 px-2 dark:bg-gray-900 h-[60%] overflow-hidden glitch-animation"
         >
           Gus Ryan
@@ -40,57 +32,25 @@ const { title } = Astro.props
         <div class="opacity-0 dark:text-white absolute glitch-animation-3 top-[0.15em] -z-10">
           Gus Ryan
         </div>
-        <h1 class='dark:text-white"'>Gus Ryan</h1>
+        <h1 class='dark:text-white"'>Gus Ryan</h1> -->
       </div>
       <h2 class="font-light text-2xl mt-4 dark:text-gray-100">Web Developer</h2>
       <nav class="ml-4 dark:text-gray-300">
         <ul class="mt-16 space-y-8 text-lg">
           <li>
-            <a class="relative p-2 group" href="/#about">
-              <!-- <div
-                class="opacity-0 group-hover:line-through dark:text-purple-400 absolute top-0 left-[0.1em] px-2 pt-1 dark:bg-gray-900 h-[60%] overflow-hidden group-hover:opacity-100 transition"
-              >
-                About
-              </div> -->
-              <div
-                class="top-0 right-0 h-2 w-2 border-t border-r absolute opacity-0 group-hover:opacity-100 transition"
-              >
-              </div>
-              <div
-                class="bottom-0 left-0 h-2 w-2 border-b border-l absolute opacity-0 group-hover:opacity-100 transition"
-              >
-              </div>
-               About
-            </a>
+            <Link content="About" href="/#about" />
           </li>
           <li>
-            <a class="relative p-2 group" href="/#projects">
-              <div
-                class="top-0 right-0 h-2 w-2 border-t border-r absolute opacity-0 group-hover:opacity-100 transition"
-              >
-              </div>
-              <div
-                class="bottom-0 left-0 h-2 w-2 border-b border-l absolute opacity-0 group-hover:opacity-100 transition"
-              >
-              </div>Projects</a
-            >
+            <Link content="Projects" href="/#projects" />
           </li>
           <li>
-            <a class="relative p-2 group" href="/blog">
-              <div
-                class="top-0 right-0 h-2 w-2 border-t border-r absolute opacity-0 group-hover:opacity-100 transition"
-              >
-              </div>
-              <div
-                class="bottom-0 left-0 h-2 w-2 border-b border-l absolute opacity-0 group-hover:opacity-100 transition"
-              >
-              </div>Blog</a
-            >
+            <Link content="Blog" href="/blog" />
           </li>
         </ul>
       </nav>
     </header>
-    <div class="p-8 md:pt-16 md:min-w-[600px]">
+    <div class="sm:w-80 flex-shrink-0"></div>
+    <div class="p-8 sm:pl-16 sm:pt-32">
       <slot />
     </div>
     <style is:global>
@@ -197,5 +157,5 @@ const { title } = Astro.props
         }
       }
     </style>
-  </body>
-</html>
+  </div>
+</BaseLayout>
