@@ -6,7 +6,6 @@ interface Props {
 }
 
 const { text, delay } = Astro.props
-// const text = "ASTRO"
 ---
 
 <div class="hero-container">
@@ -57,93 +56,8 @@ const { text, delay } = Astro.props
     opacity: 0;
   }
 
-  .single-path {
-    clip-path: polygon(
-      0% 12%,
-      53% 12%,
-      53% 26%,
-      25% 26%,
-      25% 86%,
-      31% 86%,
-      31% 0%,
-      53% 0%,
-      53% 84%,
-      92% 84%,
-      92% 82%,
-      70% 82%,
-      70% 29%,
-      78% 29%,
-      78% 65%,
-      69% 65%,
-      69% 66%,
-      77% 66%,
-      77% 45%,
-      85% 45%,
-      85% 26%,
-      97% 26%,
-      97% 28%,
-      84% 28%,
-      84% 34%,
-      54% 34%,
-      54% 89%,
-      30% 89%,
-      30% 58%,
-      83% 58%,
-      83% 5%,
-      68% 5%,
-      68% 36%,
-      62% 36%,
-      62% 1%,
-      12% 1%,
-      12% 34%,
-      60% 34%,
-      60% 57%,
-      98% 57%,
-      98% 83%,
-      1% 83%,
-      1% 53%,
-      91% 53%,
-      91% 84%,
-      8% 84%,
-      8% 83%,
-      4% 83%
-    );
-  }
-
-  @keyframes font {
-    0% {
-      font-weight: 100;
-      color: #e0287d;
-      filter: blur(3px);
-    }
-
-    20% {
-      font-weight: 500;
-      color: #fff;
-      filter: blur(0);
-    }
-
-    50% {
-      font-weight: 300;
-      color: #1bc7fb;
-      filter: blur(2px);
-    }
-
-    60% {
-      font-weight: 700;
-      color: #fff;
-      filter: blur(0);
-    }
-
-    90% {
-      font-weight: 500;
-      color: #e0287d;
-      filter: blur(6px);
-    }
-  }
-
   $baseAnimationLength: 6s;
-  $iterationCount: 0.6;
+  $iterationCount: 0.3;
   .glitch span {
     animation: paths ((1/2) * $baseAnimationLength) step-end (2 * $iterationCount) normal backwards;
   }
