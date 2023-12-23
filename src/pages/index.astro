@@ -22,15 +22,15 @@ import BaseLayout from "../layouts/BaseLayout.astro"
       <div
         class="pl-1 pt-1 border border-gray-600 border-t-0 rounded-xl rounded-t-none flex-1 text-sm"
       >
-        <p class="generate-glitch">
+        <p class="generate-glitch-text">
           Last login: {new Date(Date.now() - 1000 * 60 * 60 * 24).toDateString()} on ttys004
         </p>
-        <div class="generate-glitch">
+        <div class="generate-glitch-text">
           <span> gusryan@Guss-MacBook-Air ~ %</span>
           <span id="curl"></span><span id="caret" class="text-gray-400 bg-gray-400">O</span>
         </div>
         <div class="flex flex-row justify-between">
-          <pre class="generate-glitch" id="progress"></pre>
+          <pre class="generate-glitch-text" id="progress"></pre>
           <p id="percent"></p>
         </div>
         <pre id="error"></pre>
@@ -71,7 +71,7 @@ import BaseLayout from "../layouts/BaseLayout.astro"
   const percentElement = document.getElementById("percent") as HTMLSpanElement
   const errorElement = document.getElementById("error") as HTMLPreElement
   async function animate() {
-    await wait(4800)
+    await wait(4200)
     caretElement.classList.add("hidden")
     await wait(500)
 
@@ -147,7 +147,6 @@ import BaseLayout from "../layouts/BaseLayout.astro"
     const terminalClone2 = terminal.previousSibling as HTMLDivElement
     terminalClone2.classList.add("absolute", "-hue-rotate-90", "-z-10")
     terminalClone2.id = "terminal-clone-2"
-    terminal.classList.add("paths")
 
     await wait(200)
     errorElement.innerHTML += "\n" + generateGlitchText("corrupted", 0.6, 5)
@@ -156,7 +155,7 @@ import BaseLayout from "../layouts/BaseLayout.astro"
 
     await wait(1000)
 
-    const glitchify = document.getElementsByClassName("generate-glitch")
+    const glitchify = document.getElementsByClassName("generate-glitch-text")
     for (let i = 0; i < glitchify.length; ++i) {
       const item = glitchify.item(i)
       if (!item) continue
@@ -168,7 +167,7 @@ import BaseLayout from "../layouts/BaseLayout.astro"
     terminalContainer.classList.remove("glitch")
     terminalContainer.classList.add("glitch-disappear")
 
-    await wait(2000)
+    await wait(1000)
     document.getElementById("portfolio-link")?.click()
   }
   animate()

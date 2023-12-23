@@ -6,33 +6,22 @@ import Glitch from "../components/Glitch.astro"
 
 interface Props {
   title: string
+  glitch?: boolean
 }
 
 const { title } = Astro.props
+const glitch = Astro.props.glitch || false
 ---
 
 <BaseLayout title={title}>
-  <div class="sm:flex flex-row max-w-6xl w-full">
+  <div id="main-container" class="sm:flex flex-row max-w-6xl w-full opacity-0">
     <div id="top"></div>
     <header transition:name="nav" class="sm:w-80 relative p-8 sm:h-[80vh] sm:fixed sm:top-20">
       <div class="top-0 left-0 h-14 w-14 border-t border-l absolute"></div>
       <div class="bottom-0 right-0 h-14 w-14 border-b border-r absolute"></div>
       <div class="relative mt-10 font-light text-5xl">
-        <Glitch text="Gus Ryan" delay={1500} />
-        <!-- <div
-          class="opacity-0 dark:text-purple-400 absolute top-0 px-2 dark:bg-gray-900 h-[60%] overflow-hidden glitch-animation"
-        >
-          Gus Ryan
-        </div>
-        <div
-          class="opacity-0 dark:text-red-400 absolute glitch-animation-2 top-[-0.05em] -z-10 rotate-3"
-        >
-          Gus Ryan
-        </div>
-        <div class="opacity-0 dark:text-white absolute glitch-animation-3 top-[0.15em] -z-10">
-          Gus Ryan
-        </div>
-        <h1 class='dark:text-white"'>Gus Ryan</h1> -->
+        Gus Ryan
+        <!-- <Glitch text="Gus Ryan" delay={2500} /> -->
       </div>
       <h2 class="font-light text-2xl mt-4 dark:text-gray-100">Web Developer</h2>
       <nav class="ml-4 dark:text-gray-300">
@@ -159,3 +148,68 @@ const { title } = Astro.props
     </style>
   </div>
 </BaseLayout>
+
+<script>
+  setTimeout(() => {
+    const mainContainer = document.getElementById("main-container") as HTMLDivElement
+    setTimeout(() => {
+      mainContainer.classList.remove("opacity-0")
+    }, 300)
+
+    mainContainer.before(mainContainer.cloneNode(true))
+    const terminalClone = mainContainer.previousSibling as HTMLDivElement
+    terminalClone.classList.add("absolute", "hue-rotate-90", "-z-10", "saturate-[3]", "glitch-1")
+    terminalClone.id = "terminal-clone-1"
+
+    mainContainer.before(mainContainer.cloneNode(true))
+    const terminalClone2 = mainContainer.previousSibling as HTMLDivElement
+    terminalClone2.classList.add("absolute", "-hue-rotate-90", "-z-10", "saturate-[3]", "glitch-2")
+    terminalClone2.id = "terminal-clone-2"
+  }, 200)
+</script>
+
+<style lang="scss">
+  $baseAnimationLength: 8s;
+  $iterationCount: 0.3;
+  #main-container {
+    // animation: paths ((1/2) * $baseAnimationLength) step-end (2 * $iterationCount) normal backwards;
+  }
+
+  $movementTranslateBase: 0.5%;
+  @keyframes movementTranslate {
+    0% {
+      translate: 0 (-4 * $movementTranslateBase);
+    }
+
+    15% {
+      translate: (2 * $movementTranslateBase) (2 * $movementTranslateBase);
+    }
+
+    60% {
+      translate: $movementTranslateBase (-2 * $movementTranslateBase);
+    }
+
+    75% {
+      translate: (-1 * $movementTranslateBase) (4 * $movementTranslateBase);
+    }
+
+    100% {
+      translate: (2 * $movementTranslateBase) $movementTranslateBase;
+    }
+  }
+
+  .glitch-1 {
+    animation:
+      paths ((1/2) * $baseAnimationLength) step-end (2 * $iterationCount) normal forwards,
+      opacity ((1/2) * $baseAnimationLength) step-end (2 * $iterationCount) normal forwards,
+      movementTranslate $baseAnimationLength step-end $iterationCount normal forwards;
+  }
+
+  .glitch-2 {
+    animation:
+      paths ((1/2) * $baseAnimationLength) step-end (2 * $iterationCount) normal forwards,
+      opacity ((1/2) * $baseAnimationLength) step-end (2 * $iterationCount) normal forwards,
+      movementTranslate ((4/5) * $baseAnimationLength) step-end ((5/4) * $iterationCount) normal
+        forwards;
+  }
+</style>
