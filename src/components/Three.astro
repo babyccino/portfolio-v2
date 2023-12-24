@@ -1,0 +1,87 @@
+---
+
+---
+
+<canvas id="three" class="fixed overflow-hidden inset-0 -z-20"></canvas>
+
+<script>
+  import * as THREE from "three"
+  import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js"
+  import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js"
+  // import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js"
+  // import { OutputPass } from "three/examples/jsm/postprocessing/OutputPass.js"
+  // @ts-ignore
+  import VS from "../shaders/snoise.glsl"
+  // @ts-ignore
+  import FS from "../shaders/fragment.glsl"
+
+  const html = document.querySelector("html") as HTMLHtmlElement
+  const canvas = document.getElementById("three") as HTMLCanvasElement
+
+  const loader = new THREE.TextureLoader()
+  const shaderMaterial = new THREE.ShaderMaterial({
+    uniforms: {
+      time: { value: Math.random() * 10 },
+      blueNoise: { value: loader.load("blue-noise.webp") },
+      dark: { value: 1.0 },
+      aspect: { value: window.innerHeight / window.innerWidth },
+    },
+    vertexShader: VS,
+    fragmentShader: FS,
+  })
+  const scene = new THREE.Scene()
+  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 50)
+  const renderer = new THREE.WebGLRenderer({ canvas })
+  const geometry = new THREE.PlaneGeometry(10, 10, 200, 200)
+  const plane = new THREE.Mesh(geometry, shaderMaterial)
+
+  const renderScene = new RenderPass(scene, camera)
+
+  // const bloomPass = new UnrealBloomPass(
+  //   new THREE.Vector2(window.innerWidth * 2, window.innerHeight * 2),
+  //   0.01,
+  //   0.01,
+  //   0.0,
+  // )
+
+  // const outputPass = new OutputPass()
+
+  const effectComposer = new EffectComposer(renderer)
+  effectComposer.addPass(renderScene)
+
+  renderer.setSize(window.innerWidth, window.innerHeight)
+  document.getElementById("three-container")?.appendChild(renderer.domElement)
+
+  scene.add(plane)
+
+  camera.position.z = 1.4
+  camera.position.y = 0
+  camera.rotateX(0.7)
+
+  function animate() {
+    requestAnimationFrame(animate)
+
+    shaderMaterial.uniforms.time.value += 0.00005
+    // TODO implement light mode
+    // if (shaderMaterial.uniforms.dark.value < 1.0) shaderMaterial.uniforms.dark.value += 0.01
+    effectComposer.render()
+  }
+  animate()
+</script>
+
+<style lang="scss">
+  #three {
+    animation: name duration timing-function delay iteration-count direction fill-mode;
+    animation: fadeIn 2s ease-in-out 2s forwards;
+    opacity: 0;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+</style>

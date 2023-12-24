@@ -1,8 +1,8 @@
 ---
 import Link from "../components/Link.astro"
+import Three from "../components/Three.astro"
 
 import BaseLayout from "./BaseLayout.astro"
-import Glitch from "../components/Glitch.astro"
 
 interface Props {
   title: string
@@ -14,157 +14,182 @@ const glitch = Astro.props.glitch || false
 ---
 
 <BaseLayout title={title}>
-  <div id="main-container" class="sm:flex flex-row max-w-6xl w-full opacity-0">
-    <div id="top"></div>
-    <header transition:name="nav" class="sm:w-80 relative p-8 sm:h-[80vh] sm:fixed sm:top-20">
-      <div class="top-0 left-0 h-14 w-14 border-t border-l absolute"></div>
-      <div class="bottom-0 right-0 h-14 w-14 border-b border-r absolute"></div>
-      <div class="relative mt-10 font-light text-5xl">
-        Gus Ryan
-        <!-- <Glitch text="Gus Ryan" delay={2500} /> -->
+  <div id="main-container-container">
+    <div id="main-container" class="sm:flex flex-row max-w-6xl w-full opacity-0">
+      <div id="top"></div>
+      <header transition:name="nav" class="sm:w-80 relative p-8 sm:h-[80vh] sm:fixed sm:top-20">
+        <div class="top-0 left-0 h-14 w-14 border-t border-l absolute"></div>
+        <div class="bottom-0 right-0 h-14 w-14 border-b border-r absolute"></div>
+        <div class="relative mt-10 font-light text-5xl">
+          Gus Ryan
+          <!-- <Glitch text="Gus Ryan" delay={2500} /> -->
+        </div>
+        <h2 class="font-light text-2xl mt-4 dark:text-gray-100">Web Developer</h2>
+        <nav class="ml-4 dark:text-gray-300">
+          <ul class="mt-16 space-y-8 text-lg">
+            <li>
+              <Link content="About" href="/portfolio#about" />
+            </li>
+            <li>
+              <Link content="Projects" href="/portfolio#projects" />
+            </li>
+            <li>
+              <Link content="Blog" href="/blog" />
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <div class="sm:w-80 flex-shrink-0"></div>
+      <div class="p-8 sm:pl-16 sm:pt-32">
+        <slot />
       </div>
-      <h2 class="font-light text-2xl mt-4 dark:text-gray-100">Web Developer</h2>
-      <nav class="ml-4 dark:text-gray-300">
-        <ul class="mt-16 space-y-8 text-lg">
-          <li>
-            <Link content="About" href="/portfolio#about" />
-          </li>
-          <li>
-            <Link content="Projects" href="/portfolio#projects" />
-          </li>
-          <li>
-            <Link content="Blog" href="/blog" />
-          </li>
-        </ul>
-      </nav>
-    </header>
-    <div class="sm:w-80 flex-shrink-0"></div>
-    <div class="p-8 sm:pl-16 sm:pt-32">
-      <slot />
+      <style is:global>
+        html {
+          font-family: nimbus-sans, "helvetica neue", system-ui, sans-serif;
+        }
+        code {
+          font-family:
+            Menlo,
+            Monaco,
+            Lucida Console,
+            Liberation Mono,
+            DejaVu Sans Mono,
+            Bitstream Vera Sans Mono,
+            Courier New,
+            monospace;
+        }
+      </style>
+
+      <style>
+        .glitch-animation {
+          animation: inNOut 2s linear 0s 2 normal none;
+        }
+        @keyframes inNOut {
+          0% {
+            opacity: 0%;
+            left: -0.35rem;
+          }
+          45% {
+            opacity: 0%;
+          }
+          46% {
+            opacity: 50%;
+          }
+          49% {
+            opacity: 50%;
+          }
+          50% {
+            opacity: 0%;
+            left: -0.35rem;
+          }
+          91% {
+            opacity: 0%;
+            left: -0.75rem;
+          }
+          92% {
+            opacity: 50%;
+            left: -0.75rem;
+          }
+          95% {
+            left: -0.35rem;
+          }
+          100% {
+            opacity: 50%;
+            left: -0.35rem;
+          }
+        }
+
+        .glitch-animation-2 {
+          animation: glitch2 2s linear 1s 1 normal none;
+        }
+        @keyframes glitch2 {
+          0% {
+            opacity: 0;
+          }
+          43% {
+            opacity: 0;
+          }
+          44% {
+            opacity: 1;
+          }
+          49% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0;
+          }
+          91% {
+            opacity: 0;
+          }
+          92% {
+            opacity: 1;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+
+        .glitch-animation-3 {
+          animation: glitch3 2s linear 1s 1 normal none;
+        }
+        @keyframes glitch3 {
+          0% {
+            opacity: 0;
+          }
+          93% {
+            opacity: 0;
+          }
+          94% {
+            opacity: 1;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+      </style>
     </div>
-    <style is:global>
-      html {
-        font-family: nimbus-sans, "helvetica neue", system-ui, sans-serif;
-      }
-      code {
-        font-family:
-          Menlo,
-          Monaco,
-          Lucida Console,
-          Liberation Mono,
-          DejaVu Sans Mono,
-          Bitstream Vera Sans Mono,
-          Courier New,
-          monospace;
-      }
-    </style>
-
-    <style>
-      .glitch-animation {
-        animation: inNOut 2s linear 0s 2 normal none;
-      }
-      @keyframes inNOut {
-        0% {
-          opacity: 0%;
-          left: -0.35rem;
-        }
-        45% {
-          opacity: 0%;
-        }
-        46% {
-          opacity: 50%;
-        }
-        49% {
-          opacity: 50%;
-        }
-        50% {
-          opacity: 0%;
-          left: -0.35rem;
-        }
-        91% {
-          opacity: 0%;
-          left: -0.75rem;
-        }
-        92% {
-          opacity: 50%;
-          left: -0.75rem;
-        }
-        95% {
-          left: -0.35rem;
-        }
-        100% {
-          opacity: 50%;
-          left: -0.35rem;
-        }
-      }
-
-      .glitch-animation-2 {
-        animation: glitch2 2s linear 1s 1 normal none;
-      }
-      @keyframes glitch2 {
-        0% {
-          opacity: 0;
-        }
-        43% {
-          opacity: 0;
-        }
-        44% {
-          opacity: 1;
-        }
-        49% {
-          opacity: 1;
-        }
-        50% {
-          opacity: 0;
-        }
-        91% {
-          opacity: 0;
-        }
-        92% {
-          opacity: 1;
-        }
-        100% {
-          opacity: 1;
-        }
-      }
-
-      .glitch-animation-3 {
-        animation: glitch3 2s linear 1s 1 normal none;
-      }
-      @keyframes glitch3 {
-        0% {
-          opacity: 0;
-        }
-        93% {
-          opacity: 0;
-        }
-        94% {
-          opacity: 1;
-        }
-        100% {
-          opacity: 1;
-        }
-      }
-    </style>
   </div>
+  <Three />
 </BaseLayout>
 
 <script>
   setTimeout(() => {
     const mainContainer = document.getElementById("main-container") as HTMLDivElement
+    const mainContainerContainer = document.getElementById(
+      "main-container-container",
+    ) as HTMLDivElement
     setTimeout(() => {
       mainContainer.classList.remove("opacity-0")
     }, 300)
 
     mainContainer.before(mainContainer.cloneNode(true))
     const terminalClone = mainContainer.previousSibling as HTMLDivElement
-    terminalClone.classList.add("absolute", "hue-rotate-90", "-z-10", "saturate-[3]", "glitch-1")
+    terminalClone.classList.add(
+      "absolute",
+      "top-0",
+      "hue-rotate-90",
+      "-z-10",
+      "saturate-[3]",
+      "glitch-1",
+    )
     terminalClone.id = "terminal-clone-1"
 
     mainContainer.before(mainContainer.cloneNode(true))
     const terminalClone2 = mainContainer.previousSibling as HTMLDivElement
-    terminalClone2.classList.add("absolute", "-hue-rotate-90", "-z-10", "saturate-[3]", "glitch-2")
+    terminalClone2.classList.add(
+      "absolute",
+      "top-0",
+      "-hue-rotate-90",
+      "-z-10",
+      "saturate-[3]",
+      "glitch-2",
+    )
     terminalClone2.id = "terminal-clone-2"
+
+    // setTimeout(() => {
+    //   terminalClone.remove()
+    //   terminalClone2.remove()
+    // }, 3000)
   }, 200)
 </script>
 
