@@ -63,9 +63,7 @@ import BaseLayout from "../layouts/BaseLayout.astro"
     return glitchText
   }
 
-  // const wait2 = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
   const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
-  // const wait = (ms: number) => Promise.resolve()
   const progressElement = document.getElementById("progress") as HTMLPreElement
   const caretElement = document.getElementById("caret") as HTMLSpanElement
   const percentElement = document.getElementById("percent") as HTMLSpanElement
@@ -185,17 +183,44 @@ import BaseLayout from "../layouts/BaseLayout.astro"
       "crul -# -O ht",
       (
         type: 0.03,
-        pause-typed: 0.4,
+        pause-typed: 0.2,
         delete: 0.04,
         pause-deleted: 0,
       ),
       (
         caret: false,
         iterations: 1,
-        delay: 1,
+        delay: 1.2,
         end-on: "curl -# -O site.html https://gusryan.me/portfolio.html",
       )
     );
+  }
+
+  @keyframes enter {
+    from {
+      transform: scaleX(0.01);
+      translate: 0 200%;
+    }
+    50% {
+      transform: perspective(400px) rotateX(-40deg) scaleY(1) scaleX(0.3);
+    }
+    to {
+      transform: none;
+      translate: 0;
+      filter: none;
+    }
+  }
+
+  #terminal {
+    transform: scaleX(0.01);
+    translate: 0 200%;
+    animation: enter 0.3s ease-out 0.2s 1 normal forwards;
+  }
+
+  .glitch #terminal,
+  .glitch-disappear #terminal {
+    transform: none;
+    translate: none;
   }
 
   $animationTime: 1s;
