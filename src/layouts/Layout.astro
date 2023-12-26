@@ -45,7 +45,7 @@ const glitch = Astro.props.glitch || false
       </nav>
     </header>
     <div class="sm:w-80 flex-shrink-0"></div>
-    <div class="relative">
+    <div class="relative overflow-hidden">
       <div id="main-container" class="opacity-0">
         <slot />
       </div>
@@ -159,7 +159,7 @@ const glitch = Astro.props.glitch || false
 </BaseLayout>
 
 <script>
-  const glitchList = ["absolute", "top-0", "hue-rotate-90", "-z-10", "saturate-[3]"]
+  const glitchClassList = ["absolute", "top-0", "hue-rotate-90", "-z-10", "saturate-[3]"]
 
   function glitchElement(id: string) {
     const element = document.getElementById(id) as HTMLDivElement
@@ -169,12 +169,12 @@ const glitch = Astro.props.glitch || false
 
     element.before(element.cloneNode(true))
     const terminalClone = element.previousSibling as HTMLDivElement
-    terminalClone.classList.add(...glitchList, "glitch-1")
+    terminalClone.classList.add(...glitchClassList, "glitch-1")
     terminalClone.id = "terminal-clone-1"
 
     element.before(element.cloneNode(true))
     const terminalClone2 = element.previousSibling as HTMLDivElement
-    terminalClone2.classList.add(...glitchList, "glitch-2")
+    terminalClone2.classList.add(...glitchClassList, "glitch-2")
     terminalClone2.id = "terminal-clone-2"
 
     setTimeout(() => {
