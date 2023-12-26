@@ -8,36 +8,112 @@ const { content, href } = Astro.props
 ---
 
 <a class="relative p-2 link" href={href}>
-  <div
-    class="opacity-0 dark:text-purple-400 absolute align-bottom top-0 left-[0.2em] px-2 pt-1 dark:bg-gray-900 h-[60%] overflow-hidden group-hover:opacity-100 glitch rotate-6"
-  >
-    {content}
-  </div>
+  <span class="absolute"> {content}</span>
   {content}
 </a>
 
 <style>
-  .link:hover .glitch {
-    animation: glitch 2s infinite;
-    opacity: 1;
+  .link:hover {
+    background-image: url("../../public/textures/blue-noise.webp");
+    background-size: 500%;
+    background-blend-mode: luminosity;
+    background-clip: text;
+    background-repeat: repeat;
+    -webkit-text-fill-color: transparent;
+    filter: grayscale(1) brightness(1.5) contrast(4);
+    animation: glitch 1s step-end infinite;
   }
 
   @keyframes glitch {
-    0%,
-    100% {
-      opacity: 0;
+    0% {
+      background-position: 0% 41%;
     }
-    45% {
-      opacity: 0;
+    3.4% {
+      background-position: 13% 41%;
     }
-    46% {
-      opacity: 0.5;
+    6.7% {
+      background-position: 13% 6%;
+    }
+    10% {
+      background-position: 87% 6%;
+    }
+    13.4% {
+      background-position: 87% 93%;
+    }
+    16.8% {
+      background-position: 10% 93%;
+    }
+    20% {
+      background-position: 10% 13%;
+    }
+    23.2% {
+      background-position: 89% 13%;
+    }
+    26.8% {
+      background-position: 89% 6%;
+    }
+    30% {
+      background-position: 3% 6%;
+    }
+    33.6% {
+      background-position: 3% 8%;
+    }
+    36.4% {
+      background-position: 16% 8%;
+    }
+    40% {
+      background-position: 16% 79%;
+    }
+    43.6% {
+      background-position: 0% 79%;
+    }
+    46.4% {
+      background-position: 0% 99%;
     }
     50% {
-      opacity: 0.5;
+      background-position: 92% 99%;
     }
-    51% {
-      opacity: 0;
+    53.6% {
+      background-position: 92% 90%;
+    }
+    56.4% {
+      background-position: 5% 90%;
+    }
+    60% {
+      background-position: 5% 60%;
+    }
+    63.6% {
+      background-position: 0% 60%;
+    }
+    66.7% {
+      background-position: 0% 48%;
+    }
+    70% {
+      background-position: 89% 48%;
+    }
+    73.% {
+      background-position: 89% 13%;
+    }
+    76.7% {
+      background-position: 80% 13%;
+    }
+    80% {
+      background-position: 80% 43%;
+    }
+    83.% {
+      background-position: 95% 43%;
+    }
+    86.7% {
+      background-position: 95% 19%;
+    }
+    90% {
+      background-position: 80% 19%;
+    }
+    93.3% {
+      background-position: 80% 85%;
+    }
+    96.7% {
+      background-position: 38% 85%;
     }
   }
 </style>
