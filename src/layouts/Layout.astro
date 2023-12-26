@@ -17,7 +17,7 @@ const { title } = Astro.props
     <header
       transition:name="nav"
       transition:persist
-      class="relative top-1/2 -translate-y-1/2 p-8 opacity-0 sm:fixed sm:w-80"
+      class="relative top-1/2 -translate-y-1/2 p-8 pb-14 opacity-0 sm:fixed sm:w-80"
       id="nav"
     >
       <div class="relative cursor-default text-5xl font-light">Gus Ryan</div>
@@ -25,16 +25,16 @@ const { title } = Astro.props
       <nav class="ml-4 dark:text-gray-300">
         <ul class="mt-16 space-y-8 text-lg">
           <li>
-            <Link content="About" href="/portfolio" />
+            <Link content="About" href="/about" />
           </li>
           <li>
-            <Link content="Experience" href="/portfolio/experience" />
+            <Link content="Experience" href="/experience" />
           </li>
           <li>
-            <Link content="Projects" href="/portfolio/projects" />
+            <Link content="Projects" href="/projects" />
           </li>
           <li>
-            <Link content="Blog" href="/portfolio/blog" />
+            <Link content="Blog" href="/blog" />
           </li>
         </ul>
       </nav>
