@@ -30,7 +30,8 @@ const projectsCollection = defineCollection({
 const expierenceSchema = z.object({
   title: z.string(),
   description: z.string(),
-  started: z.coerce.date(),
+  started: z.string(),
+  ended: z.string(),
   mainImage: z.object({
     url: z.string(),
     alt: z.string(),
@@ -47,7 +48,6 @@ const expierenceSchema = z.object({
   ),
   technologies: z.array(z.string()),
   links: z.array(z.object({ link: z.string(), icon: z.string() })),
-  content: z.string(),
 })
 const expierenceCollection = defineCollection({
   type: "content",

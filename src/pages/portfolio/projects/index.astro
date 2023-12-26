@@ -1,7 +1,9 @@
 ---
 import { getCollection } from "astro:content"
-import Layout from "../../layouts/Layout.astro"
-const collection = await getCollection("experience")
+
+import Layout from "../../../layouts/Layout.astro"
+
+const collection = await getCollection("projects")
 const experience = await Promise.all(
   collection.map(async entry => ({
     ...entry,
@@ -16,17 +18,14 @@ const formatDate = (date: string) => {
 }
 ---
 
-<Layout title="Gus Ryan - Experience">
+<Layout title="Gus Ryan | Projects">
   <main id="experience" class="flex flex-col min-h-screen justify-center pl-24">
-    <ul class="space-y-4 my-14">
+    <ul class="space-y-4 my-20">
       {
         experience.map(entry => (
           <li class="peer peer-hover:opacity-50 relative hover:bg-slate-400 hover:bg-opacity-15 rounded-xl p-4 transition">
-            <a class="block text-sm text-gray-400" href={`/portfolio/experience/${entry.slug}`}>
+            <a class="block text-sm text-gray-400" href={`/portfolio/projects/${entry.slug}`}>
               <h3 class="text-base text-gray-200">{entry.data.title}</h3>
-              <p class="text-gray-600 mt-1 font-medium">
-                {formatDate(entry.data.started)} - {formatDate(entry.data.ended)}
-              </p>
               <div class="mt-1">
                 <entry.content.Content />
               </div>

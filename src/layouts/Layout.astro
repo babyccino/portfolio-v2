@@ -22,24 +22,21 @@ const glitch = Astro.props.glitch || false
       class="sm:w-80 relative p-8 sm:h-[80vh] sm:fixed sm:top-20 opacity-0"
       id="nav"
     >
-      <div class="relative mt-10 font-light text-5xl">
-        Gus Ryan
-        <!-- <Glitch text="Gus Ryan" delay={2500} /> -->
-      </div>
+      <div class="relative mt-10 font-light text-5xl">Gus Ryan</div>
       <h2 class="font-light text-2xl mt-4 dark:text-gray-100">Web Developer</h2>
       <nav class="ml-4 dark:text-gray-300">
         <ul class="mt-16 space-y-8 text-lg">
           <li>
-            <Link content="About" href="/portfolio#about" />
+            <Link content="About" href="/portfolio" />
           </li>
           <li>
             <Link content="Experience" href="/portfolio/experience" />
           </li>
           <li>
-            <Link content="Projects" href="/portfolio#projects" />
+            <Link content="Projects" href="/portfolio/projects" />
           </li>
           <li>
-            <Link content="Blog" href="/blog" />
+            <Link content="Blog" href="/portfolio/blog" />
           </li>
         </ul>
       </nav>
