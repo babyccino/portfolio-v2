@@ -18,10 +18,10 @@ const formatDate = (date: string) => {
 
 <Layout title="Gus Ryan - Experience">
   <main id="experience" class="flex flex-col min-h-screen justify-center pl-24">
-    <ul class="space-y-4 my-14">
+    <ul class="space-y-4 my-20 group">
       {
         experience.map(entry => (
-          <li class="peer peer-hover:opacity-50 relative hover:bg-slate-400 hover:bg-opacity-15 rounded-xl p-4 transition">
+          <li class="group-hover:opacity-60 hover:!opacity-100 relative hover:bg-slate-400 hover:bg-opacity-15 rounded-xl p-4 transition">
             <a class="block text-sm text-gray-400" href={`/portfolio/experience/${entry.slug}`}>
               <h3 class="text-base text-gray-200">{entry.data.title}</h3>
               <p class="text-gray-600 mt-1 font-medium">
