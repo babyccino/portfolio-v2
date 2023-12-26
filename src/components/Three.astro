@@ -2,7 +2,11 @@
 
 ---
 
-<canvas id="three" class="fixed overflow-hidden inset-0 -z-20"></canvas>
+<canvas
+  transition:name="canvas"
+  transition:persist
+  id="three"
+  class="fixed overflow-hidden inset-0 -z-20 fade-in"></canvas>
 
 <script>
   import * as THREE from "three"
@@ -15,14 +19,14 @@
   // @ts-ignore
   import FS from "../shaders/fragment.glsl"
 
-  const html = document.querySelector("html") as HTMLHtmlElement
   const canvas = document.getElementById("three") as HTMLCanvasElement
+  setTimeout(() => canvas.classList.remove("fade-in"), 4000)
 
   const loader = new THREE.TextureLoader()
   const shaderMaterial = new THREE.ShaderMaterial({
     uniforms: {
       time: { value: Math.random() * 10 },
-      blueNoise: { value: loader.load("blue-noise.webp") },
+      blueNoise: { value: loader.load("/textures/blue-noise.webp") },
       dark: { value: 1.0 },
       aspect: { value: window.innerHeight / window.innerWidth },
     },
@@ -70,13 +74,12 @@
 </script>
 
 <style lang="scss">
-  #three {
-    animation: name duration timing-function delay iteration-count direction fill-mode;
+  .fadeIn {
     animation: fadeIn 2s ease-in-out 2s forwards;
     opacity: 0;
   }
 
-  @keyframes fadeIn {
+  @keyframes fade-in {
     from {
       opacity: 0;
     }
