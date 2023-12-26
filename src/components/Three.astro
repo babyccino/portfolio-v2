@@ -7,6 +7,12 @@
   transition:persist
   id="three"
   class="fade-in fixed inset-0 -z-20 overflow-hidden"></canvas>
+<div class="z-100 fixed bottom-10 right-10 space-x-2">
+  <button class="rounded-md bg-gray-100 p-1 text-black" id="wireframe">wireframe</button>
+  <button class="rounded-md bg-gray-100 p-1 text-black" id="fragment-shader">fragment-shader</button
+  >
+  <button class="rounded-md bg-gray-100 p-1 text-black" id="camera">camera</button>
+</div>
 
 <script>
   import * as THREE from "three"
@@ -18,6 +24,12 @@
   import VS from "../shaders/snoise.glsl"
   // @ts-ignore
   import FS from "../shaders/fragment.glsl"
+  // @ts-ignore
+  import Boring from "../shaders/boring.glsl"
+  // @ts-ignore
+  import Red from "../shaders/red.glsl"
+
+  console.log(VS)
 
   const canvas = document.getElementById("three") as HTMLCanvasElement
   setTimeout(() => canvas.classList.remove("fade-in"), 4000)
@@ -31,15 +43,63 @@
       aspect: { value: window.innerHeight / window.innerWidth },
     },
     vertexShader: VS,
-    fragmentShader: FS,
+    fragmentShader: Red,
+    wireframe: true,
   })
   const scene = new THREE.Scene()
-  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 50)
+
   const renderer = new THREE.WebGLRenderer({ canvas })
-  const geometry = new THREE.PlaneGeometry(10, 10, 200, 200)
+  const geometry = new THREE.PlaneGeometry(20, 20, 200, 200)
   const plane = new THREE.Mesh(geometry, shaderMaterial)
 
-  const renderScene = new RenderPass(scene, camera)
+  const wireframeButton = document.getElementById("wireframe") as HTMLButtonElement
+  wireframeButton.addEventListener("click", () => {
+    shaderMaterial.wireframe = !shaderMaterial.wireframe
+  })
+  const fragmentShaderButton = document.getElementById("fragment-shader") as HTMLButtonElement
+  let shader = 2
+  fragmentShaderButton.addEventListener("click", () => {
+    switch (shader) {
+      case 0:
+        shaderMaterial.fragmentShader = Boring
+        break
+      case 1:
+        shaderMaterial.fragmentShader = FS
+        break
+      case 2:
+        shaderMaterial.fragmentShader = Red
+        break
+    }
+    shader = (shader + 1) % 3
+    shaderMaterial.needsUpdate = true
+  })
+
+  const perspectiveCamera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    50,
+  )
+  perspectiveCamera.position.z = 4
+  perspectiveCamera.position.y = -1
+  perspectiveCamera.rotateX(0.7)
+  const orthoCamera = new THREE.OrthographicCamera(-2, 2, 2, -2, 0.1, 50)
+  orthoCamera.position.z = 4
+  orthoCamera.position.y = -1
+  orthoCamera.rotateX(1)
+  const cameraButton = document.getElementById("camera") as HTMLButtonElement
+  cameraButton.addEventListener("click", () => {
+    if (renderScene.camera === perspectiveCamera) {
+      renderScene = new RenderPass(scene, orthoCamera)
+    } else {
+      renderScene = new RenderPass(scene, perspectiveCamera)
+    }
+
+    effectComposer = new EffectComposer(renderer)
+    effectComposer.addPass(renderScene)
+  })
+
+  let renderScene = new RenderPass(scene, orthoCamera)
 
   // const bloomPass = new UnrealBloomPass(
   //   new THREE.Vector2(window.innerWidth * 2, window.innerHeight * 2),
@@ -50,7 +110,7 @@
 
   // const outputPass = new OutputPass()
 
-  const effectComposer = new EffectComposer(renderer)
+  let effectComposer = new EffectComposer(renderer)
   effectComposer.addPass(renderScene)
 
   renderer.setSize(window.innerWidth, window.innerHeight)
@@ -62,10 +122,6 @@
   })
 
   scene.add(plane)
-
-  camera.position.z = 1.4
-  camera.position.y = 0
-  camera.rotateX(0.7)
 
   function animate() {
     requestAnimationFrame(animate)
@@ -79,10 +135,10 @@
 </script>
 
 <style lang="scss">
-  .fade-in {
-    animation: fade-in 2s ease-in-out 2s forwards;
-    opacity: 0;
-  }
+  // .fade-in {
+  //   animation: fade-in 2s ease-in-out 2s forwards;
+  //   opacity: 0;
+  // }
 
   @keyframes fade-in {
     from {

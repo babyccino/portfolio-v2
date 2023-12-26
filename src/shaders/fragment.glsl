@@ -200,9 +200,6 @@ float getBlueNoiseDither(float grayscale, vec2 pixelCoords)
 
 void main() {
   vec2 noiseCoord = vUv * vec2(3., 4.);
-  float tilt = -0.8*vUv.y;
-  float incline = 0.5*vUv.x;
-  float offset = incline*mix(-0.25, 0.25, vUv.y);
   float noiseColour = snoise(vec3(noiseCoord.x+time*15., noiseCoord.y + time * 35.0, time * 10.0));
   float modulusY = 0.075;
   float modulusX = 0.075*aspect*0.6;

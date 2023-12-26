@@ -1,12 +1,24 @@
-// uniform mat4 modelMatrix;
-// uniform mat4 modelViewMatrix;
-// uniform mat4 projectionMatrix;
 // uniform mat4 viewMatrix;
-// uniform mat3 normalMatrix;
 // uniform vec3 cameraPosition;
-// uniform vec3 position;
 
+uniform sampler2D blueNoise;
+uniform float width;
+uniform float height;
 uniform float time;
+uniform float dark;
+uniform float aspect;
+varying vec2 vUv;
+
+vec3 mod289(vec3 x) {
+	return x - floor(x * (1.0 / 289.0)) * 289.0;
+}
+vec2 mod289(vec2 x) {
+	return x - floor(x * (1.0 / 289.0)) * 289.0;
+}
+vec3 permute(vec3 x) {
+	return mod289(((x * 34.0) + 10.0) * x);
+}
+
 vec4 permute(vec4 x){return mod(((x*34.0)+1.0)*x, 289.0);}
 vec4 taylorInvSqrt(vec4 r){return 1.79284291400159 - 0.85373472095314 * r;}
 
@@ -79,17 +91,14 @@ float snoise(vec3 v){
                                 dot(p2,x2), dot(p3,x3) ) );
 }
 
-varying float noiseColour;
-varying vec2 vUv;
+float getBlueNoiseDither(float grayscale, vec2 pixelCoords)
+{
+  float blueNoiseValue = length(texture2D(blueNoise, pixelCoords).rgb);
+  return blueNoiseValue * grayscale;
+  // return blueNoiseValue < grayscale ? grayscale : 0.0;
+  // return step( blueNoiseValue, grayscale );
+}
 
 void main() {
-  vUv = uv;
-  vec2 noiseCoord = uv * vec2(3., 4.);
-  float tilt = -0.8*uv.y;
-  float incline = 0.5*uv.x;
-  float offset = incline*mix(-0.25, 0.25, uv.y);
-  float noise = snoise(vec3(2.*(noiseCoord.x + time * 3.0), 2.*noiseCoord.y, time * 10.0));
-  vec3 pos = vec3(position.x, position.y, 0.5*(position.z + noise * 2.5 + tilt + offset));
-
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+  gl_FragColor = vec4(255, 0, 0, 1);
 }
