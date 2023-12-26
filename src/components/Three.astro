@@ -56,6 +56,11 @@
   renderer.setSize(window.innerWidth, window.innerHeight)
   document.getElementById("three-container")?.appendChild(renderer.domElement)
 
+  window.addEventListener("resize", () => {
+    renderer.setSize(window.innerWidth, window.innerHeight)
+    shaderMaterial.uniforms.aspect.value = window.innerHeight / window.innerWidth
+  })
+
   scene.add(plane)
 
   camera.position.z = 1.4
@@ -74,8 +79,8 @@
 </script>
 
 <style lang="scss">
-  .fadeIn {
-    animation: fadeIn 2s ease-in-out 2s forwards;
+  .fade-in {
+    animation: fade-in 2s ease-in-out 2s forwards;
     opacity: 0;
   }
 
