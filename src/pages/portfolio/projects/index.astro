@@ -19,19 +19,19 @@ const formatDate = (date: string) => {
 ---
 
 <Layout title="Gus Ryan | Projects">
-  <main id="experience" class="flex flex-col min-h-screen justify-center pl-24">
-    <ul class="space-y-4 my-20 group">
+  <main id="experience" class="flex min-h-screen flex-col justify-center pl-24">
+    <ul class="group my-20 space-y-4">
       {
         experience.map(entry => (
-          <li class="group-hover:opacity-60 hover:!opacity-100 relative hover:bg-slate-400 hover:bg-opacity-15 rounded-xl p-4 transition">
+          <li class="relative rounded-xl p-4 transition hover:bg-slate-400 hover:bg-opacity-15 hover:!opacity-100 group-hover:opacity-60">
             <a class="block text-sm text-gray-400" href={`/portfolio/projects/${entry.slug}`}>
               <h3 class="text-base text-gray-200">{entry.data.title}</h3>
               <div class="mt-1">
                 <entry.content.Content />
               </div>
-              <ul class="mt-2 text-xs text-gray-400 space-x-2">
+              <ul class="mt-2 space-x-2 text-xs text-gray-400">
                 {entry.data.technologies.map((tech: string) => (
-                  <li class="inline-block bg-slate-400 bg-opacity-15 rounded-full px-2 py-1">
+                  <li class="inline-block rounded-full bg-slate-400 bg-opacity-15 px-2 py-1">
                     {tech}
                   </li>
                 ))}

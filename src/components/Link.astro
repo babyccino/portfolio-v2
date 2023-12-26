@@ -7,7 +7,7 @@ interface Props {
 const { content, href } = Astro.props
 ---
 
-<a class="relative p-2 link" href={href}>
+<a class="link relative p-2" href={href}>
   <span class="absolute"> {content}</span>
   {content}
 </a>

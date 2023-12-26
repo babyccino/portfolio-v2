@@ -5,29 +5,29 @@ import BaseLayout from "../layouts/BaseLayout.astro"
 <BaseLayout title="intro">
   <div
     id="terminal-container"
-    class="font-mono h-screen w-screen flex justify-center items-center relative overflow-hidden"
+    class="relative flex h-screen w-screen items-center justify-center overflow-hidden font-mono"
   >
-    <div id="terminal" class="bg-gray-800 rounded-xl max-w-3xl w-full min-h-96 flex flex-col">
+    <div id="terminal" class="flex min-h-96 w-full max-w-3xl flex-col rounded-xl bg-gray-800">
       <div
-        class="relative rounded-xl rounded-b-none border border-gray-500 border-b-gray-950 bg-gray-700 text-center py-1 font-semibold text-gray-300 font-sans text-sm"
+        class="relative rounded-xl rounded-b-none border border-gray-500 border-b-gray-950 bg-gray-700 py-1 text-center font-sans text-sm font-semibold text-gray-300"
       >
-        <img src="/mac-folder.png" height="10" class="h-5 inline-block -mt-1 mr-1" />gusryan - zsh -
+        <img src="/mac-folder.png" height="10" class="-mt-1 mr-1 inline-block h-5" />gusryan - zsh -
         180x47
-        <div class="absolute left-2 top-0 flex flex-row h-full items-center gap-2">
-          <div class="rounded-full bg-red-500 h-[13px] w-[13px]"></div>
-          <div class="rounded-full bg-yellow-500 h-[13px] w-[13px]"></div>
-          <div class="rounded-full bg-green-500 h-[13px] w-[13px]"></div>
+        <div class="absolute left-2 top-0 flex h-full flex-row items-center gap-2">
+          <div class="h-[13px] w-[13px] rounded-full bg-red-500"></div>
+          <div class="h-[13px] w-[13px] rounded-full bg-yellow-500"></div>
+          <div class="h-[13px] w-[13px] rounded-full bg-green-500"></div>
         </div>
       </div>
       <div
-        class="pl-1 pt-1 border border-gray-600 border-t-0 rounded-xl rounded-t-none flex-1 text-sm"
+        class="flex-1 rounded-xl rounded-t-none border border-t-0 border-gray-600 pl-1 pt-1 text-sm"
       >
         <p class="generate-glitch-text">
           Last login: {new Date(Date.now() - 1000 * 60 * 60 * 24).toDateString()} on ttys004
         </p>
         <div class="generate-glitch-text">
           <span> gusryan@Guss-MacBook-Air ~ %</span>
-          <span id="curl"></span><span id="caret" class="text-gray-400 bg-gray-400">O</span>
+          <span id="curl"></span><span id="caret" class="bg-gray-400 text-gray-400">O</span>
         </div>
         <div class="flex flex-row justify-between">
           <pre class="generate-glitch-text" id="progress"></pre>

@@ -10,7 +10,7 @@ const projects = await getCollection("projects")
   <main class="h-screen">
     <section
       id="about"
-      class="text-gray-400 w-full pl-24 p-4 h-full flex flex-col justify-center text-base"
+      class="flex h-full w-full flex-col justify-center p-4 pl-24 text-base text-gray-400"
     >
       <p>
         Hi! My name is Gus and I'm an aspiring software developer, originally from Perth, Western
@@ -26,13 +26,13 @@ const projects = await getCollection("projects")
       <br />
       <div>
         Besides coding at my desk, I can be found
-        <div class="inline-block group relative">
+        <div class="group relative inline-block">
           <div
-            class="top-0 -right-1 h-2 w-2 border-t border-r absolute opacity-0 group-hover:opacity-100 transition"
+            class="absolute -right-1 top-0 h-2 w-2 border-r border-t opacity-0 transition group-hover:opacity-100"
           >
           </div>
           <div
-            class="bottom-0 -left-1 h-2 w-2 border-b border-l absolute opacity-0 group-hover:opacity-100 transition"
+            class="absolute -left-1 bottom-0 h-2 w-2 border-b border-l opacity-0 transition group-hover:opacity-100"
           >
           </div>
           <a
@@ -43,13 +43,13 @@ const projects = await getCollection("projects")
           </a>
         </div>
          and
-        <div class="inline-block group relative">
+        <div class="group relative inline-block">
           <div
-            class="top-0 -right-1 h-2 w-2 border-t border-r absolute opacity-0 group-hover:opacity-100 transition"
+            class="absolute -right-1 top-0 h-2 w-2 border-r border-t opacity-0 transition group-hover:opacity-100"
           >
           </div>
           <div
-            class="bottom-0 -left-1 h-2 w-2 border-b border-l absolute opacity-0 group-hover:opacity-100 transition"
+            class="absolute -left-1 bottom-0 h-2 w-2 border-b border-l opacity-0 transition group-hover:opacity-100"
           >
           </div>
           <a class="relative inline-block text-white" href="https://www.instagram.com/babyccino1">
@@ -60,13 +60,13 @@ const projects = await getCollection("projects")
       </div>
       <br />
       <p class="mt-2 text-sm">Languages/technologies I've used:</p>
-      <ul class="mt-2 text-xs text-gray-400 space-x-2">
-        <li class="inline-block bg-slate-400 bg-opacity-15 rounded-full px-2 py-1">typescript</li>
-        <li class="inline-block bg-slate-400 bg-opacity-15 rounded-full px-2 py-1">javascript</li>
-        <li class="inline-block bg-slate-400 bg-opacity-15 rounded-full px-2 py-1">react</li>
-        <li class="inline-block bg-slate-400 bg-opacity-15 rounded-full px-2 py-1">html</li>
-        <li class="inline-block bg-slate-400 bg-opacity-15 rounded-full px-2 py-1">css</li>
-        <li class="inline-block bg-slate-400 bg-opacity-15 rounded-full px-2 py-1">sqlite</li>
+      <ul class="mt-2 space-x-2 text-xs text-gray-400">
+        <li class="inline-block rounded-full bg-slate-400 bg-opacity-15 px-2 py-1">typescript</li>
+        <li class="inline-block rounded-full bg-slate-400 bg-opacity-15 px-2 py-1">javascript</li>
+        <li class="inline-block rounded-full bg-slate-400 bg-opacity-15 px-2 py-1">react</li>
+        <li class="inline-block rounded-full bg-slate-400 bg-opacity-15 px-2 py-1">html</li>
+        <li class="inline-block rounded-full bg-slate-400 bg-opacity-15 px-2 py-1">css</li>
+        <li class="inline-block rounded-full bg-slate-400 bg-opacity-15 px-2 py-1">sqlite</li>
       </ul>
     </section>
   </main>
