@@ -7,8 +7,8 @@ const projects = await getCollection("projects")
 ---
 
 <Layout title="Gus Ryan - Full Stack Web Developer">
-  <main>
-    <section id="about" class="text-gray-400">
+  <main class="flex flex-col items-end">
+    <section id="about" class="text-gray-400 w-full max-w-lg p-4">
       <p>
         Hi! My name is Gus and I'm an aspiring software developer, originally from Perth, Western
         Australia. With a background in Maths and Physics, I&apos;m fascinated by the intricacies of
@@ -64,24 +64,6 @@ const projects = await getCollection("projects")
         <li>html</li>
         <li>css</li>
         <li>sqlite</li>
-      </ul>
-    </section>
-    <section id="projects" class="mt-20">
-      <ul class="">
-        {
-          projects.slice(0, 1).map(project => (
-            <li class="relative">
-              <div class="w-5/6 blur-sm">
-                <a href={`/portfolio/projects/${project.slug}`}>
-                  <img src={project.data.mainImage.url} alt={project.data.mainImage.alt} />
-                </a>
-              </div>
-              <div class="text-5xl font-bold absolute right-0 top-1/2 -translate-y-1/2 w-[220px] break-words leading-snug">
-                <h3>{project.data.title}</h3>
-              </div>
-            </li>
-          ))
-        }
       </ul>
     </section>
   </main>
