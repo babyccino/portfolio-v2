@@ -1,5 +1,15 @@
 ---
+import { getCollection } from "astro:content"
+
 import Layout from "../../layouts/Layout.astro"
+
+export async function getStaticPaths() {
+  const experience = await getCollection("experience")
+  return experience.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }))
+}
 ---
 
 <Layout title="Gus Ryan | experience">hi</Layout>
