@@ -14,8 +14,11 @@ const experience = await Promise.all(
 ---
 
 <Layout title="Gus Ryan - Experience">
-  <main id="experience" class="flex min-h-screen flex-col justify-center pl-24">
-    <ul class="group my-20 space-y-4">
+  <main
+    id="experience"
+    class="flex flex-col justify-center py-8 pl-20 pr-2 sm:min-h-screen sm:py-0 sm:pl-24 sm:pr-0"
+  >
+    <ul class="group space-y-4 sm:my-20">
       {
         experience.map(entry => (
           <li class="relative rounded-xl p-4 text-gray-800 hover:bg-slate-400 hover:bg-opacity-15 hover:!opacity-100 group-hover:opacity-60 dark:text-gray-400">

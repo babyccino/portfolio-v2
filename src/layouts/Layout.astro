@@ -14,36 +14,35 @@ const { title } = Astro.props
 
 <BaseLayout title={title}>
   <div class="relative w-full max-w-5xl flex-row justify-between sm:flex">
-    <div id="top"></div>
     <header
       transition:name="nav"
       transition:persist
       transition:animate="none"
-      class="relative top-1/2 -translate-y-1/2 p-8 pb-14 opacity-0 sm:fixed sm:w-80"
+      class="realtive top-0 z-10 w-full p-8 sm:fixed sm:top-1/2 sm:w-80 sm:-translate-y-1/2 sm:pb-14"
       id="nav"
     >
       <div class="relative cursor-default text-5xl font-light dark:text-gray-200">Gus Ryan</div>
       <h2 class="mt-4 cursor-default text-2xl font-light dark:text-gray-100">Web Developer</h2>
-      <nav class="ml-4 dark:text-gray-300">
-        <ul class="mt-16 space-y-8 text-lg text-gray-900 dark:text-gray-200">
-          <li>
+      <nav class="fixed left-8 top-1/2 z-10 -translate-y-1/2 sm:static sm:mt-16 dark:text-gray-300">
+        <ul class="space-y-8 text-lg text-gray-900 dark:text-gray-200">
+          <li class="writing-vertical">
             <Link content="About" href="/about" />
           </li>
-          <li>
+          <li class="writing-vertical">
             <Link content="Experience" href="/experience" />
           </li>
-          <li>
+          <li class="writing-vertical">
             <Link content="Projects" href="/projects" />
           </li>
-          <li>
+          <li class="writing-vertical">
             <Link content="Blog" href="/blog" />
           </li>
         </ul>
       </nav>
     </header>
-    <div class="flex-shrink-0 sm:w-80"></div>
-    <div class="relative overflow-hidden">
-      <div id="main-container" class="opacity-0">
+    <div class="flex-shrink sm:w-80"></div>
+    <div class="relative -z-10 overflow-hidden">
+      <div id="main-container" class="">
         <slot />
       </div>
     </div>
@@ -155,7 +154,12 @@ const { title } = Astro.props
   <div class="dark:bg-gray-950" transition:name="dark-mode-toggle" transition:persist>
     <DarkMode />
   </div>
-  <div transition:name="three-canvas" transition:persist class="fixed inset-0 -z-20">
+  <div
+    transition:name="three-canvas"
+    transition:persist
+    transition:animate="none"
+    class="fixed inset-0 -z-20"
+  >
     <Three />
   </div>
 </BaseLayout>
@@ -196,6 +200,13 @@ const { title } = Astro.props
 </script>
 
 <style lang="scss">
+  @media (max-width: 640px) {
+    .writing-vertical {
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+    }
+  }
+
   $baseAnimationLength: 8s;
   $iterationCount: 0.3;
 
