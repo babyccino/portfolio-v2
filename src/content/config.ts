@@ -54,10 +54,20 @@ const expierenceCollection = defineCollection({
   schema: expierenceSchema,
 })
 
-// Export a single `collections` object to register your collection(s)
+const blogSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+})
+const blogCollection = defineCollection({
+  type: "content",
+  schema: blogSchema,
+})
+
 export const collections = {
   projects: projectsCollection,
   expierence: expierenceCollection,
+  blog: blogCollection,
 }
 export type ProjectEntry = z.infer<typeof projectsSchema>
 export type ExperienceEntry = z.infer<typeof expierenceSchema>
+export type BlogEntry = z.infer<typeof blogSchema>
