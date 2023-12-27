@@ -2,7 +2,7 @@
 import { Icon } from "astro-icon/components"
 import { getCollection } from "astro:content"
 
-import Layout from "../../layouts/Layout.astro"
+import Layout from "../layouts/Layout.astro"
 
 const collection = await getCollection("projects")
 const projects = await Promise.all(
