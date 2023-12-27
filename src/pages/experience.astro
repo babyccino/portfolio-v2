@@ -30,7 +30,7 @@ const experience = await Promise.all(
               <div class="mt-1">
                 <entry.content.Content />
               </div>
-              <ul class="mt-2 space-x-2 text-xs">
+              <ul class="mt-2 flex flex-row flex-wrap gap-2 text-xs">
                 {entry.data.technologies.map((tech: string) => (
                   <li class="inline-block rounded-full bg-slate-400 bg-opacity-15 px-2 py-1">
                     {tech}
