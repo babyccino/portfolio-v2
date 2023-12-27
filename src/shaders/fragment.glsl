@@ -1,12 +1,9 @@
 // uniform mat4 viewMatrix;
 // uniform vec3 cameraPosition;
 
-uniform sampler2D blueNoise;
 uniform float width;
 uniform float height;
 uniform float time;
-uniform float dark;
-uniform float aspect;
 varying vec2 vUv;
 
 float dither8x8(vec2 position, float brightness) {
@@ -190,34 +187,10 @@ float snoise(vec3 v){
                                 dot(p2,x2), dot(p3,x3) ) );
 }
 
-float getBlueNoiseDither(float grayscale, vec2 pixelCoords)
-{
-  float blueNoiseValue = length(texture2D(blueNoise, pixelCoords).rgb);
-  return blueNoiseValue * grayscale;
-  // return blueNoiseValue < grayscale ? grayscale : 0.0;
-  // return step( blueNoiseValue, grayscale );
-}
-
 void main() {
   vec2 noiseCoord = vUv * vec2(3., 4.);
-  float tilt = -0.8*vUv.y;
-  float incline = 0.5*vUv.x;
-  float offset = incline*mix(-0.25, 0.25, vUv.y);
   float noiseColour = snoise(vec3(noiseCoord.x+time*15., noiseCoord.y + time * 35.0, time * 10.0));
-  float modulusY = 0.075;
-  float modulusX = 0.075*aspect*0.6;
-  float modded = snoise(vec3((mod(noiseCoord.x, modulusX)+modulusX*0.5)+time*15., (mod(noiseCoord.y, modulusY)+modulusY*0.5) + time * 35.0, time * 10.0));
-  noiseColour = mix(noiseColour, modded, 0.5);
   noiseColour = smoothstep(0.0, 1.0, noiseColour);
 
-  vec2 pixelCoords = mod(gl_FragCoord.xy*2.0, 1024.0) / 1024.;
-  float ditheredColour = getBlueNoiseDither(noiseColour, pixelCoords);
-  float rDark = (3.+(255.)*ditheredColour*0.3)/255.;
-  float gDark = (7.+(255.)*ditheredColour*0.3)/255.;
-  float bDark = (18.+(1.3*255.)*ditheredColour*0.3)/255.;
-  float rLight = (249.-249.*ditheredColour*0.4)/255.;
-  float gLight = (250.-250.*ditheredColour*0.4)/255.;
-  float bLight = (251.-251.*ditheredColour*0.4)/255.;
-
-  gl_FragColor = dark*vec4(rDark, gDark, bDark, 1) + (1.-dark)*vec4(rLight, gLight, bLight, 1);
+  gl_FragColor = vec4(vec3(noiseColour), 1.0);
 }

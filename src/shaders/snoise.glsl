@@ -88,8 +88,8 @@ void main() {
   float tilt = -0.8*uv.y;
   float incline = 0.5*uv.x;
   float offset = incline*mix(-0.25, 0.25, uv.y);
-  float noise = snoise(vec3(noiseCoord.x + time * 3.0, noiseCoord.y, time * 10.0));
+  float noise = snoise(vec3(2.*(noiseCoord.x + time * 3.0), 2.*noiseCoord.y, time * 10.0));
   vec3 pos = vec3(position.x, position.y, 0.3*(position.z + noise * 2.5 + tilt + offset));
 
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
 }
