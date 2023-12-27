@@ -10,6 +10,7 @@ import vertexShader from "../shaders/vertex-noise.glsl"
 import fragmentShader from "../shaders/fragment.glsl"
 // @ts-ignore
 import BlockPass from "../shaders/block-pass-fragment.glsl"
+import { getDarkMode, darkModeEvent } from "./dark"
 
 export default class BlockWave {
   material: THREE.ShaderMaterial
@@ -19,6 +20,8 @@ export default class BlockWave {
   geometry: THREE.PlaneGeometry
   blockNoisePass: ShaderPass
   effectComposer: EffectComposer
+  darkValue: number = 1.0
+  darkMode: boolean = true
   time: number = 0
 
   constructor(canvas: HTMLCanvasElement) {
@@ -31,7 +34,6 @@ export default class BlockWave {
     this.material = new THREE.ShaderMaterial({
       uniforms: {
         time: { value: Math.random() * 10 },
-        dark: { value: 1.0 },
         aspect: { value: window.innerHeight / window.innerWidth },
       },
       vertexShader: vertexShader,
@@ -67,6 +69,8 @@ export default class BlockWave {
     this.effectComposer.addPass(this.blockNoisePass)
 
     window.addEventListener("resize", this.onResize.bind(this))
+    window.addEventListener(darkModeEvent.type, this.setDarkMode.bind(this))
+    this.setDarkMode()
   }
   addBloom() {
     const bloomPass = new UnrealBloomPass(
@@ -84,16 +88,23 @@ export default class BlockWave {
     this.blockNoisePass.uniforms.aspect.value = window.innerHeight / window.innerWidth
   }
   updateTime(time: number) {
+    this.time = time
     this.material.uniforms.time.value = time
     this.blockNoisePass.uniforms.time.value = time
   }
   animate() {
-    requestAnimationFrame(this.animate.bind(this))
-
+    if (this.darkMode && this.darkValue < 1.0) {
+      this.darkValue += 0.015
+      this.blockNoisePass.uniforms.dark.value = this.darkValue
+    } else if (!this.darkMode && this.darkValue > 0.0) {
+      this.darkValue -= 0.015
+      this.blockNoisePass.uniforms.dark.value = this.darkValue
+    }
     this.updateTime(this.time + 0.00005)
     this.effectComposer.render()
+    requestAnimationFrame(this.animate.bind(this))
   }
-  switchDarkMode() {
-    // TODO: ここでdarkモードの切り替えをする
+  setDarkMode() {
+    this.darkMode = getDarkMode()
   }
 }

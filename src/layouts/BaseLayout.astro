@@ -11,10 +11,7 @@ const { title } = Astro.props
 ---
 
 <!doctype html>
-<html
-  class="w-full justify-center md:flex md:flex-row dark:bg-gray-950 dark:text-gray-50"
-  lang="en"
->
+<html class="w-full justify-center md:flex md:flex-row" lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content="Gus's portfolio" />
@@ -27,7 +24,9 @@ const { title } = Astro.props
     <title>{title}</title>
     <ViewTransitions />
   </head>
-  <body class="flex w-full flex-row justify-center">
+  <body
+    class="flex w-full flex-row justify-center transition-all duration-[2000ms] dark:bg-gray-950 dark:text-gray-50"
+  >
     <slot />
     <style is:global lang="scss">
       html {
@@ -57,5 +56,18 @@ const { title } = Astro.props
         background: #444;
       }
     </style>
+    <script>
+      import { getDarkMode } from "../lib/dark"
+
+      // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+      const setDarkMode = () =>
+        getDarkMode()
+          ? document.documentElement.classList.add("dark")
+          : document.documentElement.classList.remove("dark")
+      setDarkMode()
+      document.addEventListener("astro:after-swap", () => {
+        setDarkMode()
+      })
+    </script>
   </body>
 </html>

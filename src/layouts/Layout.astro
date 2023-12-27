@@ -1,4 +1,5 @@
 ---
+import DarkMode from "../components/DarkMode.astro"
 import Link from "../components/Link.astro"
 import Three from "../components/Three.astro"
 
@@ -20,7 +21,7 @@ const { title } = Astro.props
       class="relative top-1/2 -translate-y-1/2 p-8 pb-14 opacity-0 sm:fixed sm:w-80"
       id="nav"
     >
-      <div class="relative cursor-default text-5xl font-light">Gus Ryan</div>
+      <div class="relative cursor-default text-5xl font-light dark:text-gray-200">Gus Ryan</div>
       <h2 class="mt-4 cursor-default text-2xl font-light dark:text-gray-100">Web Developer</h2>
       <nav class="ml-4 dark:text-gray-300">
         <ul class="mt-16 space-y-8 text-lg">
@@ -150,7 +151,12 @@ const { title } = Astro.props
       }
     </style>
   </div>
-  <Three />
+  <div transition:name="dark-mode-toggle" transition:persist>
+    <DarkMode />
+  </div>
+  <div transition:name="three-canvas" transition:persist class="fixed inset-0 -z-20">
+    <Three />
+  </div>
 </BaseLayout>
 
 <script>
@@ -186,10 +192,6 @@ const { title } = Astro.props
   document.addEventListener("astro:page-load", () =>
     setTimeout(() => glitchElement("main-container"), 200),
   )
-
-  // document.addEventListener("astro:after-swap", () =>
-  //   window.scrollTo({ left: 0, top: 0, behavior: "instant" }),
-  // )
 </script>
 
 <style lang="scss">
