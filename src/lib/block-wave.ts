@@ -22,7 +22,7 @@ export default class BlockWave {
   effectComposer: EffectComposer
   darkValue: number = 1.0
   darkMode: boolean = true
-  time: number = 0
+  time: number = Math.random() * 100
 
   constructor(canvas: HTMLCanvasElement) {
     this.camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 50)
@@ -33,7 +33,7 @@ export default class BlockWave {
     this.geometry = new THREE.PlaneGeometry(10, 10, 200, 200)
     this.material = new THREE.ShaderMaterial({
       uniforms: {
-        time: { value: Math.random() * 10 },
+        time: { value: this.time },
         aspect: { value: window.innerHeight / window.innerWidth },
       },
       vertexShader: vertexShader,
@@ -54,14 +54,17 @@ export default class BlockWave {
     this.effectComposer.addPass(renderScene)
 
     const loader = new THREE.TextureLoader()
+
+    this.setDarkMode()
+    this.darkValue = this.darkMode ? 1.0 : 0.0
     const blockNoiseShader = {
       ...CopyShader,
       uniforms: {
         ...CopyShader.uniforms,
         aspect: { value: window.innerHeight / window.innerWidth },
         blueNoise: { value: loader.load("/textures/blue-noise.webp") },
-        dark: { value: 1.0 },
-        time: { value: Math.random() * 10 },
+        dark: { value: this.darkValue },
+        time: { value: this.time },
       },
       fragmentShader: BlockPass,
     }
@@ -70,7 +73,6 @@ export default class BlockWave {
 
     window.addEventListener("resize", this.onResize.bind(this))
     window.addEventListener(darkModeEvent.type, this.setDarkMode.bind(this))
-    this.setDarkMode()
   }
   addBloom() {
     const bloomPass = new UnrealBloomPass(

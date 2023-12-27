@@ -18,13 +18,14 @@ const { title } = Astro.props
     <header
       transition:name="nav"
       transition:persist
+      transition:animate="none"
       class="relative top-1/2 -translate-y-1/2 p-8 pb-14 opacity-0 sm:fixed sm:w-80"
       id="nav"
     >
       <div class="relative cursor-default text-5xl font-light dark:text-gray-200">Gus Ryan</div>
       <h2 class="mt-4 cursor-default text-2xl font-light dark:text-gray-100">Web Developer</h2>
       <nav class="ml-4 dark:text-gray-300">
-        <ul class="mt-16 space-y-8 text-lg">
+        <ul class="mt-16 space-y-8 text-lg text-gray-900 dark:text-gray-200">
           <li>
             <Link content="About" href="/about" />
           </li>
@@ -151,7 +152,7 @@ const { title } = Astro.props
       }
     </style>
   </div>
-  <div transition:name="dark-mode-toggle" transition:persist>
+  <div class="dark:bg-gray-950" transition:name="dark-mode-toggle" transition:persist>
     <DarkMode />
   </div>
   <div transition:name="three-canvas" transition:persist class="fixed inset-0 -z-20">
@@ -189,17 +190,14 @@ const { title } = Astro.props
   }
 
   setTimeout(() => glitchElement("nav"), 200)
-  document.addEventListener("astro:page-load", () =>
-    setTimeout(() => glitchElement("main-container"), 200),
-  )
+  document.addEventListener("astro:page-load", () => {
+    setTimeout(() => glitchElement("main-container"), 200)
+  })
 </script>
 
 <style lang="scss">
   $baseAnimationLength: 8s;
   $iterationCount: 0.3;
-  #main-container {
-    // animation: paths ((1/2) * $baseAnimationLength) step-end (2 * $iterationCount) normal backwards;
-  }
 
   $movementTranslateBase: 0.5%;
   @keyframes movementTranslate {

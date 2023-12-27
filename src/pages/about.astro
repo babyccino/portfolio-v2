@@ -1,12 +1,13 @@
 ---
 import Layout from "../layouts/Layout.astro"
+import Link from "../components/Link.astro"
 ---
 
 <Layout title="Gus Ryan - Full Stack Web Developer">
   <main class="h-screen">
     <section
       id="about"
-      class="flex h-full w-full flex-col justify-center p-4 pl-24 text-base text-gray-400"
+      class="flex h-full w-full flex-col justify-center p-4 pl-24 text-base text-gray-700 dark:text-gray-400"
     >
       <p>
         Hi! My name is Gus and I'm an aspiring software developer, originally from Perth, Western
@@ -22,41 +23,21 @@ import Layout from "../layouts/Layout.astro"
       <br />
       <div>
         Besides coding at my desk, I can be found
-        <div class="group relative inline-block">
-          <div
-            class="absolute -right-1 top-0 h-2 w-2 border-r border-t opacity-0 transition group-hover:opacity-100"
-          >
-          </div>
-          <div
-            class="absolute -left-1 bottom-0 h-2 w-2 border-b border-l opacity-0 transition group-hover:opacity-100"
-          >
-          </div>
-          <a
-            class="relative inline-block text-white"
-            href="https://www.youtube.com/channel/UCtWqQrnozUZXpxnjhVgUTUw"
-          >
-            climbing rocks
-          </a>
-        </div>
+        <a
+          class="font-medium dark:text-gray-200"
+          href="https://www.youtube.com/channel/UCtWqQrnozUZXpxnjhVgUTUw"
+        >
+          climbing rocks
+        </a>
          and
-        <div class="group relative inline-block">
-          <div
-            class="absolute -right-1 top-0 h-2 w-2 border-r border-t opacity-0 transition group-hover:opacity-100"
-          >
-          </div>
-          <div
-            class="absolute -left-1 bottom-0 h-2 w-2 border-b border-l opacity-0 transition group-hover:opacity-100"
-          >
-          </div>
-          <a class="relative inline-block text-white" href="https://www.instagram.com/babyccino1">
-            photographing natural landscapes
-          </a>
-        </div>
+        <a class="font-medium dark:text-gray-200" href="https://www.instagram.com/babyccino1">
+          photographing natural landscapes"
+        </a>
         <br />
       </div>
       <br />
       <p class="mt-2 text-sm">Languages/technologies I've used:</p>
-      <ul class="mt-2 space-x-2 text-xs text-gray-400">
+      <ul class="mt-2 space-x-2 text-xs text-gray-700 dark:text-gray-400">
         <li class="inline-block rounded-full bg-slate-400 bg-opacity-15 px-2 py-1">typescript</li>
         <li class="inline-block rounded-full bg-slate-400 bg-opacity-15 px-2 py-1">react</li>
         <li class="inline-block rounded-full bg-slate-400 bg-opacity-15 px-2 py-1">next.js</li>

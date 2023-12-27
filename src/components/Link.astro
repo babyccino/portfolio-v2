@@ -7,7 +7,7 @@ interface Props {
 const { content, href } = Astro.props
 ---
 
-<a class="link relative p-2" href={href}>
+<a class="link relative" href={href}>
   <span class="absolute"> {content}</span>
   {content}
 </a>
@@ -20,8 +20,11 @@ const { content, href } = Astro.props
     background-clip: text;
     background-repeat: repeat;
     -webkit-text-fill-color: transparent;
-    filter: grayscale(1) brightness(1.5) contrast(4);
+    filter: grayscale(1) brightness(1.5) contrast(4) invert();
     animation: glitch 1s step-end infinite;
+  }
+  :is(:where(.dark) .link):hover {
+    filter: grayscale(1) brightness(1.5) contrast(4);
   }
 
   @keyframes glitch {

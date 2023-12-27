@@ -11,8 +11,25 @@ const { title } = Astro.props
 ---
 
 <!doctype html>
-<html class="w-full justify-center md:flex md:flex-row" lang="en">
+<html
+  transition:name="body"
+  transition:animate="none"
+  transition:persist
+  class="w-full justify-center md:flex md:flex-row"
+  lang="en"
+>
   <head>
+    <script is:inline>
+      if (
+        localStorage.getItem("color-theme") === "dark" ||
+        (!("color-theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        document.documentElement.classList.add("dark")
+      } else {
+        document.documentElement.classList.remove("dark")
+      }
+    </script>
     <meta charset="UTF-8" />
     <meta name="description" content="Gus's portfolio" />
     <meta name="viewport" content="width=device-width" />
@@ -25,7 +42,7 @@ const { title } = Astro.props
     <ViewTransitions />
   </head>
   <body
-    class="flex w-full flex-row justify-center transition-all duration-[2000ms] dark:bg-gray-950 dark:text-gray-50"
+    class="flex w-full flex-row justify-center transition-none dark:bg-gray-950 dark:text-gray-50"
   >
     <slot />
     <style is:global lang="scss">
@@ -66,6 +83,9 @@ const { title } = Astro.props
           : document.documentElement.classList.remove("dark")
       setDarkMode()
       document.addEventListener("astro:after-swap", () => {
+        setDarkMode()
+      })
+      document.addEventListener("astro:before-swap", () => {
         setDarkMode()
       })
     </script>
