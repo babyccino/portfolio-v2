@@ -6,97 +6,18 @@
   transition:name="canvas"
   transition:persist
   id="three"
-  class="fade-in fixed inset-0 -z-20 overflow-hidden"></canvas>
+  class="fade-in fixed inset-0 -z-20 overflow-hidden"
+>
+</canvas>
 
 <script>
-  import * as THREE from "three"
-  import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js"
-  import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js"
-  import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js"
-  import { CopyShader } from "three/examples/jsm/shaders/CopyShader.js"
-  import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js"
-  // import { OutputPass } from "three/examples/jsm/postprocessing/OutputPass.js"
-  // @ts-ignore
-  import VS from "../shaders/snoise.glsl"
-  // @ts-ignore
-  import FS from "../shaders/fragment.glsl"
-  // @ts-ignore
-  import BlockPass from "../shaders/block-pass-fragment.glsl"
+  import BlockWave from "../lib/block-wave"
 
-  const canvas = document.getElementById("three") as HTMLCanvasElement
   setTimeout(() => canvas.classList.remove("fade-in"), 4000)
 
-  const loader = new THREE.TextureLoader()
-  const shaderMaterial = new THREE.ShaderMaterial({
-    uniforms: {
-      time: { value: Math.random() * 10 },
-      dark: { value: 1.0 },
-      aspect: { value: window.innerHeight / window.innerWidth },
-    },
-    vertexShader: VS,
-    fragmentShader: FS,
-  })
-  const scene = new THREE.Scene()
-  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 50)
-  const renderer = new THREE.WebGLRenderer({ canvas })
-  const geometry = new THREE.PlaneGeometry(10, 10, 200, 200)
-  const plane = new THREE.Mesh(geometry, shaderMaterial)
-
-  const bloomPass = new UnrealBloomPass(
-    new THREE.Vector2(window.innerWidth * 2, window.innerHeight * 2),
-    0.01,
-    0.01,
-    0.0,
-  )
-  // const outputPass = new OutputPass()
-
-  const effectComposer = new EffectComposer(renderer)
-  effectComposer.addPass(bloomPass)
-  effectComposer.setSize(window.innerWidth, window.innerHeight)
-
-  const renderScene = new RenderPass(scene, camera)
-  effectComposer.addPass(renderScene)
-
-  const blockNoiseShader = {
-    ...CopyShader,
-    uniforms: {
-      ...CopyShader.uniforms,
-      aspect: { value: window.innerHeight / window.innerWidth },
-      blueNoise: { value: loader.load("/textures/blue-noise.webp") },
-      dark: { value: 1.0 },
-      time: { value: Math.random() * 10 },
-    },
-    fragmentShader: BlockPass,
-  }
-  const blockNoisePass = new ShaderPass(blockNoiseShader)
-  effectComposer.addPass(blockNoisePass)
-
-  renderer.setSize(window.innerWidth, window.innerHeight)
-  document.getElementById("three-container")?.appendChild(renderer.domElement)
-
-  window.addEventListener("resize", () => {
-    renderer.setSize(window.innerWidth, window.innerHeight)
-    shaderMaterial.uniforms.aspect.value = window.innerHeight / window.innerWidth
-    effectComposer.setSize(window.innerWidth, window.innerHeight)
-    blockNoiseShader.uniforms.aspect.value = window.innerHeight / window.innerWidth
-  })
-
-  scene.add(plane)
-
-  camera.position.z = 4
-  camera.position.y = -1
-  camera.rotateX(0.7)
-
-  function animate() {
-    requestAnimationFrame(animate)
-
-    shaderMaterial.uniforms.time.value += 0.00005
-    blockNoiseShader.uniforms.time.value += 0.00005
-    // TODO implement light mode
-    // if (shaderMaterial.uniforms.dark.value < 1.0) shaderMaterial.uniforms.dark.value += 0.01
-    effectComposer.render()
-  }
-  animate()
+  const canvas = document.getElementById("three") as HTMLCanvasElement
+  const fun = new BlockWave(canvas)
+  fun.animate()
 </script>
 
 <style lang="scss">
