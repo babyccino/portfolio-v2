@@ -7,11 +7,7 @@ mainImage: { url: "/images/dono-main.webp", alt: Main image of pyschologymatters
 mainVideo: { url: "video.src", alt: Main video of portfolio site }
 otherImages: [{ url: "image.src", alt: Main image of portfolio site }]
 technologies: [angular, parse, bootstrap]
-links:
-  [
-    { link: "github.com/babyccino/qbo-donation-receipts", icon: github },
-    { link: "https://donationreceipt.online", icon: vercel },
-  ]
+link: https://connect.psychologymatter.ca
 ---
 
 A bespoke application developed in Angular for a pyschology practice to assist

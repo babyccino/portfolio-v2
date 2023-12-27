@@ -1,18 +1,14 @@
 ---
 title: LetterBoxr
 description: A simulation of the barnes hut algorithm using a quad tree
-mainImage: { url: "", alt: Main image of portfolio site }
-mainVideo: { url: "video.src", alt: Main video of portfolio site }
-otherImages:
-  [
-    { url: "image.src", alt: Main image of portfolio site },
-    { url: "image.src", alt: Main image of portfolio site },
-  ]
+started: "01-01-2022"
+image: { url: "", alt: Main image of portfolio site }
+video: { url: "video.src", alt: Main video of portfolio site }
 technologies: [react.js, sass, redux, figma]
 links:
   [
-    { link: "github.com/babyccino/babyccino/Letterboxr", icon: github },
-    { link: "https://letterboxr.vercel.app/", icon: vercel },
+    { link: "github.com/babyccino/babyccino/Letterboxr", icon: mdi:github },
+    { link: "https://letterboxr.vercel.app/", icon: mdi:triangle },
   ]
 ---
 

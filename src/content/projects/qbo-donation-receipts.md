@@ -1,15 +1,11 @@
 ---
 title: QBO Donation Receipts
 description: A simulation of the barnes hut algorithm using a quad tree
-mainImage: { url: "", alt: Main image of portfolio site }
-mainVideo: { url: "video.src", alt: Main video of portfolio site }
-otherImages:
-  [
-    { url: "image.src", alt: Main image of portfolio site },
-    { url: "image.src", alt: Main image of portfolio site },
-  ]
+started: "01-01-2022"
+image: { url: "", alt: Main image of portfolio site }
+video: { url: "video.src", alt: Main video of portfolio site }
 technologies: [node.js, google-api, nodemailer, pdfkit]
-links: [{ link: "github.com/babyccino/babyccino/donation-receipts", icon: github }]
+links: [{ link: "github.com/babyccino/babyccino/donation-receipts", icon: mdi:github }]
 ---
 
 While QuickBooks Online is the most popular accounting software it gives no option
