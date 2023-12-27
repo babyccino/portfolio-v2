@@ -7,7 +7,7 @@ mainImage: { url: "/images/dono-main.webp", alt: Main image of pyschologymatters
 mainVideo: { url: "video.src", alt: Main video of portfolio site }
 otherImages: [{ url: "image.src", alt: Main image of portfolio site }]
 technologies: [angular, parse, bootstrap]
-link: https://connect.psychologymatter.ca
+link: https://connect.psychologymatters.ca
 ---
 
 A bespoke application developed in Angular for a pyschology practice to assist
