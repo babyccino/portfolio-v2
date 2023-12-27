@@ -36,7 +36,14 @@ import BaseLayout from "../layouts/BaseLayout.astro"
         <pre id="error"></pre>
       </div>
     </div>
-    <a id="portfolio-link" class="hidden" href="/about" data-astro-prefetch>go to home</a>
+    <a
+      id="portfolio-link"
+      class="fixed bottom-[7vh] right-[7vh] text-lg"
+      href="/about"
+      data-astro-prefetch
+    >
+      skip
+    </a>
   </div>
 </BaseLayout>
 
@@ -113,7 +120,7 @@ import BaseLayout from "../layouts/BaseLayout.astro"
 
     await wait(500)
 
-    document.getElementById("terminal")?.classList.add("wait")
+    document.getElementById("terminal")?.classList.add("cursor-wait")
 
     errorElement.innerHTML = "curl: (7) lost connection to gusryan.me: Data received is corrupted"
 
@@ -174,8 +181,20 @@ import BaseLayout from "../layouts/BaseLayout.astro"
 <style lang="scss">
   @import "src/typed";
 
-  .wait {
-    cursor: wait;
+  #portfolio-link {
+    filter: drop-shadow(white 0 0 0.75rem);
+    // animation: name duration timing-function delay iteration-count direction fill-mode;
+    animation: skip 1.5s ease-in 0s infinite;
+  }
+
+  @keyframes skip {
+    0%,
+    100% {
+      filter: drop-shadow(white 0 0 0.75rem);
+    }
+    50% {
+      filter: drop-shadow(white 0 0 0.75rem) drop-shadow(rgba(255, 255, 255, 0.25) 0 0 0.5rem);
+    }
   }
 
   #curl {
