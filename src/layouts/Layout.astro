@@ -13,17 +13,15 @@ const { title } = Astro.props
 ---
 
 <BaseLayout title={title}>
-  <div class="relative w-full max-w-5xl flex-row justify-between md:flex">
+  <div class="relative flex min-h-screen w-full max-w-5xl flex-col justify-between md:flex-row">
     <header
       transition:name="nav"
       transition:persist
       transition:animate="none"
-      class="relative top-0 z-10 w-full p-8 md:fixed md:top-1/2 md:w-80 md:-translate-y-1/2 md:pb-14"
+      class="relative top-0 z-10 w-full p-8 pb-4 pl-12 pt-12 md:fixed md:top-1/2 md:w-80 md:-translate-y-1/2 md:pb-14 md:pt-0"
       id="nav"
     >
-      <div class="relative cursor-default pt-4 text-5xl font-light md:pt-0 dark:text-gray-200">
-        Gus Ryan
-      </div>
+      <div class="relative cursor-default text-5xl font-light dark:text-gray-200">Gus Ryan</div>
       <h2 class="mt-4 cursor-default text-2xl font-light dark:text-gray-100">Web Developer</h2>
       <nav
         class="fixed left-8 top-1/2 z-10 -translate-y-1/2 md:static md:mt-16 md:transform-none dark:text-gray-300"
@@ -47,8 +45,8 @@ const { title } = Astro.props
     <div>
       <div class="md:w-80"></div>
     </div>
-    <div class="relative overflow-hidden">
-      <div id="main-container" class="">
+    <div class="relative flex-grow overflow-hidden">
+      <div id="main-container" class="h-full">
         <slot />
       </div>
     </div>
