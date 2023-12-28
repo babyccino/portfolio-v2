@@ -13,8 +13,11 @@ const { content, href } = Astro.props
 </a>
 
 <style>
-  .link:hover {
+  .link {
     background-image: url("../../public/textures/blue-noise.webp");
+    background-size: 0%;
+  }
+  .link:hover {
     background-size: 500%;
     background-blend-mode: luminosity;
     background-clip: text;
