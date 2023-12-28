@@ -5,11 +5,7 @@ started: "12-01-2023"
 image: { url: "", alt: Main image of portfolio site }
 video: { url: "video.src", alt: Main video of portfolio site }
 technologies: [astro, view-transitions, figma, webgl, three.js]
-links:
-  [
-    { link: "github.com/babyccino/babyccino/portfolio-v2", icon: mdi:github },
-    { link: "https://gusryan.me", icon: mdi:triangle },
-  ]
+links: [{ link: "github.com/babyccino/babyccino/portfolio-v2", icon: mdi:github }]
 ---
 
 This is my second iteration of a portfolio site, crafted with Astro.
