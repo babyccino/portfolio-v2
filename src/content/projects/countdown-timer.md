@@ -1,7 +1,7 @@
 ---
 title: Countdown Timer
 description: A simulation of the barnes hut algorithm using a quad tree
-started: "01-01-2022"
+started: "08-01-2022"
 image: { url: "", alt: Main image of portfolio site }
 video: { url: "video.src", alt: Main video of portfolio site }
 technologies: [typescript, react.js, next.js, tailwindcss, figma, sql, prisma]

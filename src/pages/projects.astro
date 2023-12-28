@@ -11,6 +11,9 @@ const projects = await Promise.all(
     content: await entry.render(),
   })),
 )
+projects.sort((a, b) => {
+  return new Date(b.data.started).getTime() - new Date(a.data.started).getTime()
+})
 ---
 
 <Layout title="Gus Ryan | Projects">

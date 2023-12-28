@@ -1,7 +1,7 @@
 ---
 title: PsychologyMattersConnect
 description: A bespoke web application for a local psychology practice
-started: 01-04-2023
+started: 11-01-2023
 ended: Present
 mainImage: { url: "/images/dono-main.webp", alt: Main image of pyschologymattersconnect site }
 mainVideo: { url: "video.src", alt: Main video of portfolio site }

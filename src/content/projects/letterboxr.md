@@ -1,7 +1,7 @@
 ---
 title: LetterBoxr
 description: A simulation of the barnes hut algorithm using a quad tree
-started: "01-01-2022"
+started: "04-01-2022"
 image: { url: "", alt: Main image of portfolio site }
 video: { url: "video.src", alt: Main video of portfolio site }
 technologies: [react.js, sass, redux, figma]
