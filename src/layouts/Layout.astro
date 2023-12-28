@@ -13,18 +13,20 @@ const { title } = Astro.props
 ---
 
 <BaseLayout title={title}>
-  <div class="relative w-full max-w-5xl flex-row justify-between sm:flex">
+  <div class="relative w-full max-w-5xl flex-row justify-between md:flex">
     <header
       transition:name="nav"
       transition:persist
       transition:animate="none"
-      class="relative top-0 z-10 w-full p-8 sm:fixed sm:top-1/2 sm:w-80 sm:-translate-y-1/2 sm:pb-14"
+      class="relative top-0 z-10 w-full p-8 md:fixed md:top-1/2 md:w-80 md:-translate-y-1/2 md:pb-14"
       id="nav"
     >
-      <div class="relative cursor-default text-5xl font-light dark:text-gray-200">Gus Ryan</div>
+      <div class="relative cursor-default pt-4 text-5xl font-light md:pt-0 dark:text-gray-200">
+        Gus Ryan
+      </div>
       <h2 class="mt-4 cursor-default text-2xl font-light dark:text-gray-100">Web Developer</h2>
       <nav
-        class="fixed left-8 top-1/2 z-10 -translate-y-1/2 sm:static sm:mt-16 sm:transform-none dark:text-gray-300"
+        class="fixed left-8 top-1/2 z-10 -translate-y-1/2 md:static md:mt-16 md:transform-none dark:text-gray-300"
       >
         <ul class="space-y-8 text-lg text-gray-900 dark:text-gray-200">
           <li class="writing-vertical">
@@ -43,9 +45,9 @@ const { title } = Astro.props
       </nav>
     </header>
     <div>
-      <div class="sm:w-80"></div>
+      <div class="md:w-80"></div>
     </div>
-    <div class="relative -z-10 overflow-hidden">
+    <div class="relative overflow-hidden">
       <div id="main-container" class="">
         <slot />
       </div>
@@ -169,7 +171,7 @@ const { title } = Astro.props
 </BaseLayout>
 
 <script>
-  const glitchClassList = ["absolute", "top-0", "hue-rotate-90", "-z-10", "saturate-[3]"]
+  const glitchClassList = ["!absolute", "top-0", "hue-rotate-90", "-z-10", "saturate-[3]"]
 
   function glitchElement(id: string) {
     const element = document.getElementById(id) as HTMLDivElement
@@ -204,7 +206,7 @@ const { title } = Astro.props
 </script>
 
 <style lang="scss">
-  @media (max-width: 640px) {
+  @media (max-width: 768px) {
     .writing-vertical {
       writing-mode: vertical-rl;
       text-orientation: mixed;
