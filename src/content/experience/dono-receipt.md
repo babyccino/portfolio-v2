@@ -3,13 +3,8 @@ title: Donation Receipt Online
 description: A site I created myself using astro,
 started: 04-01-2023
 ended: Present
-mainImage: { url: "/images/dono-main.webp", alt: Main image of portfolio site }
-mainVideo: { url: "video.src", alt: Main video of portfolio site }
-otherImages:
-  [
-    { url: "image.src", alt: Main image of portfolio site },
-    { url: "image.src", alt: Main image of portfolio site },
-  ]
+image: { url: "/images/dono-main.webp", alt: Main image of portfolio site }
+video: { url: "video.src", alt: Main video of portfolio site }
 technologies: [react.js, next.js, redux, figma, drizzle]
 link: https://donationreceipt.online
 ---

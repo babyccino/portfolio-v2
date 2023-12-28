@@ -43,7 +43,7 @@ const blogCollection = defineCollection({
 
 export const collections = {
   projects: projectsCollection,
-  expierence: expierenceCollection,
+  experience: expierenceCollection,
   blog: blogCollection,
 }
 export type ProjectEntry = z.infer<typeof projectsSchema>

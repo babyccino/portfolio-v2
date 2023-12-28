@@ -3,9 +3,8 @@ title: PsychologyMattersConnect
 description: A bespoke web application for a local psychology practice
 started: 11-01-2023
 ended: Present
-mainImage: { url: "/images/dono-main.webp", alt: Main image of pyschologymattersconnect site }
-mainVideo: { url: "video.src", alt: Main video of portfolio site }
-otherImages: [{ url: "image.src", alt: Main image of portfolio site }]
+image: { url: "/images/dono-main.webp", alt: Main image of pyschologymattersconnect site }
+video: { url: "video.src", alt: Main video of portfolio site }
 technologies: [angular, parse, bootstrap]
 link: https://connect.psychologymatters.ca
 ---

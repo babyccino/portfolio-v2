@@ -238,16 +238,16 @@ const { title } = Astro.props
 
   .glitch-1 {
     animation:
-      paths ((1/2) * $baseAnimationLength) step-end (2 * $iterationCount) normal forwards,
-      opacity ((1/2) * $baseAnimationLength) step-end (2 * $iterationCount) normal forwards,
+      paths (calc(1 / 2) * $baseAnimationLength) step-end (2 * $iterationCount) normal forwards,
+      opacity (calc(1 / 2) * $baseAnimationLength) step-end (2 * $iterationCount) normal forwards,
       movementTranslate $baseAnimationLength step-end $iterationCount normal forwards;
   }
 
   .glitch-2 {
     animation:
-      paths ((1/2) * $baseAnimationLength) step-end (2 * $iterationCount) normal forwards,
-      opacity ((1/2) * $baseAnimationLength) step-end (2 * $iterationCount) normal forwards,
-      movementTranslate ((4/5) * $baseAnimationLength) step-end ((5/4) * $iterationCount) normal
-        forwards;
+      paths (calc(1 / 2) * $baseAnimationLength) step-end (2 * $iterationCount) normal forwards,
+      opacity (calc(1 / 2) * $baseAnimationLength) step-end (2 * $iterationCount) normal forwards,
+      movementTranslate (calc(4 / 5) * $baseAnimationLength) step-end
+        (calc(5 / 4) * $iterationCount) normal forwards;
   }
 </style>
