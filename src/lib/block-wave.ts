@@ -69,6 +69,10 @@ export default class BlockWave {
         blueNoise: { value: tex },
         dark: { value: this.darkValue },
         time: { value: this.time },
+        darkBg: { value: new THREE.Color("rgb(3, 7, 18)") },
+        darkNoise: { value: new THREE.Color("rgb(75, 85, 99)") },
+        lightBg: { value: new THREE.Color("rgb(249, 250, 251)") },
+        lightNoise: { value: new THREE.Color("rgb(108, 94, 90)") },
       },
       fragmentShader: BlockPass,
     }
@@ -113,5 +117,23 @@ export default class BlockWave {
   }
   setDarkMode() {
     this.darkMode = getDarkMode()
+  }
+  setColours({
+    dark,
+    light,
+  }: {
+    dark: {
+      bg: string
+      noise: string
+    }
+    light: {
+      bg: string
+      noise: string
+    }
+  }) {
+    this.blockNoisePass.uniforms.darkBg.value = new THREE.Color(dark.bg)
+    this.blockNoisePass.uniforms.darkNoise.value = new THREE.Color(dark.noise)
+    this.blockNoisePass.uniforms.lightBg.value = new THREE.Color(light.bg)
+    this.blockNoisePass.uniforms.lightNoise.value = new THREE.Color(light.noise)
   }
 }

@@ -168,6 +168,17 @@ const { title } = Astro.props
   >
     <Three />
   </div>
+
+  <form id="colours" class="fixed top-0 z-40">
+    <label for="dark-bg">dark-bg</label>
+    <input type="color" id="dark-bg" name="dark-bg" value="#030712" />
+    <label for="dark-noise">dark-noise</label>
+    <input type="color" id="dark-noise" name="dark-noise" value="#4b5563" />
+    <label for="light-bg">light-bg</label>
+    <input type="color" id="light-bg" name="light-bg" value="#f9fafb" />
+    <label for="light-noise">light-noise</label>
+    <input type="color" id="light-noise" name="light-noise" value="#6c5e5a" />
+  </form>
 </BaseLayout>
 
 <script>

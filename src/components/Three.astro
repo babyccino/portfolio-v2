@@ -24,6 +24,24 @@
       },
       { once: true },
     )
+
+    const form = document.getElementById("colours") as HTMLFormElement
+    const darkBg = document.getElementById("dark-bg") as HTMLInputElement
+    const darkNoise = document.getElementById("dark-noise") as HTMLInputElement
+    const lightBg = document.getElementById("light-bg") as HTMLInputElement
+    const lightNoise = document.getElementById("light-noise") as HTMLInputElement
+    form.onchange = () => {
+      fun.setColours({
+        dark: {
+          bg: darkBg.value,
+          noise: darkNoise.value,
+        },
+        light: {
+          bg: lightBg.value,
+          noise: lightNoise.value,
+        },
+      })
+    }
   }
 </script>
 
