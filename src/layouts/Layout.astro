@@ -50,112 +50,8 @@ const { title } = Astro.props
         <slot />
       </div>
     </div>
-    <style is:global>
-      html {
-        font-family: nimbus-sans, "helvetica neue", system-ui, sans-serif;
-      }
-      code {
-        font-family:
-          Menlo,
-          Monaco,
-          Lucida Console,
-          Liberation Mono,
-          DejaVu Sans Mono,
-          Bitstream Vera Sans Mono,
-          Courier New,
-          monospace;
-      }
-    </style>
-
-    <style>
-      .glitch-animation {
-        animation: inNOut 2s linear 0s 2 normal none;
-      }
-      @keyframes inNOut {
-        0% {
-          opacity: 0%;
-          left: -0.35rem;
-        }
-        45% {
-          opacity: 0%;
-        }
-        46% {
-          opacity: 50%;
-        }
-        49% {
-          opacity: 50%;
-        }
-        50% {
-          opacity: 0%;
-          left: -0.35rem;
-        }
-        91% {
-          opacity: 0%;
-          left: -0.75rem;
-        }
-        92% {
-          opacity: 50%;
-          left: -0.75rem;
-        }
-        95% {
-          left: -0.35rem;
-        }
-        100% {
-          opacity: 50%;
-          left: -0.35rem;
-        }
-      }
-
-      .glitch-animation-2 {
-        animation: glitch2 2s linear 1s 1 normal none;
-      }
-      @keyframes glitch2 {
-        0% {
-          opacity: 0;
-        }
-        43% {
-          opacity: 0;
-        }
-        44% {
-          opacity: 1;
-        }
-        49% {
-          opacity: 1;
-        }
-        50% {
-          opacity: 0;
-        }
-        91% {
-          opacity: 0;
-        }
-        92% {
-          opacity: 1;
-        }
-        100% {
-          opacity: 1;
-        }
-      }
-
-      .glitch-animation-3 {
-        animation: glitch3 2s linear 1s 1 normal none;
-      }
-      @keyframes glitch3 {
-        0% {
-          opacity: 0;
-        }
-        93% {
-          opacity: 0;
-        }
-        94% {
-          opacity: 1;
-        }
-        100% {
-          opacity: 1;
-        }
-      }
-    </style>
   </div>
-  <div class="dark:bg-gray-950" transition:name="dark-mode-toggle" transition:persist>
+  <div class="z-10 dark:bg-gray-950" transition:name="dark-mode-toggle" transition:persist>
     <DarkMode />
   </div>
   <div
@@ -203,7 +99,110 @@ const { title } = Astro.props
   })
 </script>
 
+<style is:global>
+  html {
+    font-family: nimbus-sans, "helvetica neue", system-ui, sans-serif;
+  }
+  code {
+    font-family:
+      Menlo,
+      Monaco,
+      Lucida Console,
+      Liberation Mono,
+      DejaVu Sans Mono,
+      Bitstream Vera Sans Mono,
+      Courier New,
+      monospace;
+  }
+</style>
+
 <style lang="scss">
+  .glitch-animation {
+    animation: inNOut 2s linear 0s 2 normal none;
+  }
+  @keyframes inNOut {
+    0% {
+      opacity: 0%;
+      left: -0.35rem;
+    }
+    45% {
+      opacity: 0%;
+    }
+    46% {
+      opacity: 50%;
+    }
+    49% {
+      opacity: 50%;
+    }
+    50% {
+      opacity: 0%;
+      left: -0.35rem;
+    }
+    91% {
+      opacity: 0%;
+      left: -0.75rem;
+    }
+    92% {
+      opacity: 50%;
+      left: -0.75rem;
+    }
+    95% {
+      left: -0.35rem;
+    }
+    100% {
+      opacity: 50%;
+      left: -0.35rem;
+    }
+  }
+
+  .glitch-animation-2 {
+    animation: glitch2 2s linear 1s 1 normal none;
+  }
+  @keyframes glitch2 {
+    0% {
+      opacity: 0;
+    }
+    43% {
+      opacity: 0;
+    }
+    44% {
+      opacity: 1;
+    }
+    49% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+    91% {
+      opacity: 0;
+    }
+    92% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .glitch-animation-3 {
+    animation: glitch3 2s linear 1s 1 normal none;
+  }
+  @keyframes glitch3 {
+    0% {
+      opacity: 0;
+    }
+    93% {
+      opacity: 0;
+    }
+    94% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
   @media (max-width: 768px) {
     .writing-vertical {
       writing-mode: vertical-rl;
