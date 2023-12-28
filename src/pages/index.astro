@@ -7,12 +7,15 @@ import BaseLayout from "../layouts/BaseLayout.astro"
     id="terminal-container"
     class="relative flex h-screen w-screen items-center justify-center overflow-hidden font-mono"
   >
-    <div id="terminal" class="flex min-h-96 w-full max-w-3xl flex-col rounded-xl bg-gray-800">
+    <div
+      id="terminal"
+      class="m-6 flex min-h-[70vh] w-[90vw] max-w-3xl flex-col break-all rounded-xl bg-gray-800 sm:min-h-96 sm:w-full"
+    >
       <div
         class="relative rounded-xl rounded-b-none border border-gray-500 border-b-gray-950 bg-gray-700 py-1 text-center font-sans text-sm font-semibold text-gray-300"
       >
-        <img src="/mac-folder.png" height="10" class="-mt-1 mr-1 inline-block h-5" />gusryan - zsh -
-        180x47
+        <img src="/images/mac-folder.png" height="10" class="-mt-1 mr-1 inline-block h-5" />gusryan
+        - zsh - 180x47
         <div class="absolute left-2 top-0 flex h-full flex-row items-center gap-2">
           <div class="h-[13px] w-[13px] rounded-full bg-red-500"></div>
           <div class="h-[13px] w-[13px] rounded-full bg-yellow-500"></div>
@@ -33,7 +36,7 @@ import BaseLayout from "../layouts/BaseLayout.astro"
           <pre class="generate-glitch-text" id="progress"></pre>
           <p id="percent"></p>
         </div>
-        <pre id="error"></pre>
+        <p id="error"></p>
       </div>
     </div>
     <a
@@ -49,6 +52,7 @@ import BaseLayout from "../layouts/BaseLayout.astro"
 
 <script>
   import { prefetch } from "astro:prefetch"
+  import { p } from "../../dist/_astro/index.JMLLUxR2"
   const floor = Math.floor.bind(Math)
 
   // get random int between min and max
@@ -75,6 +79,7 @@ import BaseLayout from "../layouts/BaseLayout.astro"
   const caretElement = document.getElementById("caret") as HTMLSpanElement
   const percentElement = document.getElementById("percent") as HTMLSpanElement
   const errorElement = document.getElementById("error") as HTMLPreElement
+  const terminalElement = document.getElementById("terminal") as HTMLPreElement
   async function animate() {
     await wait(4200)
     caretElement.classList.add("hidden")
@@ -104,59 +109,62 @@ import BaseLayout from "../layouts/BaseLayout.astro"
 
     prefetch("/")
 
-    const hashes = "###########################################################"
+    progressElement.innerText = "#"
+    const hashWidth = progressElement.clientWidth
+    const charCount = Math.floor(terminalElement.clientWidth / hashWidth) - 10
+
     percentElement.innerText = `0%`
 
     for (let i = 0; i <= 99; ++i) {
       await wait(getRandomInt(20, 40))
       if (Math.random() > 0.8) {
-        progressElement.innerText = hashes.slice(0, floor((i * hashes.length) / 100))
+        const count = floor((i * charCount) / 100)
+        progressElement.innerText = new Array(count).fill("#").join("")
         percentElement.innerText = `${i}%`
       }
     }
 
-    progressElement.innerText = hashes
+    progressElement.innerText = new Array(charCount).fill("#").join("")
     percentElement.innerText = `99%`
 
     await wait(500)
 
-    document.getElementById("terminal")?.classList.add("cursor-wait")
+    terminalElement.classList.add("cursor-wait")
 
     errorElement.innerHTML = "curl: (7) lost connection to gusryan.me: Data received is corrupted"
 
     await wait(1000)
 
-    errorElement.innerHTML += "\ncorrupted"
+    errorElement.innerHTML += "<br>corrupted"
 
     await wait(1000)
 
-    errorElement.innerHTML += "\n" + generateGlitchText("corrupted")
+    errorElement.innerHTML += "<br>" + generateGlitchText("corrupted")
 
     await wait(1000)
 
-    errorElement.innerHTML += "\n" + generateGlitchText("corrupted", 0.6, 5)
+    errorElement.innerHTML += "<br>" + generateGlitchText("corrupted", 0.6, 5)
 
     await wait(200)
-    errorElement.innerHTML += "\n" + generateGlitchText("corrupted", 0.6, 5)
+    errorElement.innerHTML += "<br>" + generateGlitchText("corrupted", 0.6, 5)
 
-    const terminal = document.getElementById("terminal") as HTMLDivElement
     const terminalContainer = document.getElementById("terminal-container") as HTMLDivElement
     terminalContainer.classList.add("glitch")
 
-    terminal.before(terminal.cloneNode(true))
-    const terminalClone = terminal.previousSibling as HTMLDivElement
+    terminalElement.before(terminalElement.cloneNode(true))
+    const terminalClone = terminalElement.previousSibling as HTMLDivElement
     terminalClone.classList.add("absolute", "hue-rotate-90", "-z-10")
     terminalClone.id = "terminal-clone-1"
 
-    terminal.before(terminal.cloneNode(true))
-    const terminalClone2 = terminal.previousSibling as HTMLDivElement
+    terminalElement.before(terminalElement.cloneNode(true))
+    const terminalClone2 = terminalElement.previousSibling as HTMLDivElement
     terminalClone2.classList.add("absolute", "-hue-rotate-90", "-z-10")
     terminalClone2.id = "terminal-clone-2"
 
     await wait(200)
-    errorElement.innerHTML += "\n" + generateGlitchText("corrupted", 0.6, 5)
+    errorElement.innerHTML += "<br>" + generateGlitchText("corrupted", 0.6, 5)
     await wait(200)
-    errorElement.innerHTML += "\n" + generateGlitchText("corrupted", 0.6, 5)
+    errorElement.innerHTML += "<br>" + generateGlitchText("corrupted", 0.6, 5)
 
     await wait(1000)
 
@@ -180,6 +188,10 @@ import BaseLayout from "../layouts/BaseLayout.astro"
 
 <style lang="scss">
   @import "src/typed";
+
+  #progress {
+    overflow-wrap: break-word;
+  }
 
   #portfolio-link {
     filter: drop-shadow(white 0 0 0.75rem);
