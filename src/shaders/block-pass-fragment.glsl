@@ -33,13 +33,13 @@ float averageTex(vec2 uv) {
   return sum/(sampleCountRoot*sampleCountRoot);
 }
 
-// const vec3 bgDark = vec3(3., 7., 18.)/255.;
-// const vec3 noiseDark = vec3(75., 85., 99.)/255.;
-// const vec3 diffDark = noiseDark - bgDark;
+const vec3 bgDark = vec3(3., 7., 18.)/255.;
+const vec3 noiseDark = vec3(75., 85., 99.)/255.;
+const vec3 diffDark = noiseDark - bgDark;
 
-// const vec3 bgLight = vec3(249., 250., 251.)/255.;
-// const vec3 noiseLight = vec3(108., 94., 90.)/255.;
-// const vec3 diffLight = noiseLight - bgLight;
+const vec3 bgLight = vec3(249., 250., 251.)/255.;
+const vec3 noiseLight = vec3(108., 94., 90.)/255.;
+const vec3 diffLight = noiseLight - bgLight;
 
 void main() {
   vec3 diffDark = darkNoise - darkBg;
@@ -52,9 +52,8 @@ void main() {
   vec2 pixelCoords = mod(vec2(x,y)/1024., 1.0);
   float final = getBlueNoiseDither(mixed, pixelCoords);
 
-  vec3 darkVec = darkBg + diffDark*final;
-  vec3 light = lightBg + diffLight*final;
+  vec3 darkFinal = darkBg + diffDark*final;
+  vec3 lightFinal = lightBg + diffLight*final;
 
-  // gl_FragColor = vec4(light, 1);
-  gl_FragColor = dark*vec4(darkVec, 1) + (1.-dark)*vec4(light, 1);
+  gl_FragColor = dark*vec4(darkFinal, 1) + (1.-dark)*vec4(lightFinal, 1);
 }

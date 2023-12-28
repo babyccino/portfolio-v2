@@ -37,6 +37,7 @@ export default class BlockWave {
       },
       vertexShader: vertexShader,
       fragmentShader: fragmentShader,
+      transparent: false,
     })
     const plane = new THREE.Mesh(this.geometry, this.material)
 
@@ -69,12 +70,13 @@ export default class BlockWave {
         blueNoise: { value: tex },
         dark: { value: this.darkValue },
         time: { value: this.time },
-        darkBg: { value: new THREE.Color("rgb(3, 7, 18)") },
-        darkNoise: { value: new THREE.Color("rgb(75, 85, 99)") },
-        lightBg: { value: new THREE.Color("rgb(249, 250, 251)") },
-        lightNoise: { value: new THREE.Color("rgb(108, 94, 90)") },
+        darkBg: { value: new THREE.Color("#030712").convertLinearToSRGB() },
+        darkNoise: { value: new THREE.Color("#4b5563").convertLinearToSRGB() },
+        lightBg: { value: new THREE.Color("#f9fafb").convertLinearToSRGB() },
+        lightNoise: { value: new THREE.Color("#6c5e5a").convertLinearToSRGB() },
       },
       fragmentShader: BlockPass,
+      transparent: false,
     }
     this.blockNoisePass = new ShaderPass(blockNoiseShader)
     this.effectComposer.addPass(this.blockNoisePass)
@@ -131,9 +133,11 @@ export default class BlockWave {
       noise: string
     }
   }) {
-    this.blockNoisePass.uniforms.darkBg.value = new THREE.Color(dark.bg)
-    this.blockNoisePass.uniforms.darkNoise.value = new THREE.Color(dark.noise)
-    this.blockNoisePass.uniforms.lightBg.value = new THREE.Color(light.bg)
-    this.blockNoisePass.uniforms.lightNoise.value = new THREE.Color(light.noise)
+    this.blockNoisePass.uniforms.darkBg.value = new THREE.Color(dark.bg).convertLinearToSRGB()
+    this.blockNoisePass.uniforms.darkNoise.value = new THREE.Color(dark.noise).convertLinearToSRGB()
+    this.blockNoisePass.uniforms.lightBg.value = new THREE.Color(light.bg).convertLinearToSRGB()
+    this.blockNoisePass.uniforms.lightNoise.value = new THREE.Color(
+      light.noise,
+    ).convertLinearToSRGB()
   }
 }
