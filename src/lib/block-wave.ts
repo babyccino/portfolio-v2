@@ -34,7 +34,6 @@ export default class BlockWave {
     this.material = new THREE.ShaderMaterial({
       uniforms: {
         time: { value: this.time },
-        aspect: { value: window.innerHeight / window.innerWidth },
       },
       vertexShader: vertexShader,
       fragmentShader: fragmentShader,
@@ -45,7 +44,8 @@ export default class BlockWave {
     this.scene.add(plane)
 
     this.renderer = new THREE.WebGLRenderer({ canvas })
-    this.renderer.setSize(window.innerWidth, window.innerHeight)
+    this.renderer.setSize(window.screen.width, window.screen.height)
+    console.log(window.screen.width, window.screen.height)
 
     this.effectComposer = new EffectComposer(this.renderer)
     this.effectComposer.setSize(window.innerWidth, window.innerHeight)
@@ -54,6 +54,8 @@ export default class BlockWave {
     this.effectComposer.addPass(renderScene)
 
     const loader = new THREE.TextureLoader()
+    const tex = loader.load("/textures/blue-noise.webp")
+    tex.generateMipmaps = true
 
     this.setDarkMode()
     this.darkValue = this.darkMode ? 1.0 : 0.0
@@ -61,8 +63,10 @@ export default class BlockWave {
       ...CopyShader,
       uniforms: {
         ...CopyShader.uniforms,
-        aspect: { value: window.innerHeight / window.innerWidth },
-        blueNoise: { value: loader.load("/textures/blue-noise.webp") },
+        aspect: { value: window.screen.height / window.screen.width },
+        width: { value: window.innerWidth * window.devicePixelRatio },
+        height: { value: window.innerHeight * window.devicePixelRatio },
+        blueNoise: { value: tex },
         dark: { value: this.darkValue },
         time: { value: this.time },
       },
@@ -85,9 +89,10 @@ export default class BlockWave {
   }
   onResize() {
     this.renderer.setSize(window.innerWidth, window.innerHeight)
-    this.material.uniforms.aspect.value = window.innerHeight / window.innerWidth
     this.effectComposer.setSize(window.innerWidth, window.innerHeight)
     this.blockNoisePass.uniforms.aspect.value = window.innerHeight / window.innerWidth
+    this.blockNoisePass.uniforms.width.value = window.innerWidth * window.devicePixelRatio
+    this.blockNoisePass.uniforms.height.value = window.innerHeight * window.devicePixelRatio
   }
   updateTime(time: number) {
     this.time = time

@@ -4,12 +4,12 @@ uniform float aspect;
 varying vec2 vUv;
 uniform float dark;
 uniform float time;
+uniform float width;
+uniform float height;
 
 float getBlueNoiseDither(float grayscale, vec2 pixelCoords) {
-  float blueNoiseValue = length(texture2D(blueNoise, pixelCoords).rgb);
+  float blueNoiseValue = texture2D(blueNoise, pixelCoords).g;
   return blueNoiseValue * grayscale;
-  // return blueNoiseValue < grayscale ? grayscale : 0.0;
-  // return step( blueNoiseValue, grayscale );
 }
 
 // doing this properly (i.e. with mipmaps) would be v expensive
@@ -29,21 +29,25 @@ float averageTex(vec2 uv) {
   return sum/(sampleCountRoot*sampleCountRoot);
 }
 
-const float timeInv = 1./0.00005;
+const vec3 initalDark = vec3(3., 7., 18.)/255.;
+const vec3 targetDark = vec3(75., 85., 99.)/255.;
+const vec3 diffDark = targetDark - initalDark;
+
+const vec3 initalLight = vec3(249., 250., 251.)/255.;
+const vec3 targetLight = vec3(88., 74., 70.)/255.;
+const vec3 diffLight = targetLight - initalLight;
 
 void main() {
   float modded = averageTex(vUv);
   float val = texture2D( tDiffuse, vUv ).x;
   float mixed = mix(val, modded, 0.5);
-  vec2 pixelCoords = mod(vUv*3.*vec2(1., aspect), 1.0);
+  float x = mod(vUv.x*width, 1024.);
+  float y = mod(vUv.y*height, 1024.);
+  vec2 pixelCoords = mod(vec2(x,y)/1024., 1.0);
   float final = getBlueNoiseDither(mixed, pixelCoords);
 
-  float rDark = (3.+(255.)*final*0.25)/255.;
-  float gDark = (7.+(255.)*final*0.25)/255.;
-  float bDark = (18.+(1.3*255.)*final*0.25)/255.;
-  float rLight = (249.-249.*final*0.4)/255.;
-  float gLight = (250.-250.*final*0.4)/255.;
-  float bLight = (251.-251.*final*0.4)/255.;
+  vec3 darkVec = initalDark + diffDark*final;
+  vec3 light = initalLight + diffLight*final;
 
-  gl_FragColor = dark*vec4(rDark, gDark, bDark, 1) + (1.-dark)*vec4(rLight, gLight, bLight, 1);
+  gl_FragColor = dark*vec4(darkVec, 1) + (1.-dark)*vec4(light, 1);
 }
