@@ -13,5 +13,5 @@ links:
 ---
 
 Instagram only allows photos with aspect ratios between 4:5 and 16:9 for posts, and
-only gives you the option to crop when posting photos outside this range. I created
+only gives you the option to crop when posting photos outside this range. I created this application to
 give me and others an easy option to letterbox our images instead of cropping
