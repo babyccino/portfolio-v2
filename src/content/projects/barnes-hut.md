@@ -8,7 +8,7 @@ technologies: [react.js, next.js, typescript, tailwindcss]
 links:
   [
     { link: "github.com/babyccino/babyccino/barnes-hut", icon: mdi:github },
-    { link: "https://barnes-hut.vercel.app/", icon: mdi:triangle },
+    { link: "https://barnes-hut.vercel.app/", icon: ion:open },
   ]
 ---
 

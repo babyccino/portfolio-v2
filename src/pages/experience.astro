@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content"
+import { Icon } from "astro-icon/components"
 
 import Layout from "../layouts/Layout.astro"
 import { formatDate } from "../lib/date"
@@ -22,8 +23,16 @@ const experience = await Promise.all(
       {
         experience.map(entry => (
           <li class="relative rounded-xl p-4 text-gray-800 hover:bg-slate-400 hover:bg-opacity-15 hover:!opacity-100 group-hover:opacity-60 dark:text-gray-400">
-            <a class="block text-sm" href={entry.data.link}>
-              <h3 class="text-base text-gray-900 dark:text-gray-200">{entry.data.title}</h3>
+            <a class="group/inner block text-sm" href={entry.data.link}>
+              <div class="space-x-2 transition duration-100">
+                <h3 class="inline text-base text-gray-900 dark:text-gray-200">
+                  {entry.data.title}
+                </h3>
+                <Icon
+                  class="  inner:text-gray-500  -mt-1 inline size-5 transition duration-100 group-hover/inner:text-gray-500 sm:text-gray-400 dark:text-gray-500 dark:group-hover/inner:text-gray-500 sm:dark:text-gray-600"
+                  name="ion:open"
+                />
+              </div>
               <p class="mt-1 font-medium text-gray-600">
                 {formatDate(entry.data.started)} - {formatDate(entry.data.ended)}
               </p>

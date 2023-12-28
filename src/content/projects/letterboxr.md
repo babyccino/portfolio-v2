@@ -8,7 +8,7 @@ technologies: [react.js, sass, redux, figma]
 links:
   [
     { link: "github.com/babyccino/babyccino/Letterboxr", icon: mdi:github },
-    { link: "https://letterboxr.vercel.app/", icon: mdi:triangle },
+    { link: "https://letterboxr.vercel.app/", icon: ion:open },
   ]
 ---
 

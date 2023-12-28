@@ -8,7 +8,7 @@ technologies: [typescript, react.js, next.js, tailwindcss, figma, sql, prisma]
 links:
   [
     { link: "github.com/babyccino/babyccino/countdown-timer", icon: mdi:github },
-    { link: "https://countdown-timer-babyccino.vercel.app/", icon: mdi:triangle },
+    { link: "https://countdown-timer-babyccino.vercel.app/", icon: ion:open },
   ]
 ---
 
