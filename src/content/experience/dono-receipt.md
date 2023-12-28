@@ -10,7 +10,7 @@ otherImages:
     { url: "image.src", alt: Main image of portfolio site },
     { url: "image.src", alt: Main image of portfolio site },
   ]
-technologies: [react.js, next.js, redux, figma]
+technologies: [react.js, next.js, redux, figma, drizzle]
 link: https://donationreceipt.online
 ---
 

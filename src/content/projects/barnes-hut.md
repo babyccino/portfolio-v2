@@ -4,7 +4,7 @@ description: A simulation of the barnes hut algorithm using a quad tree
 started: "11-01-2022"
 image: { url: "", alt: Main image of portfolio site }
 video: { url: "video.src", alt: Main video of portfolio site }
-technologies: [react.js, next.js, typescript, tailwindcss]
+technologies: [react.js, next.js, typescript, tailwindcss, object pooling]
 links:
   [
     { link: "github.com/babyccino/babyccino/barnes-hut", icon: mdi:github },
