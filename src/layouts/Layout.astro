@@ -2,7 +2,6 @@
 import DarkMode from "../components/DarkMode.astro"
 import Link from "../components/Link.astro"
 import Three from "../components/Three.astro"
-
 import BaseLayout from "./BaseLayout.astro"
 
 interface Props {
@@ -13,6 +12,7 @@ const { title } = Astro.props
 ---
 
 <BaseLayout title={title}>
+  <a id="skip-main" href="#main" tabindex="0">Skip to main content</a>
   <div class="relative flex min-h-screen w-full max-w-5xl flex-col justify-between md:flex-row">
     <header
       transition:name="nav"
@@ -42,7 +42,7 @@ const { title } = Astro.props
         </ul>
       </nav>
     </header>
-    <div>
+    <div aria-hidden="true">
       <div class="md:w-80"></div>
     </div>
     <div class="relative flex-grow overflow-hidden">
@@ -59,6 +59,7 @@ const { title } = Astro.props
     transition:persist
     transition:animate="none"
     class="fixed inset-0 -z-20"
+    aria-hidden="true"
   >
     <Three />
   </div>
@@ -67,6 +68,22 @@ const { title } = Astro.props
 <script>
   const glitchClassList = ["!absolute", "top-0", "hue-rotate-90", "-z-10", "saturate-[3]"]
 
+  function deTab(el: HTMLElement) {
+    if (!el) return
+    el.tabIndex = -1
+    el.ariaHidden = "true"
+    el.id = ""
+    for (const child of el.children) {
+      deTab(child as HTMLElement)
+    }
+  }
+
+  const skipMain = document.getElementById("skip-main") as HTMLAnchorElement
+  let skipFocused = false
+  skipMain.addEventListener("focus", () => {
+    skipFocused = true
+  })
+
   function glitchElement(id: string) {
     const element = document.getElementById(id) as HTMLDivElement
     setTimeout(() => {
@@ -74,28 +91,32 @@ const { title } = Astro.props
     }, 300)
 
     element.before(element.cloneNode(true))
-    const terminalClone = element.previousSibling as HTMLDivElement
-    terminalClone.classList.add(...glitchClassList, "glitch-1")
-    terminalClone.id = "terminal-clone-1"
+    const glitchClone = element.previousSibling as HTMLDivElement
+    deTab(glitchClone)
+    glitchClone.classList.add(...glitchClassList, "glitch-1")
 
     element.before(element.cloneNode(true))
-    const terminalClone2 = element.previousSibling as HTMLDivElement
-    terminalClone2.classList.add(...glitchClassList, "glitch-2")
-    terminalClone2.id = "terminal-clone-2"
+    const glitchClone2 = element.previousSibling as HTMLDivElement
+    deTab(glitchClone2)
+    glitchClone2.classList.add(...glitchClassList, "glitch-2")
 
     setTimeout(() => {
-      terminalClone.remove()
-      terminalClone2.remove()
+      glitchClone.remove()
+      glitchClone2.remove()
     }, 3000)
+    skipMain.addEventListener("focus", () => {
+      glitchClone.remove()
+      glitchClone2.remove()
+    })
     document.addEventListener("astro:before-preparation", () => {
-      terminalClone.remove()
-      terminalClone2.remove()
+      glitchClone.remove()
+      glitchClone2.remove()
     })
   }
 
-  setTimeout(() => glitchElement("nav"), 200)
+  setTimeout(() => !skipFocused && glitchElement("nav"), 200)
   document.addEventListener("astro:page-load", () => {
-    setTimeout(() => glitchElement("main-container"), 200)
+    setTimeout(() => !skipFocused && glitchElement("main-container"), 200)
   })
 </script>
 
@@ -113,6 +134,33 @@ const { title } = Astro.props
       Bitstream Vera Sans Mono,
       Courier New,
       monospace;
+  }
+
+  #skip-main {
+    left: -999px;
+    position: absolute;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    z-index: -999;
+  }
+  #skip-main:focus,
+  #skip-main:active {
+    color: #fff;
+    background-color: #000;
+    left: auto;
+    top: auto;
+    width: 30%;
+    height: auto;
+    overflow: auto;
+    margin: 10px 35%;
+    padding: 5px;
+    border-radius: 15px;
+    border: 4px solid yellow;
+    text-align: center;
+    font-size: 1.2em;
+    z-index: 999;
   }
 </style>
 

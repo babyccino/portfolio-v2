@@ -3,6 +3,16 @@ import BaseLayout from "../layouts/BaseLayout.astro"
 ---
 
 <BaseLayout title="Gus Ryan | Intro">
+  <a
+    id="portfolio-link"
+    class="fixed bottom-[7vh] right-[7vh] z-10 text-lg"
+    href="/about"
+    data-astro-prefetch
+    aria-label="skip animation, go to main page"
+    tabindex="0"
+  >
+    skip
+  </a>
   <div
     id="terminal-container"
     class="relative flex h-screen w-screen items-center justify-center overflow-hidden font-mono"
@@ -14,8 +24,12 @@ import BaseLayout from "../layouts/BaseLayout.astro"
       <div
         class="relative rounded-xl rounded-b-none border border-gray-500 border-b-gray-950 bg-gray-700 py-1 text-center font-sans text-sm font-semibold text-gray-300"
       >
-        <img src="/images/mac-folder.png" height="10" class="-mt-1 mr-1 inline-block h-5" />gusryan
-        - zsh - 180x47
+        <img
+          src="/images/mac-folder.png"
+          height="10"
+          class="-mt-1 mr-1 inline-block h-5"
+          alt="mac folder icon"
+        />gusryan - zsh - 180x47
         <div class="absolute left-2 top-0 flex h-full flex-row items-center gap-2">
           <div class="h-[13px] w-[13px] rounded-full bg-red-500"></div>
           <div class="h-[13px] w-[13px] rounded-full bg-yellow-500"></div>
@@ -39,14 +53,6 @@ import BaseLayout from "../layouts/BaseLayout.astro"
         <p id="error"></p>
       </div>
     </div>
-    <a
-      id="portfolio-link"
-      class="fixed bottom-[7vh] right-[7vh] text-lg"
-      href="/about"
-      data-astro-prefetch
-    >
-      skip
-    </a>
   </div>
 </BaseLayout>
 

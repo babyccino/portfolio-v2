@@ -2,19 +2,20 @@
 interface Props {
   content: string
   href: string
+  tabIndex?: string
 }
 
-const { content, href } = Astro.props
+const { content, href, tabIndex } = Astro.props
 ---
 
-<a class="link relative" href={href}>
-  <span class="absolute"> {content}</span>
+<a class="link relative" href={href} tabindex={tabIndex}>
+  <span class="absolute" aria-hidden="true"> {content}</span>
   {content}
 </a>
 
 <style>
   .link {
-    background-image: url("../../public/textures/blue-noise.webp");
+    background-image: url("/textures/blue-noise.webp");
     background-size: 0%;
   }
   .link:hover {
