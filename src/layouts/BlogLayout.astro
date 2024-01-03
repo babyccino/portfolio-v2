@@ -1,0 +1,55 @@
+---
+import { Icon } from "astro-icon/components"
+
+import DarkMode from "../components/DarkMode.astro"
+import Three from "../components/Three.astro"
+import BaseLayout from "./BaseLayout.astro"
+
+interface Props {
+  title: string
+}
+
+const { title } = Astro.props
+---
+
+<BaseLayout title={title}>
+  <a class="skip-main" href="#main" tabindex="0">Skip to main content</a>
+  <div
+    class="min-h-screen w-full max-w-4xl rounded-xl bg-slate-200/20 p-6 backdrop-blur-2xl md:mt-10 md:p-8 dark:bg-slate-700/20"
+  >
+    <div class="flex flex-row justify-between px-2 pb-2">
+      <a
+        href="/blog"
+        class="flex flex-row items-center space-x-2 text-xl font-bold text-slate-900 dark:text-slate-100"
+      >
+        <Icon name="ion:arrow-back-outline" class="h-6 w-6" />
+      </a>
+      <div transition:name="dark-mode-toggle" transition:persist transition:animate="fade">
+        <DarkMode />
+      </div>
+    </div>
+    <div class="relative flex min-h-screen w-full max-w-5xl flex-col justify-between md:flex-row">
+      <div id="main-container" class="h-full w-full">
+        <slot />
+      </div>
+    </div>
+  </div>
+  <div
+    transition:name="three-canvas"
+    transition:persist
+    transition:animate="none"
+    class="fixed inset-0 -z-20"
+    aria-hidden="true"
+  >
+    <Three />
+  </div>
+</BaseLayout>
+
+<script>
+  import { glitchElement } from "../lib/glitch"
+
+  setTimeout(() => glitchElement("nav"), 200)
+  document.addEventListener("astro:page-load", () => {
+    setTimeout(() => glitchElement("main-container"), 200)
+  })
+</script>

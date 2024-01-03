@@ -32,20 +32,9 @@ const expierenceCollection = defineCollection({
   schema: expierenceSchema,
 })
 
-const blogSchema = z.object({
-  title: z.string(),
-  description: z.string(),
-})
-const blogCollection = defineCollection({
-  type: "content",
-  schema: blogSchema,
-})
-
 export const collections = {
   projects: projectsCollection,
   experience: expierenceCollection,
-  blog: blogCollection,
 }
 export type ProjectEntry = z.infer<typeof projectsSchema>
 export type ExperienceEntry = z.infer<typeof expierenceSchema>
-export type BlogEntry = z.infer<typeof blogSchema>

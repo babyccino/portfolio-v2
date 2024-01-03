@@ -1,0 +1,146 @@
+---
+import type { GetStaticPaths } from "astro"
+
+import BlogLayout from "../../../layouts/BlogLayout.astro"
+import { PostsPost } from "../../../types/substack"
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  async function getPosts(offset: number = 0, totalPosts: PostsPost[] = []): Promise<PostsPost[]> {
+    const substackUrl = import.meta.env.SUBSTACK_URL
+    const data = await fetch(`${substackUrl}api/v1/posts?sort=new&offset=${offset}&limit=50`)
+    const newPosts = (await data.json()) as PostsPost[]
+    const newTotalPosts = totalPosts.concat(newPosts)
+    if (newPosts.length !== 50) return newTotalPosts
+    return getPosts(offset + 50, newTotalPosts)
+  }
+
+  const posts = await getPosts()
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { body: post.body_html, title: post.title, subtitle: post.subtitle },
+  }))
+}
+
+const { body, title, subtitle } = Astro.props
+---
+
+<BlogLayout title={title as string}>
+  <article class="mx-auto max-w-4xl leading-7 text-gray-700 dark:text-gray-300">
+    <h1 class="text-3xl text-slate-700 dark:text-slate-300" id="main">
+      {title}
+    </h1>
+    <h5 class="mt-2 text-lg text-slate-500 dark:text-gray-400">
+      {subtitle}
+    </h5>
+    <hr class="border border-gray-500" />
+    <div id="article-body" set:html={body} />
+  </article>
+</BlogLayout>
+
+<style lang="scss">
+  .captioned-image-container {
+    position: relative;
+    margin-top: 2rem;
+  }
+  .image-link-expand {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  .image-caption {
+    color: #9ba4af;
+    font-size: 0.75rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  ul {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    list-style-type: disc;
+    list-style-position: inside;
+
+    p {
+      display: inline;
+    }
+  }
+
+  hr {
+    margin: 2rem 2rem 0 2rem;
+  }
+
+  p {
+    margin-top: 1rem;
+  }
+
+  strong {
+    font-weight: 500;
+  }
+
+  blockquote {
+    margin: 1rem 0;
+    padding-left: 1rem;
+    border-left: 0.25rem solid #9ba4af;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+
+  pre {
+    margin: 1rem 0;
+    padding: 1rem;
+    background-color: rgba(40, 44, 52, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+  }
+
+  .button-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+  .button {
+    background-color: rgb(59, 130, 246);
+    color: rgb(243 244 246);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+  }
+
+  :is(:where(.dark) h2) {
+    color: rgb(243 244 246);
+  }
+  :is(:where(.dark) h3) {
+    color: rgb(243 244 246);
+  }
+  :is(:where(.dark) h4) {
+    color: rgb(243 244 246);
+  }
+  :is(:where(.dark) strong) {
+    color: rgb(243 244 246);
+  }
+
+  :is(:where(.dark) a) {
+    color: rgb(189, 211, 245);
+  }
+</style>

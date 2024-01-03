@@ -1,0 +1,466 @@
+---
+import BlogLayout from "../../../layouts/BlogLayout.astro"
+---
+
+<BlogLayout title="test">
+  <article class="mx-auto max-w-4xl leading-7 text-gray-700 dark:text-gray-300">
+    <h1 class="text-3xl text-slate-700 dark:text-slate-300">
+      Avoid using Type Assertions in TypeScript
+    </h1>
+    <h5 class="mt-2 text-lg text-slate-500 dark:text-gray-400">
+      In this issue, I will explain why you should avoid using Type Assertions in Typescript and
+      techniques you can use to avoid them.
+    </h5>
+    <hr class="border border-gray-500" />
+    <div id="article-body">
+      <div class="captioned-image-container">
+        <figure>
+          <a
+            class="image-link is-viewable-img image2"
+            target="_blank"
+            href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1c1a6c85-8ccc-46d1-b380-9cdd2caf3007_888x499.jpeg"
+            data-component-name="Image2ToDOM"
+            ><div class="image2-inset">
+              <picture
+                ><source
+                  type="image/webp"
+                  srcset="
+              https://substackcdn.com/image/fetch/w_424,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1c1a6c85-8ccc-46d1-b380-9cdd2caf3007_888x499.jpeg   424w,
+              https://substackcdn.com/image/fetch/w_848,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1c1a6c85-8ccc-46d1-b380-9cdd2caf3007_888x499.jpeg   848w,
+              https://substackcdn.com/image/fetch/w_1272,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1c1a6c85-8ccc-46d1-b380-9cdd2caf3007_888x499.jpeg 1272w,
+              https://substackcdn.com/image/fetch/w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1c1a6c85-8ccc-46d1-b380-9cdd2caf3007_888x499.jpeg 1456w
+            "
+                  sizes="100vw"
+                />
+                <img
+                  src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1c1a6c85-8ccc-46d1-b380-9cdd2caf3007_888x499.jpeg"
+                  width="888"
+                  height="499"
+                  data-attrs='{"src":"https://substack-post-media.s3.amazonaws.com/public/images/1c1a6c85-8ccc-46d1-b380-9cdd2caf3007_888x499.jpeg","srcNoWatermark":null,"fullscreen":null,"imageSize":null,"height":499,"width":888,"resizeWidth":null,"bytes":139626,"alt":null,"title":null,"type":"image/jpeg","href":null,"belowTheFold":false,"topImage":true,"internalRedirect":null}'
+                  class="sizing-normal"
+                  alt=""
+                  srcset="
+              https://substackcdn.com/image/fetch/w_424,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1c1a6c85-8ccc-46d1-b380-9cdd2caf3007_888x499.jpeg   424w,
+              https://substackcdn.com/image/fetch/w_848,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1c1a6c85-8ccc-46d1-b380-9cdd2caf3007_888x499.jpeg   848w,
+              https://substackcdn.com/image/fetch/w_1272,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1c1a6c85-8ccc-46d1-b380-9cdd2caf3007_888x499.jpeg 1272w,
+              https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1c1a6c85-8ccc-46d1-b380-9cdd2caf3007_888x499.jpeg 1456w
+            "
+                  sizes="100vw"
+                  fetchpriority="high"
+                /></picture
+              >
+              <div class="image-link-expand">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#FFFFFF"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-maximize2"
+                >
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <polyline points="9 21 3 21 3 15"></polyline>
+                  <line x1="21" x2="14" y1="3" y2="10"></line>
+                  <line x1="3" x2="10" y1="21" y2="14"></line>
+                </svg>
+              </div>
+            </div></a
+          >
+        </figure>
+      </div>
+      <p>We have all been there, and we have come across the following error:</p>
+      <div class="captioned-image-container">
+        <figure>
+          <a
+            class="image-link image2"
+            target="_blank"
+            href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc24e7ba5-356b-4bb4-a7de-4faf8431c9ae_905x172.png"
+            data-component-name="Image2ToDOM"
+            ><div class="image2-inset">
+              <picture
+                ><source
+                  type="image/webp"
+                  srcset="
+              https://substackcdn.com/image/fetch/w_424,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc24e7ba5-356b-4bb4-a7de-4faf8431c9ae_905x172.png   424w,
+              https://substackcdn.com/image/fetch/w_848,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc24e7ba5-356b-4bb4-a7de-4faf8431c9ae_905x172.png   848w,
+              https://substackcdn.com/image/fetch/w_1272,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc24e7ba5-356b-4bb4-a7de-4faf8431c9ae_905x172.png 1272w,
+              https://substackcdn.com/image/fetch/w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc24e7ba5-356b-4bb4-a7de-4faf8431c9ae_905x172.png 1456w
+            "
+                  sizes="100vw"
+                />
+                <img
+                  src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc24e7ba5-356b-4bb4-a7de-4faf8431c9ae_905x172.png"
+                  width="905"
+                  height="172"
+                  data-attrs='{"src":"https://substack-post-media.s3.amazonaws.com/public/images/c24e7ba5-356b-4bb4-a7de-4faf8431c9ae_905x172.png","srcNoWatermark":null,"fullscreen":null,"imageSize":null,"height":172,"width":905,"resizeWidth":null,"bytes":28309,"alt":null,"title":null,"type":"image/png","href":null,"belowTheFold":false,"topImage":false,"internalRedirect":null}'
+                  class="sizing-normal"
+                  alt=""
+                  srcset="
+              https://substackcdn.com/image/fetch/w_424,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc24e7ba5-356b-4bb4-a7de-4faf8431c9ae_905x172.png   424w,
+              https://substackcdn.com/image/fetch/w_848,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc24e7ba5-356b-4bb4-a7de-4faf8431c9ae_905x172.png   848w,
+              https://substackcdn.com/image/fetch/w_1272,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc24e7ba5-356b-4bb4-a7de-4faf8431c9ae_905x172.png 1272w,
+              https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc24e7ba5-356b-4bb4-a7de-4faf8431c9ae_905x172.png 1456w
+            "
+                  sizes="100vw"
+                /></picture
+              >
+              <div></div>
+            </div></a
+          >
+        </figure>
+      </div>
+      <p>And we have been inclined to solve the above issue by asserting the type.</p>
+      <pre><code>example(y as string)</code></pre>
+      <p>
+        So, why am I discouraging you to avoid doing this? Let me answer that question in this issue
+        of All Things Typescript.
+      </p>
+      <p
+        class="button-wrapper"
+        data-attrs='{"url":"https://www.allthingstypescript.dev/subscribe?","text":"Subscribe now","action":null,"class":null}'
+        data-component-name="ButtonCreateButton"
+      >
+        <a class="button primary" href="https://www.allthingstypescript.dev/subscribe?"
+          ><span>Subscribe now</span></a
+        >
+      </p>
+      <h3>But first, what are Type Assertions?</h3>
+      <p>
+        Types assertion is a way of telling Typescript what the type of a variable is. This can be
+        done either of two ways: using the <code>as</code> syntax or the angle bracket
+        <code>&lt;Type&gt;</code> syntax, as shown below:
+      </p>
+      <pre><code><code>type Person = &lcub;
+            firstname: string;
+            lastname: string;
+        &rcub;
+        
+        // using as syntax
+        const x : unknown = &lcub;&rcub;;
+        
+        // asserting it as Person using as syntax
+        const firstname = (x as Person).firstname;
+        
+        // asserting it as Person using the angle brackets
+        const firstname = (&lt;Person&gt;x).firstname;
+        </code></code></pre>
+      <p>
+        Type assertion allows us as developers to provide more information to Typescript about a
+        variable type. This is a good way to go when we have more information about a variable Type
+        than Typescript is able to infer based on the limited information available to it. For
+        instance, dom elements:
+      </p>
+      <pre><code>const button = document.getElementById("btn");</code></pre>
+      <p>
+        The type of button above is HTMLElement, which is generic. But we know that the type should
+        be
+        <code>HTMLButtonElement</code> and we can use assertions to provide more information to
+        Typescript, as shown below:
+      </p>
+      <pre><code>const button = document.getElementById("btn") as HTMLButtonElement | null;</code></pre>
+      <p>
+        As you can imagine, this is a very powerful feature and can come in handy as shown above.
+        But with power comes great responsibility and I believe that assertion should be used
+        sparingly and not the default option.
+      </p>
+      <p>
+        When we use type assertion we are basically telling the Typescript compiler that we know
+        what the type is and it should trust us, i.e. we know what we are doing. The problem with
+        this is that we prevent Typescript from helping us where it should and take on that
+        responsibility ourselves.
+      </p>
+      <p>
+        In the above example, Typescript does not type-check whether the variable <code>x</code> has
+        the property <code>firstname</code> we are accessing because we are asserting the type,
+        which will definitely introduce a bug into our system.
+      </p>
+      <p>
+        Typescript does provide some safeguards and will warn you when you try to perform an unsafe
+        type assertion, as shown below:
+      </p>
+      <pre><code>function example(x: string) &lcub;
+            // do something 
+        &rcub;
+        
+        let y: number | undefined;
+        
+        example(y as string)</code></pre>
+      <p>
+        In the case above, Typescript will warn you against performing a type assertion that’s not
+        structurally sound.
+      </p>
+      <pre><code>Conversion of type \'number | undefined\' to type \'string\' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to \'unknown\' first.
+        
+        Type \'number\' is not comparable to type \'string\'.(2352)</code></pre>
+      <p>
+        Of course, if you are still determined, you can still override Typescript by first asserting
+        it as unknown and then to string, as shown below:
+      </p>
+      <pre><code>example(y as unknown as string)</code></pre>
+      <p>
+        One other thing to keep in mind is that if you are asserting to any, you will completely
+        disable type-checking for that variable usage. This is because the <code>any</code> type is
+        assignable to any variable and can be assigned to the <code>any</code> variable. This means
+        any is dangerous as it can be contagious, due to its ability to be assigned to any variable
+        and vice versa.
+      </p>
+      <h3><strong>What about Non-null Assertions?</strong></h3>
+      <p>
+        Another common type of assertion is a non-null assertion. In this assertion, we use the
+        <code>!</code> operator after variable to tell the Typescript compiler that a variable
+        isn\'t null.
+      </p>
+      <pre><code><code>function square(x: number) &lcub;
+          return x * x;
+        &rcub;
+        
+        const x : number | undefined;
+        
+        const answer = square(x!);</code></code></pre>
+      <p>
+        This assertion should be used sparingly, especially if the null suggestion is coming from
+        external API typing like environment variables, which are always typed as <code
+          >string | undefined</code
+        >. I have come across not-so-obvious bugs that were thrown in a completely different section
+        of the code with a different error message because I allowed an undefined variable to be
+        passed on. This happened because instead of handling the possibility of the environment
+        variable being undefined, I decided that non-null assertion was the way to go.
+      </p>
+      <h2><strong>So, what are the Alternatives?</strong></h2>
+      <h3><strong>Narrowing of Types</strong></h3>
+      <p>
+        Type narrowing is the process of moving a less precise type to a more precise type. For
+        instance, taking a variable of type <code>any</code> and moving it to string. There are
+        various ways of achieving this, which I have covered previously
+        <a href="https://www.allthingstypescript.dev/p/narrowing-types-in-typescript">here</a>, but
+        I will take a look at a few notable ones.
+      </p>
+      <p>
+        <strong>Type Guards:</strong> You can use Type Guards to narrow the types of a <code
+          >union</code
+        >,
+        <code>unknown</code>, <code>any</code>, etc. to a specific type:
+      </p>
+      <pre><code><code>function doSomething(x: string | number) &lcub;
+            if(typeof x === "string") &lcub;
+              // do somethign with the string
+            &rcub; else &lcub;
+              // do something with the number
+            &rcub;
+        &rcub;</code></code></pre>
+      <p>
+        <strong>Truthiness Narrowing:</strong>You can check if a variable is truthy i.e. not
+        undefined or null before using it:
+      </p>
+      <pre><code><code>function doSomething(x?: string) &lcub;
+          if(x) &lcub;
+            // type of x is now string
+          &rcub;
+        &rcub;</code></code></pre>
+      <p>
+        <strong>Building Custom Type Guards:</strong>Finally, you can create type guards that do an
+        exhaustive type checking on an object before asserting its type:
+      </p>
+      <pre><code><code>function isRectangle(shape: unknown): shape is Rectangle &lcub;
+          if ("width" in shape &amp;&amp; "height" in shape) &lcub;
+            // this is a rectangle
+            return true; 
+          &rcub;
+          // it\'s not a rectangle
+          return false;
+        &rcub;</code></code></pre>
+      <h3><strong>Providing Default/Fallback Values</strong></h3>
+      <p>
+        This mostly works with null and undefined values, but instead of asserting to a string to
+        remove the possibility of it being undefined, you can provide a default value that
+        automatically becomes a string. You can achieve this by using either null coalescing
+        operator (<code>??</code>) or the or ( <code>||</code>) operator.
+      </p>
+      <pre><code><code>// using the nullish coalescing operator
+        const API_URL = process.ENV.API_URL ?? "DEFAULT URL";
+        
+        // using the OR (||) logical operator
+        const API_URL = process.ENV.API_URL || "DEFAULT URL";
+        
+        </code></code></pre>
+      <p>We can also use Javascript Logical Assignment Operator to provide a default value:</p>
+      <pre><code><code>let x : string | number;
+        
+        // provide a default value if null or undefined
+        x ??= "Hello World"
+        
+        // provide a default value if falsy
+        x ||= "Hello World"</code></code></pre>
+      <h2><strong>Conclusion</strong></h2>
+      <p>
+        In today’s issue, we learned that by using type assertions, we are limiting the ability of
+        the Typescript compiler to do Type checking for us. This can lead to us having bugs in our
+        system which Typescript was meant to prevent. To avoid using assertions, we covered a few
+        techniques we can use such as Type narrowing and providing fallback values in the case of
+        possibly undefined/null values.
+      </p>
+      <p
+        class="button-wrapper"
+        data-attrs='{"url":"https://www.allthingstypescript.dev/p/avoid-using-type-assertions-in-typescript?utm_source=substack&utm_medium=email&utm_content=share&action=share&token=eyJ1c2VyX2lkIjoxNDkzNDAyNiwicG9zdF9pZCI6MTM4MTk4OTMwLCJpYXQiOjE3MDQxODM3NzksImV4cCI6MTcwNjc3NTc3OSwiaXNzIjoicHViLTEwMjU1NjEiLCJzdWIiOiJwb3N0LXJlYWN0aW9uIn0.ztjE5QFrSwcNOBZcaCRPo0EE5m9okw6GhHzEytZM2Xg","text":"Share","action":null,"class":null}'
+        data-component-name="ButtonCreateButton"
+      >
+        <a
+          class="button primary"
+          href="https://www.allthingstypescript.dev/p/avoid-using-type-assertions-in-typescript?utm_source=substack&utm_medium=email&utm_content=share&action=share&token=eyJ1c2VyX2lkIjoxNDkzNDAyNiwicG9zdF9pZCI6MTM4MTk4OTMwLCJpYXQiOjE3MDQxODM3NzksImV4cCI6MTcwNjc3NTc3OSwiaXNzIjoicHViLTEwMjU1NjEiLCJzdWIiOiJwb3N0LXJlYWN0aW9uIn0.ztjE5QFrSwcNOBZcaCRPo0EE5m9okw6GhHzEytZM2Xg"
+          ><span>Share</span></a
+        >
+      </p>
+      <p>That’s it for this week, and here are a few more issues you might interested in:</p>
+      <div
+        class="digest-post-embed"
+        data-attrs='{"nodeId":"0c892715-523a-4ad9-91fb-8b6a5fd602c4","caption":"In this issue, we will be looking as to why you should prefer types with a more narrow scope in Typescript as compared to the standard types (strings, numbers, etc), that you get out of the box.","size":"sm","isEditorNode":true,"title":"Always Prefer Type with a Narrower Scope in Typescript","publishedBylines":[{"id":43214086,"name":"Maina Wycliffe","bio":"Software Engineer, Google Developer Expert and Typescript Nerd.","photo_url":"https://bucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com/public/images/8765c349-75ba-43ee-9976-e3ae5631b064_904x1124.jpeg","is_guest":false,"bestseller_tier":null}],"post_date":"2023-07-18T19:40:40.734Z","cover_image":"https://substack-post-media.s3.amazonaws.com/public/images/583126b7-442b-400c-baa0-29d5197ea349_1280x958.jpeg","cover_image_alt":null,"canonical_url":"https://www.allthingstypescript.dev/p/always-prefer-type-with-a-narrower","section_name":null,"id":129186941,"type":"newsletter","reaction_count":4,"comment_count":0,"publication_name":"All Things Typescript","publication_logo_url":"https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7922083f-3e29-485a-ab34-3b07ac80034c_1084x1084.png","belowTheFold":true}'
+      >
+      </div>
+      <div
+        class="digest-post-embed"
+        data-attrs='{"nodeId":"f44a2500-d4b4-4f98-b30b-c0d926411a23","caption":"Have you come across the never type before? If not, let me tell you more about this in this issue of All Things Typescript. In this issue, I want to explore situations in which a variable can have the never Type. But before we do that, what’s the never Type? To understand this, let’s explore Types first. Types, in Typescript and in language for that matt…","size":"sm","isEditorNode":true,"title":"When is a variables\&apos; Type Never?","publishedBylines":[{"id":43214086,"name":"Maina Wycliffe","bio":"Software Engineer, Google Developer Expert and Typescript Nerd.","photo_url":"https://bucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com/public/images/8765c349-75ba-43ee-9976-e3ae5631b064_904x1124.jpeg","is_guest":false,"bestseller_tier":null}],"post_date":"2023-06-19T06:21:59.257Z","cover_image":"https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F037db254-400d-4e38-b40f-bfb8d6df9496_2000x1500.jpeg","cover_image_alt":null,"canonical_url":"https://www.allthingstypescript.dev/p/when-is-a-variables-type-never","section_name":null,"id":126204619,"type":"newsletter","reaction_count":2,"comment_count":0,"publication_name":"All Things Typescript","publication_logo_url":"https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7922083f-3e29-485a-ab34-3b07ac80034c_1084x1084.png","belowTheFold":true}'
+      >
+      </div>
+      <div
+        class="digest-post-embed"
+        data-attrs='{"nodeId":"91cd8c0d-dacb-4c05-be32-096087001993","caption":"Typescript has a great inference system, which will infer Types for variables when the variable doesn’t have an explicit type annotation. The process in which Typescript will determine the type of a variable is called Type Widening, which I have covered previously","size":"sm","isEditorNode":true,"title":"The typeof and keyof operators - referencing variable types in Typescript","publishedBylines":[{"id":43214086,"name":"Maina Wycliffe","bio":"Software Engineer, Google Developer Expert and Typescript Nerd.","photo_url":"https://bucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com/public/images/8765c349-75ba-43ee-9976-e3ae5631b064_904x1124.jpeg","is_guest":false,"bestseller_tier":null}],"post_date":"2023-03-27T07:00:53.761Z","cover_image":"https://substack-post-media.s3.amazonaws.com/public/images/3e1ccdbf-a48d-4635-9dfc-f1154290efee_2433x1826.png","cover_image_alt":null,"canonical_url":"https://www.allthingstypescript.dev/p/the-typeof-and-keyof-operators-referencing","section_name":null,"id":99591856,"type":"newsletter","reaction_count":5,"comment_count":0,"publication_name":"All Things Typescript","publication_logo_url":"https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7922083f-3e29-485a-ab34-3b07ac80034c_1084x1084.png","belowTheFold":true}'
+      >
+      </div>
+      <div
+        class="digest-post-embed"
+        data-attrs='{"nodeId":"76c30ede-dffe-4c51-9fd2-2fdf645d93b1","caption":"Hey, Wycliffe here, and welcome to this week’s mid-week scoop. At the beginning of every week, I usually send out an article covering various Techniques and Lessons in Typescript to help you learn and build more Type safe code in Typescript, such as","size":"sm","isEditorNode":true,"title":"Narrowing Types in Typescript","publishedBylines":[{"id":43214086,"name":"Maina Wycliffe","bio":"Software Engineer, Google Developer Expert and Typescript Nerd.","photo_url":"https://bucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com/public/images/8765c349-75ba-43ee-9976-e3ae5631b064_904x1124.jpeg","is_guest":false,"bestseller_tier":null}],"post_date":"2023-01-17T04:42:54.650Z","cover_image":"https://substack-post-media.s3.amazonaws.com/public/images/a63afa41-ae6d-4d26-9d7d-4703aa0a2125_1280x720.jpeg","cover_image_alt":null,"canonical_url":"https://www.allthingstypescript.dev/p/narrowing-types-in-typescript","section_name":null,"id":95731310,"type":"newsletter","reaction_count":1,"comment_count":0,"publication_name":"All Things Typescript","publication_logo_url":"https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7922083f-3e29-485a-ab34-3b07ac80034c_1084x1084.png","belowTheFold":true}'
+      >
+      </div>
+      <p></p>
+      <p
+        class="button-wrapper"
+        data-attrs='{"url":"https://www.allthingstypescript.dev/p/avoid-using-type-assertions-in-typescript/comments","text":"Leave a comment","action":null,"class":null}'
+        data-component-name="ButtonCreateButton"
+      >
+        <a
+          class="button primary"
+          href="https://www.allthingstypescript.dev/p/avoid-using-type-assertions-in-typescript/comments"
+          ><span>Leave a comment</span></a
+        >
+      </p>
+      <div
+        class="community-chat"
+        data-attrs='{"url":"https://open.substack.com/pub/allthingstypescript/chat?utm_source=chat_embed","subdomain":"allthingstypescript","pub":{"id":1025561,"name":"All Things Typescript","author_name":"Maina Wycliffe","author_photo_url":"https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F8765c349-75ba-43ee-9976-e3ae5631b064_904x1124.jpeg"}}'
+        data-component-name="CommunityChatRenderPlaceholder"
+      >
+      </div>
+    </div>
+  </article>
+</BlogLayout>
+
+<style lang="scss">
+  .captioned-image-container {
+    position: relative;
+    margin-top: 2rem;
+  }
+  .image-link-expand {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  .image-caption {
+    color: #9ba4af;
+    font-size: 0.75rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  ul {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    list-style-type: disc;
+    list-style-position: inside;
+
+    p {
+      display: inline;
+    }
+  }
+
+  hr {
+    margin: 2rem 2rem 0 2rem;
+  }
+
+  p {
+    margin-top: 1rem;
+  }
+
+  strong {
+    font-weight: 500;
+  }
+
+  blockquote {
+    margin: 1rem 0;
+    padding-left: 1rem;
+    border-left: 0.25rem solid #9ba4af;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+
+  pre {
+    margin: 1rem 0;
+    padding: 1rem;
+    background-color: rgba(40, 44, 52, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+  }
+
+  .button-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+  .button {
+    background-color: rgb(59, 130, 246);
+    color: rgb(243 244 246);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+  }
+
+  :is(:where(.dark) h2) {
+    color: rgb(243 244 246);
+  }
+  :is(:where(.dark) h3) {
+    color: rgb(243 244 246);
+  }
+  :is(:where(.dark) h4) {
+    color: rgb(243 244 246);
+  }
+  :is(:where(.dark) strong) {
+    color: rgb(243 244 246);
+  }
+
+  :is(:where(.dark) a) {
+    color: rgb(189, 211, 245);
+  }
+</style>
