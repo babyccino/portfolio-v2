@@ -34,7 +34,7 @@ const vec3 targetDark = vec3(61., 68., 108.)/255.;
 const vec3 diffDark = targetDark - initalDark;
 
 const vec3 initalLight = vec3(249., 250., 251.)/255.;
-const vec3 targetLight = vec3(151., 118., 109.)/255.;
+const vec3 targetLight = vec3(181., 148., 139.)/255.;
 const vec3 diffLight = targetLight - initalLight;
 
 void main() {
