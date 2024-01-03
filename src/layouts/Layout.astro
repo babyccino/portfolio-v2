@@ -12,7 +12,7 @@ const { title } = Astro.props
 ---
 
 <BaseLayout title={title}>
-  <a id="skip-main" href="#main" tabindex="0">Skip to main content</a>
+  <a class="skip-main" href="#main" tabindex="0">Skip to main content</a>
   <div class="relative flex min-h-screen w-full max-w-5xl flex-col justify-between md:flex-row">
     <header
       transition:name="nav"
@@ -24,7 +24,7 @@ const { title } = Astro.props
       <div class="relative cursor-default text-5xl font-light dark:text-gray-200">Gus Ryan</div>
       <h2 class="mt-4 cursor-default text-2xl font-light dark:text-gray-100">Web Developer</h2>
       <nav
-        class="fixed left-8 top-1/2 z-10 -translate-y-1/2 md:static md:mt-16 md:transform-none dark:text-gray-300"
+        class="fixed left-6 top-1/2 z-10 -translate-y-1/2 pt-14 md:static md:mt-16 md:transform-none md:pt-0 dark:text-gray-300"
       >
         <ul class="space-y-8 text-lg text-gray-900 dark:text-gray-200">
           <li class="writing-vertical">
@@ -51,8 +51,10 @@ const { title } = Astro.props
       </div>
     </div>
   </div>
-  <div class="z-10 dark:bg-gray-950" transition:name="dark-mode-toggle" transition:persist>
-    <DarkMode />
+  <div id="dark-mode-container" class="fixed right-[5vh] top-[5vh] z-10">
+    <div transition:persist transition:animate="fade" transition:name="dark-mode-toggle">
+      <DarkMode />
+    </div>
   </div>
   <div
     transition:name="three-canvas"
@@ -66,236 +68,22 @@ const { title } = Astro.props
 </BaseLayout>
 
 <script>
-  const glitchClassList = ["!absolute", "top-0", "hue-rotate-90", "-z-10", "saturate-[3]"]
+  import { glitchElement } from "../lib/glitch"
 
-  function deTab(el: HTMLElement) {
-    if (!el) return
-    el.tabIndex = -1
-    el.ariaHidden = "true"
-    el.id = ""
-    for (const child of el.children) {
-      deTab(child as HTMLElement)
-    }
-  }
+  const darkModeContainer = document.getElementById("dark-mode-container") as HTMLDivElement
+  darkModeContainer.className = "fixed right-[5vh] top-[5vh] z-10"
 
-  const skipMain = document.getElementById("skip-main") as HTMLAnchorElement
-  let skipFocused = false
-  skipMain.addEventListener("focus", () => {
-    skipFocused = true
-  })
-
-  function glitchElement(id: string) {
-    const element = document.getElementById(id) as HTMLDivElement
-    setTimeout(() => {
-      element.classList.remove("opacity-0")
-    }, 300)
-
-    element.before(element.cloneNode(true))
-    const glitchClone = element.previousSibling as HTMLDivElement
-    deTab(glitchClone)
-    glitchClone.classList.add(...glitchClassList, "glitch-1")
-
-    element.before(element.cloneNode(true))
-    const glitchClone2 = element.previousSibling as HTMLDivElement
-    deTab(glitchClone2)
-    glitchClone2.classList.add(...glitchClassList, "glitch-2")
-
-    setTimeout(() => {
-      glitchClone.remove()
-      glitchClone2.remove()
-    }, 3000)
-    skipMain.addEventListener("focus", () => {
-      glitchClone.remove()
-      glitchClone2.remove()
-    })
-    document.addEventListener("astro:before-preparation", () => {
-      glitchClone.remove()
-      glitchClone2.remove()
-    })
-  }
-
-  setTimeout(() => !skipFocused && glitchElement("nav"), 200)
+  setTimeout(() => glitchElement("nav"), 200)
   document.addEventListener("astro:page-load", () => {
-    setTimeout(() => !skipFocused && glitchElement("main-container"), 200)
+    setTimeout(() => glitchElement("main-container"), 200)
   })
 </script>
 
-<style is:global>
-  html {
-    font-family: nimbus-sans, "helvetica neue", system-ui, sans-serif;
-  }
-  code {
-    font-family:
-      Menlo,
-      Monaco,
-      Lucida Console,
-      Liberation Mono,
-      DejaVu Sans Mono,
-      Bitstream Vera Sans Mono,
-      Courier New,
-      monospace;
-  }
-
-  #skip-main {
-    left: -999px;
-    position: absolute;
-    top: auto;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    z-index: -999;
-  }
-  #skip-main:focus,
-  #skip-main:active {
-    color: #fff;
-    background-color: #000;
-    left: auto;
-    top: auto;
-    width: 30%;
-    height: auto;
-    overflow: auto;
-    margin: 10px 35%;
-    padding: 5px;
-    border-radius: 15px;
-    border: 4px solid yellow;
-    text-align: center;
-    font-size: 1.2em;
-    z-index: 999;
-  }
-</style>
-
 <style lang="scss">
-  .glitch-animation {
-    animation: inNOut 2s linear 0s 2 normal none;
-  }
-  @keyframes inNOut {
-    0% {
-      opacity: 0%;
-      left: -0.35rem;
-    }
-    45% {
-      opacity: 0%;
-    }
-    46% {
-      opacity: 50%;
-    }
-    49% {
-      opacity: 50%;
-    }
-    50% {
-      opacity: 0%;
-      left: -0.35rem;
-    }
-    91% {
-      opacity: 0%;
-      left: -0.75rem;
-    }
-    92% {
-      opacity: 50%;
-      left: -0.75rem;
-    }
-    95% {
-      left: -0.35rem;
-    }
-    100% {
-      opacity: 50%;
-      left: -0.35rem;
-    }
-  }
-
-  .glitch-animation-2 {
-    animation: glitch2 2s linear 1s 1 normal none;
-  }
-  @keyframes glitch2 {
-    0% {
-      opacity: 0;
-    }
-    43% {
-      opacity: 0;
-    }
-    44% {
-      opacity: 1;
-    }
-    49% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0;
-    }
-    91% {
-      opacity: 0;
-    }
-    92% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-
-  .glitch-animation-3 {
-    animation: glitch3 2s linear 1s 1 normal none;
-  }
-  @keyframes glitch3 {
-    0% {
-      opacity: 0;
-    }
-    93% {
-      opacity: 0;
-    }
-    94% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-
   @media (max-width: 768px) {
     .writing-vertical {
       writing-mode: vertical-rl;
       text-orientation: mixed;
     }
-  }
-
-  $baseAnimationLength: 8s;
-  $iterationCount: 0.3;
-
-  $movementTranslateBase: 0.5%;
-  @keyframes movementTranslate {
-    0% {
-      translate: 0 (-4 * $movementTranslateBase);
-    }
-
-    15% {
-      translate: (2 * $movementTranslateBase) (2 * $movementTranslateBase);
-    }
-
-    60% {
-      translate: $movementTranslateBase (-2 * $movementTranslateBase);
-    }
-
-    75% {
-      translate: (-1 * $movementTranslateBase) (4 * $movementTranslateBase);
-    }
-
-    100% {
-      translate: (2 * $movementTranslateBase) $movementTranslateBase;
-    }
-  }
-
-  .glitch-1 {
-    animation:
-      paths (calc(1 / 2) * $baseAnimationLength) step-end (2 * $iterationCount) normal forwards,
-      opacity (calc(1 / 2) * $baseAnimationLength) step-end (2 * $iterationCount) normal forwards,
-      movementTranslate $baseAnimationLength step-end $iterationCount normal forwards;
-  }
-
-  .glitch-2 {
-    animation:
-      paths (calc(1 / 2) * $baseAnimationLength) step-end (2 * $iterationCount) normal forwards,
-      opacity (calc(1 / 2) * $baseAnimationLength) step-end (2 * $iterationCount) normal forwards,
-      movementTranslate (calc(4 / 5) * $baseAnimationLength) step-end
-        (calc(5 / 4) * $iterationCount) normal forwards;
   }
 </style>
