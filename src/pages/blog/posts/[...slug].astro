@@ -34,10 +34,17 @@ const { body, title, subtitle } = Astro.props
     </h5>
     <hr class="border border-gray-500" />
     <div id="article-body" set:html={body} />
+    <!-- <iframe
+      src="https://gusryan.substack.com/embed"
+      width="480"
+      height="150"
+      style="background:white;"
+      frameborder="0"
+      scrolling="no"></iframe> -->
   </article>
 </BlogLayout>
 
-<style lang="scss">
+<style lang="scss" is:global>
   .captioned-image-container {
     position: relative;
     margin-top: 2rem;
@@ -53,6 +60,20 @@ const { body, title, subtitle } = Astro.props
   .image-caption {
     color: #9ba4af;
     font-size: 0.75rem;
+  }
+  .subscription-widget-wrap {
+    display: none;
+  }
+  .button-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+  .button {
+    background-color: rgb(59, 130, 246);
+    color: rgb(243 244 246);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
   }
 
   h3 {
@@ -113,18 +134,6 @@ const { body, title, subtitle } = Astro.props
     overflow-x: auto;
     font-size: 0.875rem;
     line-height: 1.5rem;
-  }
-
-  .button-wrapper {
-    display: flex;
-    justify-content: center;
-  }
-  .button {
-    background-color: rgb(59, 130, 246);
-    color: rgb(243 244 246);
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    text-decoration: none;
   }
 
   :is(:where(.dark) h2) {
