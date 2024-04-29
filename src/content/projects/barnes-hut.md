@@ -12,6 +12,6 @@ links:
   ]
 ---
 
-I studied this algorithm in a Scala course on parallel programming and thought it
+I studied this algorithm in a parallel programming unit and thought it
 would be a fun project to make a visualisation web app. To keep this site performant
 I used stragies such as: object pooling, using html canvas, and various other algorithms.
