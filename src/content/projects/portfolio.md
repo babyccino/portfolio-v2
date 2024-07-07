@@ -1,7 +1,7 @@
 ---
 title: Portfolio Website
 description: A site I created myself using astro,
-started: "12-01-2023"
+started: 12-01-2023
 image: { url: "", alt: Main image of portfolio site }
 video: { url: "video.src", alt: Main video of portfolio site }
 technologies: [astro, view-transitions, figma, webgl, three.js]
