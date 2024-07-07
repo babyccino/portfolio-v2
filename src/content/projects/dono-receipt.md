@@ -1,10 +1,10 @@
 ---
 title: Donation Receipt Online
-description: A site I created myself using astro,
+description: A site I created myself using astro
 started: 04-01-2023
 ended: Present
 image: { url: "/images/dono-main.webp", alt: Main image of portfolio site }
-video: { url: "video.src", alt: Main video of portfolio site }
+video: { url: "", alt: Main video of donation receipt online }
 technologies: [aws, sql, go, react.js, next.js, typescript, docker, websockets]
 link: https://donationreceipt.online
 ---

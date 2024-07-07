@@ -1,10 +1,10 @@
 ---
 title: PeerLink
 description: An application for connecting peer support networks
-started: 10-01-2023
-ended: Present
+started: 03-01-2023
+ended: 01-01-2024
 image: { url: "", alt: main image of peerlink site }
-video: { url: "video.src", alt: Main video of portfolio site }
+video: { url: "", alt: Main video of portfolio site }
 technologies: [angular, parse, bootstrap]
 link: https://www.peerlinkapp.com
 ---
