@@ -128,82 +128,10 @@
       68% 83%
     );
   }
-  76% {
-    clip-path: polygon(
-      0% 26%,
-      15% 26%,
-      15% 73%,
-      72% 73%,
-      72% 70%,
-      77% 70%,
-      77% 75%,
-      8% 75%,
-      8% 42%,
-      4% 42%,
-      4% 61%,
-      17% 61%,
-      17% 12%,
-      26% 12%,
-      26% 63%,
-      73% 63%,
-      73% 43%,
-      90% 43%,
-      90% 67%,
-      50% 67%,
-      50% 41%,
-      42% 41%,
-      42% 46%,
-      50% 46%,
-      50% 84%,
-      96% 84%,
-      96% 78%,
-      49% 78%,
-      49% 25%,
-      63% 25%,
-      63% 14%
-    );
-  }
-  90% {
-    clip-path: polygon(
-      0% 41%,
-      13% 41%,
-      13% 6%,
-      87% 6%,
-      87% 93%,
-      10% 93%,
-      10% 13%,
-      89% 13%,
-      89% 6%,
-      3% 6%,
-      3% 8%,
-      16% 8%,
-      16% 79%,
-      0% 79%,
-      0% 99%,
-      92% 99%,
-      92% 90%,
-      5% 90%,
-      5% 60%,
-      0% 60%,
-      0% 48%,
-      89% 48%,
-      89% 13%,
-      80% 13%,
-      80% 43%,
-      95% 43%,
-      95% 19%,
-      80% 19%,
-      80% 85%,
-      38% 85%,
-      38% 62%
-    );
-  }
   1%,
   7%,
   33%,
-  47%,
-  78%,
-  93% {
+  47% {
     clip-path: none;
   }
 }
@@ -221,18 +149,10 @@
   45% {
     opacity: 0.6;
   }
-  76% {
-    opacity: 0.4;
-  }
-  90% {
-    opacity: 0.8;
-  }
   1%,
   7%,
   33%,
-  47%,
-  78%,
-  93% {
+  47% {
     opacity: 0;
   }
 }
@@ -241,41 +161,23 @@ $movementBase: 0.1em;
 @keyframes movement {
   0% {
     top: 0;
-    left: -4 * $movementBase;
-  }
-  15% {
-    top: 2 * $movementBase;
-    left: 2 * $movementBase;
-  }
-  60% {
-    top: $movementBase;
     left: -2 * $movementBase;
   }
-  75% {
-    top: -1 * $movementBase;
-    left: 4 * $movementBase;
-  }
-  100% {
-    top: 2 * $movementBase;
-    left: $movementBase;
+  15% {
+    top: 1 * $movementBase;
+    left: 1 * $movementBase;
   }
 }
 
-$movementTranslateBase: 2%;
+$movementTranslateBase: 1%;
 @keyframes movementTranslate {
-  0% {
-    translate: 0 (-4 * $movementTranslateBase);
-  }
-  15% {
-    translate: (2 * $movementTranslateBase) (2 * $movementTranslateBase);
-  }
-  60% {
+  10% {
     translate: $movementTranslateBase (-2 * $movementTranslateBase);
   }
-  75% {
+  25% {
     translate: (-1 * $movementTranslateBase) (4 * $movementTranslateBase);
   }
-  100% {
+  45% {
     translate: (2 * $movementTranslateBase) $movementTranslateBase;
   }
 }
@@ -298,16 +200,22 @@ $movementTranslateBase: 2%;
     color: #1bc7fb;
     filter: blur(2px);
   }
+}
 
-  60% {
-    font-weight: 700;
-    color: #fff;
-    filter: blur(0);
-  }
+$baseAnimationLength: 3s;
+$iterationCount: 0.3;
 
-  90% {
-    font-weight: 500;
-    color: #e0287d;
-    filter: blur(6px);
-  }
+.glitch-1 {
+  animation:
+    paths (calc(1 / 2) * $baseAnimationLength) step-end (2 * $iterationCount) normal forwards,
+    opacity (calc(1 / 2) * $baseAnimationLength) step-end (2 * $iterationCount) normal forwards,
+    movementTranslate $baseAnimationLength step-end $iterationCount normal forwards;
+}
+
+.glitch-2 {
+  animation:
+    paths (calc(1 / 2) * $baseAnimationLength) step-end (2 * $iterationCount) normal forwards,
+    opacity (calc(1 / 2) * $baseAnimationLength) step-end (2 * $iterationCount) normal forwards,
+    movementTranslate (calc(4 / 5) * $baseAnimationLength) step-end (calc(5 / 4) * $iterationCount)
+      normal forwards;
 }
