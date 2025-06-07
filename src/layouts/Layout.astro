@@ -70,7 +70,16 @@ const { title } = Astro.props
 <script>
   import { glitchElement } from "../lib/glitch"
 
-  console.log("hello????")
+  function isElementInViewport(element: Element) {
+    const rect = element.getBoundingClientRect()
+
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    )
+  }
 
   const darkModeContainer = document.getElementById("dark-mode-container") as HTMLDivElement
   darkModeContainer.className = "fixed right-[5vh] top-[5vh] z-10"
@@ -82,23 +91,66 @@ const { title } = Astro.props
 
   const hashLinks = document.querySelectorAll('a[href^="/about#"]')
 
+  let beforeLastIntersection: Element | null = null
+  let lastIntersection: Element | null = null
+
+  function setActive(link: Element) {
+    for (const hashLink of hashLinks) {
+      if (hashLink !== link) {
+        hashLink.classList.add("decoration-transparent")
+      }
+    }
+
+    link.classList.remove("decoration-transparent")
+  }
+
+  function getSectionForLink(element: Element) {
+    const href = element.getAttribute("href")
+    if (href == null) return
+    const match = href.match(/#.*/i)
+    if (match == null) return
+    const targetId = match[0].substring(1)
+    return document.getElementById(targetId)
+  }
+
+  function observerCb(entry: IntersectionObserverEntry) {
+    const targetId = entry.target.id
+    let link = document.querySelector(`a[href^="/about#${targetId}"]`)
+
+    if (link == null) {
+      console.warn("link not found")
+      return
+    }
+
+    console.table({
+      intersect: entry.isIntersecting,
+      target: targetId,
+      lastIntersection: lastIntersection?.getAttribute("href"),
+      beforeLastIntersection: beforeLastIntersection?.getAttribute("href"),
+    })
+
+    if (!entry.isIntersecting) {
+      if (lastIntersection == null || beforeLastIntersection == null) {
+        return
+      }
+
+      const section = getSectionForLink(beforeLastIntersection)
+      if (section != null && isElementInViewport(section)) {
+        setActive(beforeLastIntersection)
+      }
+    } else {
+      if (lastIntersection !== link) {
+        beforeLastIntersection = lastIntersection
+      }
+      lastIntersection = link
+      setActive(link)
+    }
+  }
+
   const observer = new IntersectionObserver(
     entries => {
       console.log("intersection cb")
-      for (const entry of entries) {
-        const targetId = entry.target.id
-        const link = document.querySelector(`a[href^="/about#${targetId}"]`)
-
-        if (link && entry.isIntersecting) {
-          for (const hashLink of hashLinks) {
-            if (hashLink !== link) {
-              hashLink.classList.add("decoration-transparent")
-            }
-          }
-
-          link.classList.remove("decoration-transparent")
-        }
-      }
+      entries.forEach(observerCb)
     },
     {
       threshold: 0.5,
@@ -106,15 +158,7 @@ const { title } = Astro.props
   )
 
   for (const link of hashLinks) {
-    const href = link.getAttribute("href")
-    console.log("link:", href)
-    if (href == null) continue
-    const match = href.match(/#.*/i)
-    if (match == null) continue
-    const targetId = match[0].substring(1)
-    console.log("targetId:", targetId)
-    const targetElement = document.getElementById(targetId)
-
+    const targetElement = getSectionForLink(link)
     if (targetElement) {
       observer.observe(targetElement)
     }
