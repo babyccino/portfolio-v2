@@ -1,0 +1,53 @@
+---
+const technologies = [
+  "typescript",
+  "react",
+  "vue.js",
+  "next.js",
+  "nuxt",
+  "rust",
+  "go",
+  "css",
+  "webgl",
+]
+---
+
+<section
+  class="flex-col justify-center space-y-3 text-base text-gray-700 dark:text-gray-400 md:flex"
+>
+  <p>
+    Hi! My name is Gus and I'm a software developer, originally from Perth, Western Australia. With
+    a background in Maths and Physics, I'm fascinated by the intricacies of how things work and
+    enjoy using logic to solve problems
+  </p>
+  <br />
+  <p>
+    I became interested in software development a few years ago after discovering a passion for
+    building useful applications from scratch. I'm now looking to apply my skills in creating tools
+    to help users be more efficient
+  </p>
+  <br />
+  <div>
+    Besides coding at my desk, I can be found
+    <a
+      class="font-medium dark:text-gray-200"
+      href="https://www.youtube.com/channel/UCtWqQrnozUZXpxnjhVgUTUw"
+    >
+      climbing rocks
+    </a>
+    and
+    <a class="font-medium dark:text-gray-200" href="https://www.instagram.com/babyccino1">
+      photographing natural landscapes
+    </a>
+    <br />
+  </div>
+  <br />
+  <p class="mt-2 text-sm">Languages/technologies I've used:</p>
+  <ul class="mt-2 flex flex-row flex-wrap gap-2 text-xs text-gray-700 dark:text-gray-400">
+    {
+      technologies.map(tech => (
+        <li class="inline-block rounded-full bg-slate-400 bg-opacity-15 px-2 py-1">{tech}</li>
+      ))
+    }
+  </ul>
+</section>

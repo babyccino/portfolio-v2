@@ -24,7 +24,7 @@ const { title } = Astro.props
       <div class="relative cursor-default text-5xl font-light dark:text-gray-200">Gus Ryan</div>
       <h2 class="mt-4 cursor-default text-2xl font-light dark:text-gray-100">Web Developer</h2>
       <nav
-        class="fixed left-6 top-1/2 z-10 -translate-y-1/2 pt-14 md:static md:mt-16 md:transform-none md:pt-0 dark:text-gray-300"
+        class="fixed left-6 top-1/2 z-10 -translate-y-1/2 pt-14 dark:text-gray-300 md:static md:mt-16 md:transform-none md:pt-0"
       >
         <ul class="space-y-8 text-lg text-gray-900 dark:text-gray-200">
           <li class="writing-vertical">
@@ -45,8 +45,8 @@ const { title } = Astro.props
     <div aria-hidden="true">
       <div class="md:w-80"></div>
     </div>
-    <div class="relative flex-grow overflow-hidden">
-      <div id="main-container" class="h-full">
+    <div class="relative grow overflow-hidden">
+      <div id="main-container" class="h-full overflow-hidden">
         <slot />
       </div>
     </div>

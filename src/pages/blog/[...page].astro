@@ -1,24 +1,13 @@
 ---
 import type { GetStaticPaths, Page } from "astro"
-import { Image } from "astro:assets"
 
 import Layout from "../../layouts/Layout.astro"
+import BlogList from "../../components/sections/BlogList.astro"
 import { ArchivePost } from "../../types/substack"
+import { getAllPosts } from "../../lib/substack"
 
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
-  async function getPosts(
-    offset: number = 0,
-    totalPosts: ArchivePost[] = [],
-  ): Promise<ArchivePost[]> {
-    const substackUrl = import.meta.env.SUBSTACK_URL
-    const data = await fetch(`${substackUrl}api/v1/archive?sort=new&offset=${offset}&limit=50`)
-    const newPosts = (await data.json()) as ArchivePost[]
-    const newTotalPosts = totalPosts.concat(newPosts)
-    if (newPosts.length !== 50) return newTotalPosts
-    return getPosts(offset + 50, newTotalPosts)
-  }
-  const posts = await getPosts()
-
+  const posts = await getAllPosts()
   return paginate(posts, { pageSize: 10 })
 }
 
@@ -30,46 +19,17 @@ const page = Astro.props.page as Page<ArchivePost>
     id="main"
     class="relative flex h-full flex-col justify-center py-8 pl-20 pr-2 md:py-0 md:pl-10 md:pr-0 lg:pl-24"
   >
-    <div
-      class="absolute bottom-5 left-1/2 flex -translate-x-1/2 flex-col items-center text-sm dark:text-gray-400"
-    >
-      <div>
-        {page.url.prev && <a href={page.url.prev}>prev</a>}
-        {page.url.prev && page.url.next && <span class="mx-2">|</span>}
-        {page.url.next && <a href={page.url.next}>next</a>}
+    <section>
+      <div
+        class="absolute bottom-5 left-1/2 flex -translate-x-1/2 flex-col items-center text-sm dark:text-gray-400 md:py-20"
+      >
+        <div>
+          {page.url.prev && <a href={page.url.prev}>prev</a>}
+          {page.url.prev && page.url.next && <span class="mx-2">|</span>}
+          {page.url.next && <a href={page.url.next}>next</a>}
+        </div>
       </div>
-    </div>
-    <ul class="group space-y-4 md:my-20">
-      {
-        page.data.map(post => (
-          <li class="relative rounded-xl p-4 text-gray-800 hover:bg-slate-400 hover:bg-opacity-15 hover:!opacity-100 group-hover:opacity-60 dark:text-gray-400">
-            <a href={`/blog/posts/${post.slug}`} class="flex flex-row items-center gap-4">
-              {post.cover_image && (
-                <div class="hidden h-24 w-24 overflow-hidden rounded-xl sm:block">
-                  <Image
-                    src={post.cover_image}
-                    alt={post.title + " image"}
-                    width="40"
-                    height="40"
-                    class="h-full w-full object-cover grayscale-[0.5] filter transition duration-100 group-hover:filter-none"
-                  />
-                </div>
-              )}
-              <div>
-                <h3 class="inline text-base text-gray-900 dark:text-gray-200">{post.title}</h3>
-                <div class="mt-1">{post.description}</div>
-                <ul class="mt-2 flex flex-row flex-wrap gap-2 text-xs">
-                  {post.postTags.map(tag => (
-                    <li class="inline-block rounded-full bg-slate-400 bg-opacity-15 px-2 py-1">
-                      {tag.name}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+      <BlogList data={page.data} />
+    </section>
   </main>
 </Layout>

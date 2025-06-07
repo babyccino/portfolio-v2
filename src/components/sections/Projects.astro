@@ -1,0 +1,49 @@
+---
+import { Icon } from "astro-icon/components"
+import { getCollection } from "astro:content"
+
+const collection = await getCollection("projects")
+const projects = await Promise.all(
+  collection.map(async entry => ({
+    ...entry,
+    content: await entry.render(),
+  })),
+)
+projects.sort((a, b) => {
+  return new Date(b.data.started).getTime() - new Date(a.data.started).getTime()
+})
+---
+
+<section>
+  <ul class="group space-y-4 md:my-20">
+    {
+      projects.map(entry => (
+        <li class="relative cursor-default rounded-xl p-4 text-gray-800 transition duration-100 hover:bg-slate-400 hover:bg-opacity-15 hover:!opacity-100 group-hover:opacity-60 dark:text-gray-400">
+          <div class="block align-baseline text-sm">
+            <div class="space-x-2 transition duration-100">
+              <h3 class="inline text-base text-gray-900 dark:text-gray-200">{entry.data.title}</h3>
+              {entry.data.links.map(link => (
+                <a
+                  class="inline text-gray-400 transition duration-100 hover:text-gray-500 dark:text-gray-600 dark:hover:text-gray-500"
+                  href={link.link}
+                >
+                  <Icon class="-mt-1 inline size-5" name={link.icon} />
+                </a>
+              ))}
+            </div>
+            <div class="mt-1">
+              <entry.content.Content />
+            </div>
+            <ul class="mt-2 flex flex-row flex-wrap gap-2 text-xs text-gray-700 dark:text-gray-400">
+              {entry.data.technologies.map((tech: string) => (
+                <li class="inline-block rounded-full bg-slate-400 bg-opacity-15 px-2 py-1">
+                  {tech}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</section>
