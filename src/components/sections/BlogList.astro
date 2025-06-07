@@ -3,7 +3,11 @@ import { Image } from "astro:assets"
 
 import { ArchivePost } from "../../types/substack"
 
-const data = Astro.props.data as ArchivePost[]
+interface Props {
+  data: ArchivePost[]
+}
+
+const data = Astro.props.data
 ---
 
 <ul class="group space-y-4">

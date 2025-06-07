@@ -8,8 +8,11 @@ interface Props {
 const { content, href, tabIndex } = Astro.props
 ---
 
-<a class="link relative" href={href} tabindex={tabIndex}>
-  <span class="absolute" aria-hidden="true"> {content}</span>
+<a
+  class="decoration-tranparent link relative underline transition-[text-decoration-color] duration-500"
+  href={href}
+  tabindex={tabIndex}
+>
   {content}
 </a>
 
@@ -98,7 +101,7 @@ const { content, href, tabIndex } = Astro.props
     70% {
       background-position: 89% 48%;
     }
-    73.% {
+    73% {
       background-position: 89% 13%;
     }
     76.7% {

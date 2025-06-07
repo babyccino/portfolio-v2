@@ -26,18 +26,18 @@ const { title } = Astro.props
       <nav
         class="fixed left-6 top-1/2 z-10 -translate-y-1/2 pt-14 dark:text-gray-300 md:static md:mt-16 md:transform-none md:pt-0"
       >
-        <ul class="space-y-8 text-lg text-gray-900 dark:text-gray-200">
+        <ul class="space-y-8 text-base font-light tracking-wide text-gray-900 dark:text-gray-200">
           <li class="writing-vertical">
-            <Link content="About" href="/about" />
+            <Link content="About" href="/about#about" />
           </li>
           <li class="writing-vertical">
-            <Link content="Experience" href="/experience" />
+            <Link content="Experience" href="/about#experience" />
           </li>
           <li class="writing-vertical">
-            <Link content="Projects" href="/projects" />
+            <Link content="Projects" href="/about#projects" />
           </li>
           <li class="writing-vertical">
-            <Link content="Blog" href="/blog" />
+            <Link content="Blog" href="/about#blog" />
           </li>
         </ul>
       </nav>
@@ -70,6 +70,8 @@ const { title } = Astro.props
 <script>
   import { glitchElement } from "../lib/glitch"
 
+  console.log("hello????")
+
   const darkModeContainer = document.getElementById("dark-mode-container") as HTMLDivElement
   darkModeContainer.className = "fixed right-[5vh] top-[5vh] z-10"
 
@@ -77,6 +79,46 @@ const { title } = Astro.props
   document.addEventListener("astro:page-load", () => {
     setTimeout(() => glitchElement("main-container"), 200)
   })
+
+  const hashLinks = document.querySelectorAll('a[href^="/about#"]')
+
+  const observer = new IntersectionObserver(
+    entries => {
+      console.log("intersection cb")
+      for (const entry of entries) {
+        const targetId = entry.target.id
+        const link = document.querySelector(`a[href^="/about#${targetId}"]`)
+
+        if (link && entry.isIntersecting) {
+          for (const hashLink of hashLinks) {
+            if (hashLink !== link) {
+              hashLink.classList.add("decoration-transparent")
+            }
+          }
+
+          link.classList.remove("decoration-transparent")
+        }
+      }
+    },
+    {
+      threshold: 0.5,
+    },
+  )
+
+  for (const link of hashLinks) {
+    const href = link.getAttribute("href")
+    console.log("link:", href)
+    if (href == null) continue
+    const match = href.match(/#.*/i)
+    if (match == null) continue
+    const targetId = match[0].substring(1)
+    console.log("targetId:", targetId)
+    const targetElement = document.getElementById(targetId)
+
+    if (targetElement) {
+      observer.observe(targetElement)
+    }
+  }
 </script>
 
 <style lang="scss">

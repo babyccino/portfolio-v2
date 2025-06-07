@@ -4,13 +4,14 @@ import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js"
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js"
 import { CopyShader } from "three/examples/jsm/shaders/CopyShader.js"
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js"
+import { getDarkMode, darkModeEvent } from "./dark"
+
 // @ts-ignore
 import vertexShader from "../shaders/vertex-noise.glsl"
 // @ts-ignore
 import fragmentShader from "../shaders/fragment.glsl"
 // @ts-ignore
-import BlockPass from "../shaders/block-pass-fragment.glsl"
-import { getDarkMode, darkModeEvent } from "./dark"
+import blockPassShader from "../shaders/block-pass-fragment.glsl"
 
 export default class BlockWave {
   material: THREE.ShaderMaterial
@@ -45,7 +46,6 @@ export default class BlockWave {
 
     this.renderer = new THREE.WebGLRenderer({ canvas })
     this.renderer.setSize(window.screen.width, window.screen.height)
-    console.log(window.screen.width, window.screen.height)
 
     this.effectComposer = new EffectComposer(this.renderer)
     this.effectComposer.setSize(window.innerWidth, window.innerHeight)
@@ -70,7 +70,7 @@ export default class BlockWave {
         dark: { value: this.darkValue },
         time: { value: this.time },
       },
-      fragmentShader: BlockPass,
+      fragmentShader: blockPassShader,
     }
     this.blockNoisePass = new ShaderPass(blockNoiseShader)
     this.effectComposer.addPass(this.blockNoisePass)

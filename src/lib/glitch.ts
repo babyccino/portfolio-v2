@@ -1,10 +1,17 @@
 const glitchClassList = ["!absolute", "top-0", "hue-rotate-90", "-z-10", "saturate-[3]"]
 
+export function isAnchor(el: HTMLElement): el is HTMLAnchorElement {
+  return "href" in el
+}
+
 export function deTab(el: HTMLElement) {
   if (!el) return
   el.tabIndex = -1
   el.ariaHidden = "true"
   el.id = ""
+
+  if (isAnchor(el)) el.setAttribute("href", "")
+
   for (const child of el.children) {
     deTab(child as HTMLElement)
   }
