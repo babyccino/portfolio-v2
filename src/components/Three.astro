@@ -7,8 +7,6 @@
 <script>
   import BlockWave from "../lib/block-wave"
 
-  console.log("hi?")
-
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
   if (!prefersReducedMotion) {
     const canvas = document.getElementById("three") as HTMLCanvasElement
@@ -26,11 +24,55 @@
       },
       { once: true },
     )
+
+    function scrollPercentage(element: Element) {
+      const rect = element.getBoundingClientRect()
+      const percentage = element.scrollTop / (element.scrollHeight - rect.height)
+      return Math.max(0, Math.min(1, percentage))
+    }
+
+    function throttle<T extends any[]>(func: (...args: T) => void, limit: number) {
+      let inThrottle = false
+      return function (...args: T) {
+        if (inThrottle) {
+          return
+        }
+
+        func(...args)
+        inThrottle = true
+        setTimeout(() => (inThrottle = false), limit)
+      }
+    }
+
+    function monitorElementScroll(element: Element, callback: (arg0: number) => void) {
+      const throttledCallback = throttle(() => {
+        const percentage = scrollPercentage(element)
+        callback(percentage)
+      }, 16)
+
+      element.addEventListener("scroll", throttledCallback)
+      element.addEventListener("resize", throttledCallback)
+
+      // Return cleanup function
+      return () => {
+        element.removeEventListener("scroll", throttledCallback)
+        element.removeEventListener("resize", throttledCallback)
+      }
+    }
+
+    const main = document.getElementById("main")
+    if (main) {
+      const cleanup = monitorElementScroll(main, percentage => {
+        fun.setColourTarget(percentage)
+      })
+
+      // Clean up when done
+      // cleanup();
+    }
   }
 </script>
 
 <script is:inline>
-  console.log("hi?")
   const canvas = document.getElementById("three")
   canvas.classList.add("fade-in")
 </script>

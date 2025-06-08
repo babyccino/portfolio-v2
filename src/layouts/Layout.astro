@@ -122,13 +122,6 @@ const { title } = Astro.props
       return
     }
 
-    console.table({
-      intersect: entry.isIntersecting,
-      target: targetId,
-      lastIntersection: lastIntersection?.getAttribute("href"),
-      beforeLastIntersection: beforeLastIntersection?.getAttribute("href"),
-    })
-
     if (!entry.isIntersecting) {
       if (lastIntersection == null || beforeLastIntersection == null) {
         return
@@ -149,7 +142,6 @@ const { title } = Astro.props
 
   const observer = new IntersectionObserver(
     entries => {
-      console.log("intersection cb")
       entries.forEach(observerCb)
     },
     {

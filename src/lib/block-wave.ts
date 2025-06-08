@@ -13,6 +13,8 @@ import fragmentShader from "../shaders/fragment.glsl"
 // @ts-ignore
 import blockPassShader from "../shaders/block-pass-fragment.glsl"
 
+const colourChangeSpeed = 0.001
+
 export default class BlockWave {
   material: THREE.ShaderMaterial
   scene: THREE.Scene
@@ -24,6 +26,11 @@ export default class BlockWave {
   darkValue: number = 1.0
   darkMode: boolean = true
   time: number = Math.random() * 100
+
+  // the bg is one colour at the top of the page and another at the bottom
+  // value of 1.0 means it has fully transitioned to the bottom colour
+  colourSliderTarget = 0.0
+  colourSliderValue = 0.0
 
   constructor(canvas: HTMLCanvasElement) {
     this.camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 50)
@@ -68,6 +75,7 @@ export default class BlockWave {
         height: { value: window.innerHeight * window.devicePixelRatio },
         blueNoise: { value: tex },
         dark: { value: this.darkValue },
+        colourSlider: { value: this.colourSliderValue },
         time: { value: this.time },
       },
       fragmentShader: blockPassShader,
@@ -107,11 +115,25 @@ export default class BlockWave {
       this.darkValue -= 0.015
       this.blockNoisePass.uniforms.dark.value = this.darkValue
     }
+
+    const diff = this.colourSliderTarget - this.colourSliderValue
+    if (Math.abs(diff) >= colourChangeSpeed) {
+      this.colourSliderValue += Math.sign(diff) * colourChangeSpeed
+      this.blockNoisePass.uniforms.colourSlider.value = this.colourSliderValue
+    } else {
+      this.colourSliderValue = this.colourSliderTarget
+      this.blockNoisePass.uniforms.colourSlider.value = this.colourSliderValue
+    }
+
     this.updateTime(this.time + 0.00005)
     this.effectComposer.render()
     requestAnimationFrame(this.animate.bind(this))
   }
   setDarkMode() {
     this.darkMode = getDarkMode()
+  }
+
+  setColourTarget(val: number) {
+    this.colourSliderTarget = Math.min(Math.max(val, 0), 1)
   }
 }
